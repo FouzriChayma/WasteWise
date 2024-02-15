@@ -133,8 +133,9 @@ class StoreHouse
 
         return $this;
     }
-
-    
-
+    public function __toString(): string
+    {
+        return $this->nameSh ?? ''; // Adjust this based on the property you want to display
+    }
     
 }

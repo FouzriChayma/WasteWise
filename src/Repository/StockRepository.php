@@ -45,4 +45,17 @@ class StockRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+/**
+     * Count the number of rows in the Stock table.
+     *
+     * @return int
+     */
+    public function countRows(): int
+    {
+        return $this->entityManager
+            ->createQuery('SELECT COUNT(s.idSt) FROM App\Entity\Stock s')
+            ->getSingleScalarResult();
+    }
 }

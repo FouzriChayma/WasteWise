@@ -34,6 +34,7 @@ class Stock
     #[ORM\JoinColumn(name: 'id_sh', referencedColumnName: 'id_sh', nullable: false)]
     private ?StoreHouse $storehouse = null;
 
+    
     public function getIdSt(): ?int
     {
         return $this->idSt;
