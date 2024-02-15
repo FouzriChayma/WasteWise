@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stock index{% endblock %}
+
+{% block body %}
+    <h1>Stock index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdSt</th>
+                <th>Name_st</th>
+                <th>Quantity_st</th>
+                <th>Date_d_ajout_st</th>
+                <th>Date_derniere_mise_a_jour_st</th>
+                <th>Statut_st</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.idSt }}</td>
+                <td>{{ stock.nameSt }}</td>
+                <td>{{ stock.quantitySt }}</td>
+                <td>{{ stock.dateDAjoutSt ? stock.dateDAjoutSt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ stock.dateDerniereMiseAJourSt ? stock.dateDerniereMiseAJourSt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ stock.statutSt }}</td>
+                <td>
+                    <a href="{{ path('app_stock_show', {'idSt': stock.idSt}) }}">show</a>
+                    <a href="{{ path('app_stock_edit', {'idSt': stock.idSt}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stock_new') }}">Create new</a>
+{% endblock %}

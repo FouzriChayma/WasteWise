@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StoreHouse{% endblock %}
+
+{% block body %}
+    <h1>Create new StoreHouse</h1>
+
+    {{ include('store_house/_form.html.twig') }}
+
+    <a href="{{ path('app_store_house_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StoreHouse index{% endblock %}
+
+{% block body %}
+    <h1>StoreHouse index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdSh</th>
+                <th>NameSh</th>
+                <th>LocationSh</th>
+                <th>CapacitySh</th>
+                <th>DateCreatedSh</th>
+                <th>StatusSh</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for store_house in store_houses %}
+            <tr>
+                <td>{{ store_house.idSh }}</td>
+                <td>{{ store_house.nameSh }}</td>
+                <td>{{ store_house.locationSh }}</td>
+                <td>{{ store_house.capacitySh }}</td>
+                <td>{{ store_house.dateCreatedSh ? store_house.dateCreatedSh|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ store_house.statusSh }}</td>
+                <td>
+                    <a href="{{ path('app_store_house_show', {'idSh': store_house.idSh}) }}">show</a>
+                    <a href="{{ path('app_store_house_edit', {'idSh': store_house.idSh}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_store_house_new') }}">Create new</a>
+{% endblock %}
