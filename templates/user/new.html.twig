@@ -1,0 +1,73 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Votre style ici */
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New User</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {{ form_widget(form._token) }}
+                        
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                <label for="edit-name" class="form-label">Name</label>
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'edit-name'}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-last-name" class="form-label">Last Name</label>
+                                {{ form_widget(form.LastName, {'attr': {'class': 'form-control', 'id': 'edit-last-name'}}) }}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="edit-username" class="form-label">Username</label>
+                            {{ form_widget(form.UserName, {'attr': {'class': 'form-control', 'id': 'edit-username'}}) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="edit-ddn" class="form-label">Birth Date</label>
+                            {{ form_widget(form.ddn, {'attr': {'class': 'form-control', 'id': 'edit-ddn'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-email" class="form-label">Email</label>
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'edit-email'}}) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="edit-password" class="form-label">Password</label>
+                            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'id': 'edit-password'}}) }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="edit-role" class="form-label">Role</label>
+                            {{ form_widget(form.role, {'attr': {'class': 'form-control', 'id': 'edit-role'}}) }}
+                        </div>
+
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
+                                <div class="ms-2">
+                                    <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Back to List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

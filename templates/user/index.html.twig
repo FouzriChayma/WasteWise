@@ -1,0 +1,111 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">User List</h1>
+    <a href="{{ path('app_user_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
+</div>
+<nav class="app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Admins</a>
+    <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">Suppliers</a>
+    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Clients</a>
+    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Drivers</a>
+</nav>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-success"> <!-- Modification: changer la couleur en vert -->
+            <tr>
+              <th>Image</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Birth Date</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Is Banned</th>
+                <th>Is Verified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                <td><img src="{{ asset(user.ImagePath) }}" alt="User Image" class="img-thumbnail" width="100"></td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.LastName }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>{{ user.ddn }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{% if user.isBanned == 1 %}<span class="badge bg-danger">Yes{% else %}<span class="badge bg-success">No{% endif %}</td>
+                    <td>{% if user.IsVerified == 1 %}<span class="badge bg-success">Yes{% else %}<span class="badge bg-danger">No{% endif %}</td>
+                    <td>
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-sm btn-secondary">Show</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% block stylesheets %}
+    <style>
+        /* Style pour la pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            color: #555;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
+        }
+
+        .pagination a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination .active a {
+            background-color: #D4EDDA;
+            color: #fff;
+        }
+
+        .pagination .disabled a {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+{% endblock %}
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
+        <li class="page-item disabled">
+            <span class="page-link custom-link text-dark">Previous</span>
+        </li>
+        <li class="page-item active "><a class="page-link custom-link text-dark" href="#">1</a></li>
+        <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
+        <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link custom-link text-dark" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
+{% endblock %}
