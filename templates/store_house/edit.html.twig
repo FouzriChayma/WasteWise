@@ -1,13 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
-{% block title %}Edit StoreHouse{% endblock %}
+{% block content %}
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <h1 class="app-page-title" >Edit StoreHouse</h1>
+                <hr class="mb-4">
+                <div class="row g-4 settings-section justify-content-center align-items-center">
 
-{% block body %}
-    <h1>Edit StoreHouse</h1>
+                    <div class="col-12 col-md-8">
+                        <div class="app-card app-card-settings shadow-sm p-4">
+                            <div class="app-card-body">
+                                {{ include('store_house/_form.html.twig', {'button_label': 'Update'}) }}
+                            </div><!--//app-card-body-->
+                        </div>
+                    </div>
 
-    {{ include('store_house/_form.html.twig', {'button_label': 'Update'}) }}
+                    <div class="col-12 text-center mt-4">
+                        <button onclick="window.location.href='{{ path('app_store_house_index') }}'" class="btn app-btn-secondary">Back to List</button>
+                    </div>
 
-    <a href="{{ path('app_store_house_index') }}">back to list</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {{ include('store_house/_delete_form.html.twig') }}
+    
 {% endblock %}
