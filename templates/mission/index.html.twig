@@ -1,0 +1,41 @@
+{% extends 'baseBackMission.html.twig' %}
+
+{% block title %}Mission index{% endblock %}
+{% block tableaumission %}
+
+<table class="table app-table-hover mb-0 text-left">
+										 <thead>
+            <tr>
+                <th>IdMission</th>
+                <th>Start_date</th>
+                <th>End_date</th>
+                <th>Location</th>
+                <th>Type dechet</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for mission in missions %}
+            <tr>
+                <td>{{ mission.idMission }}</td>
+                <td>{{ mission.startDate ? mission.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mission.endDate ? mission.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ mission.location }}</td>
+                <td>{{ mission.typeD }}</td>
+                <td><span class="badge bg-danger">{{ mission.status }}</span></td>
+                <td>
+                    <a href="{{ path('app_mission_show', {'id_mission': mission.getIdMission()}) }}">show</a>
+                    <a href="{{ path('app_mission_edit', {'id_mission': mission.getIdMission()}) }}">edit</a>
+                    <a href="{{ path('app_mission_delete', {'id_mission': mission.getIdMission()}) }}">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+									</table>
+{% endblock %}
+                                   

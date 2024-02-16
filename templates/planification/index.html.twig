@@ -1,0 +1,42 @@
+{% extends 'baseBackMission.html.twig' %}
+
+{% block title %}Planification index{% endblock %}
+
+{% block tableaumission %}
+    <h1>Planification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id_plan</th>
+                <th>Id_driver</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Id mission</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planification in planifications %}
+            <tr>
+                <td>{{ planification.idPlan }}</td>
+                <td>{{ planification.idDriver }}</td>
+                <td>{{ planification.date ? planification.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ planification.location }}</td>
+                <td>{{ planification.getMission() }}</td>
+                <td>
+                    <a href="{{ path('app_planification_show', {'id_plan': planification.getIdPlan()}) }}">show</a>
+                    <a href="{{ path('app_planification_edit', {'id_plan': planification.getIdPlan()}) }}">edit</a>
+                     <a href="{{ path('app_planification_delete', {'id_plan': planification.getIdPlan()}) }}">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_planification_new') }}">Create new</a>
+{% endblock %}

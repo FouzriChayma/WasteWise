@@ -1,0 +1,39 @@
+  <div class="col-12 col-md-8">
+		                <div class="app-card app-card-settings shadow-sm p-4">
+ <div class="app-card-body">
+{{ form_start(form) }}
+  <table>
+  <tr>
+   <td>{{form_label(form.start_date,"start date:",{'label_attr': {'class': 'form-label'}})}}</td>
+   <td>{{form_widget(form.start_date)}}</td>
+  <tr> 
+
+  <tr>  
+   <td> {{form_label(form.end_date,"end_date:",{'label_attr': {'class': 'form-label'}})}}</td>
+   <td>{{form_widget(form.end_date)}}</td>
+   <tr>
+
+    <tr>
+    <td>
+    {{form_label(form.location,"location:",{'label_attr': {'class': 'form-label'}})}}
+    </td>
+   <td> {{form_widget(form.location,{'attr': {'class': 'form-control'}})}}</td>
+    </tr>
+
+  <tr>  
+   <td> {{form_label(form.type_d,"type dechet:",{'label_attr': {'class': 'form-label'}})}}</td>
+   <td> {{form_widget(form.type_d,{'attr': {'class': 'form-control'}})}}</td>
+  </tr>
+
+   <tr>
+   <td> {{form_label(form.status,"status:",{'label_attr': {'class': 'form-label'}})}}</td>
+   <td> {{form_widget(form.status,{'attr': {'class': 'form-control custom-select'}})}}</td>
+   </tr>
+    </table>
+    <button class="btn" type="submit">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+
+</div>
+</div>
+</div>
