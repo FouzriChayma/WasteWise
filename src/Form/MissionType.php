@@ -16,7 +16,14 @@ class MissionType extends AbstractType
             ->add('start_date')
             ->add('end_date')
             ->add('location')
-            ->add('type_d')
+            ->add('type_d',ChoiceType::class, [
+                'choices' => [
+                    'Paper' => 'Paper',
+                    'Glass' => 'Glass',
+                    'Plastic' => 'Plastic',
+                    'Organic' => 'Organic',
+                    'Metal'  => 'Metal',
+                ]])
             ->add('status',ChoiceType::class, [
                 'choices'  => [
                     'On Going' => 'on going',

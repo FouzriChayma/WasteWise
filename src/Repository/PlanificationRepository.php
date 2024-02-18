@@ -45,4 +45,12 @@ class PlanificationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function fetchPlanningByDriver($name)  {
+    $em=$this->getEntityManager();
+    $req=$em->createQuery("select s from App\Entity\Student s where s.name=:n");
+    $req->setParameter('n',$name);
+    $result=$req->getSQL();
+    return $result;
+    
+}
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MissionRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,12 +24,15 @@ class Mission
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Location is required")]
     private ?string $location = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Waste type is required")]
     private ?string $type_d = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"status is required")]
     private ?string $status = null;
 
     #[ORM\OneToMany(targetEntity: Planification::class, mappedBy: 'mission')]

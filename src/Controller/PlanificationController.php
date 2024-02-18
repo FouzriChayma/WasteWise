@@ -6,6 +6,7 @@ use App\Entity\Planification;
 use App\Form\PlanificationType;
 use App\Repository\PlanificationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,13 +43,7 @@ class PlanificationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_plan}', name: 'app_planification_show', methods: ['GET'])]
-    public function show(Planification $planification): Response
-    {
-        return $this->render('planification/show.html.twig', [
-            'planification' => $planification,
-        ]);
-    }
+   
 
     #[Route('/{id_plan}/edit', name: 'app_planification_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Planification $planification, EntityManagerInterface $entityManager): Response
@@ -68,13 +63,13 @@ class PlanificationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_plan}', name: 'app_planification_delete', methods: ['POST'])]
-    public function delete(Request $request, Planification $planification, EntityManagerInterface $entityManager): Response
+    #[Route('/{id_plan}', name: 'app_planification_delete')]
+    public function delete( PlanificationRepository $repo,$id_plan, ManagerRegistry $mr): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$planification->getIdPlan(), $request->request->get('_token'))) {
-            $entityManager->remove($planification);
-            $entityManager->flush();
-        }
+        $planification=$repo->find($id_plan);
+        $em=$mr->getManager();
+        $em->remove($planification);
+        $em->flush();
 
         return $this->redirectToRoute('app_planification_index', [], Response::HTTP_SEE_OTHER);
     }

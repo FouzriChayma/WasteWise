@@ -2,9 +2,17 @@
 
 namespace App\Form;
 
+use App\Entity\Mission;
 use App\Entity\Planification;
+use DateTime;
+use Doctrine\DBAL\Types\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlanificationType extends AbstractType
@@ -13,10 +21,30 @@ class PlanificationType extends AbstractType
     {
         $builder
             ->add('id_driver')
-            ->add('date')
-            ->add('location')
-            ->add('mission')
+            ->add('date',DateTimeType::class)
+            ->add('mission',null, [
+                'attr' => [
+                    'placeholder' => 'Mission',
+                ]])
+            
+           
+            
         ;
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+            $form = $event->getForm();
+        
+            if ($data->getMission()) {
+                $mission = $form->get('mission')->getData();
+                if ($mission) {
+                    $data->setLocation($mission->getLocation());
+                }
+            }
+        });
+        
+        
+       
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
