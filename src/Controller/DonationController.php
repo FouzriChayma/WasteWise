@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Association;
 use App\Entity\Donation;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
+use App\Repository\AssociationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 #[Route('/donation')]
 class DonationController extends AbstractController
@@ -24,10 +27,18 @@ class DonationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, AssociationRepository $associationRepository ): Response
     {
         $donation = new Donation();
         $form = $this->createForm(DonationType::class, $donation);
+
+        $associationName = $session->get('association_name');
+        $association = $associationRepository->findOneBy(['name' => $associationName]);
+        if ($association)
+        {$donation->setAssociation($association);}
+       
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -95,6 +106,8 @@ class DonationController extends AbstractController
            ]);
        
     }
+
+    
 
    
 

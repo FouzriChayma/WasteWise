@@ -2,13 +2,14 @@
 
 {% block title %}Association index{% endblock %}
 
+
 {% block sidepanel %} 
         <div id="app-sidepanel" class="app-sidepanel"> 
 	        <div id="sidepanel-drop" class="sidepanel-drop"></div>
 	        <div class="sidepanel-inner d-flex flex-column">
 		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
 		        <div class="app-branding">
-		            <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="{{asset('Back/assets/images/logoW.png')}}" alt="logo" width="500" height="150"><span class="logo-text" style="color:#563d2d" >WasteWise</span></a>
+		            <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="{{asset('Back/assets/images/logoW.png')}}" alt="logo"><span class="logo-text" style="color:#563d2d" >WasteWise</span></a>
 	
 		        </div><!--//app-branding-->  
 		        
@@ -172,11 +173,12 @@
 					    </li><!--//nav-item-->
 					    <li class="nav-item">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					       <a class="nav-link active submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+					        <a class="nav-link active" href="">
 						        
 								
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+								
 
 						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-heart" viewBox="0 0 16 16">
   <path d="M8 6.982C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982"/>
@@ -191,7 +193,7 @@
 					    </li><!--//nav-item-->
 					    <li class="nav-item has-submenu">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link  submenu-toggle" href="{{ path('app_donation_index') }}" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+					        <a class="nav-link" href="{{path('app_donation_index')}}" >
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 
@@ -208,9 +210,9 @@
 					        </a><!--//nav-link-->
 					    </li><!--//nav-item-->
 
-<li class="nav-item has-submenu">
+						<li class="nav-item has-submenu">
 					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link  submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+					        <a class="nav-link  submenu-toggle" href="" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-upside-down" viewBox="0 0 16 16">
@@ -253,7 +255,7 @@
 		       
 	        </div><!--//sidepanel-inner-->
 	    </div><!--//app-sidepanel-->
-		{% endblock %} 
+{% endblock %} 
 
 {% block body %}
     <div class="app-wrapper">
@@ -270,13 +272,13 @@
 						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							    <div class="col-auto">
 								    <form class="table-search-form row gx-1 align-items-center" method='post' action='/recherche'>
-					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="test" class="form-control search-orders" placeholder="Search">
-					                    </div>
-					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary" value="search">Search</button>
-					                    </div>
-					                </form>
+    <div class="col-auto">
+        <input type="text" id="search-orders" name="test" class="form-control search-orders" placeholder="Search" value="{{ app.request.get('test') }}">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn app-btn-secondary" value="search">Search</button>
+    </div>
+</form>
 					                
 							    </div><!--//col-->
 							    <div class="col-auto">
@@ -319,6 +321,7 @@
 												<th class="cell">Name</th>
 												<th class="cell">Adresse</th>
 												<th class="cell">Email</th>
+												<th class="cell">Image</th>
 												<th class="cell">actions</th>
 												
 											</tr>
@@ -330,6 +333,12 @@
                                                      <td>{{ association.name }}</td>
                                                      <td>{{ association.adresse }}</td>
                                                     <td>{{ association.email }}</td>
+													 <td>
+													 {% if association.ImagePath ends with '.pdf' %}
+       												 <a href="{{ asset(association.ImagePath) }}" target="_blank">View PDF</a>
+   													 {% else %}
+													 <img src="{{ asset(association.ImagePath) }}" alt="Association Image" class="img-thumbnail" width="100"></td>
+													 {% endif %}
                                                     <td>
                                                     <a href="{{ path('app_association_edit', {'id': association.id_association}) }}" class="badge bg-warning">Edit</a>
                                                     <a href="{{ path('app_association_delete', {'id': association.id_association}) }}" onclick="return confirm('Are you sure you want to delete this item?');" class="badge bg-danger">Delete</a>

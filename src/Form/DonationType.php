@@ -6,6 +6,7 @@ use App\Entity\Donation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class DonationType extends AbstractType
 {
@@ -13,11 +14,15 @@ class DonationType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('Description')
-            ->add('association')
+            ->add('Description',TextareaType::class, [
+                'attr' => [
+                    'placeholder' => 'Description...',
+                    'style' => " width: 362px; height: 80px;",
+                    
+                ],
+            ]);
             
-            
-        ;
+   
     }
 
     public function configureOptions(OptionsResolver $resolver): void

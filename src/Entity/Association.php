@@ -39,6 +39,12 @@ class Association
     #[ORM\OneToMany(targetEntity: Donation::class, mappedBy: 'association')]
     private Collection $donations;
 
+    #[ORM\Column(length: 255)]
+    #[Assert\Image(
+        mimeTypesMessage: 'Please upload a valid PDF',
+    )]
+    private ?string $ImagePath = null;
+
     public function __construct()
     {
         $this->donations = new ArrayCollection();
@@ -118,6 +124,18 @@ class Association
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->ImagePath;
+    }
+
+    public function setImagePath(string $ImagePath): static
+    {
+        $this->ImagePath = $ImagePath;
+
+        return $this;
     }
 
 }

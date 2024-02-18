@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/association')]
 class AssociationController extends AbstractController
@@ -24,15 +25,29 @@ class AssociationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $association = new Association();
         $form = $this->createForm(AssociationType::class, $association);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('ImagePath')->getData();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+    
+            // Move the file to the directory where brochures are stored
+            $targetDirectory = $this->getParameter('kernel.project_dir') . '/public';
+            $file->move(
+                $targetDirectory,
+                $fileName
+            );
+            $association->setImagePath($fileName);
             $entityManager->persist($association);
             $entityManager->flush();
+
+            $session->set('association_name',$association->getName());
 
             return $this->redirectToRoute('yesorno', [], Response::HTTP_SEE_OTHER);
         }
@@ -52,6 +67,20 @@ class AssociationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newFile = $form->get('ImagePath')->getData();
+
+        if ($newFile) {
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$newFile->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $targetDirectory = $this->getParameter('kernel.project_dir') . '/public';
+            $newFile->move($targetDirectory, $fileName);
+
+            // Set the new file path
+            $association->setImagePath($fileName);
+        }
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
@@ -76,63 +105,40 @@ class AssociationController extends AbstractController
         return $this->redirectToRoute('app_association_index');
     }
 
-    #[Route('/recherche', name: 'recherche', methods: ['POST'])]//recherche avec dql
-    public function recherche(EntityManagerInterface $em, Request $request, AssociationRepository $repo):Response
-    {  
-       $result=$repo->findAll();
-       $req=$em->createQuery("select a from App\Entity\Association a where a.name=:n OR a.adresse = :n OR a.email = :n OR a.id_association=:n");
-       if($request->isMethod('post'))
-       {
-           $value=$request->get('test');
-           $req->setParameter('n',$value);
-
-           $result=$req->getResult();
-
-       }
-       
-       return $this->render('association/index.html.twig',[
-           'associations'=>$result,
-           ]);
-       
+    #[Route('/recherche', name: 'recherche', methods: ['POST'])]
+    public function recherche(EntityManagerInterface $em, Request $request, AssociationRepository $repo): Response
+    {
+        $qb = $em->createQueryBuilder();
+        $qb->select('a')
+            ->from('App\Entity\Association', 'a');
+    
+        if ($request->isMethod('POST')) {
+            $searchTerm = $request->get('test');
+            if ($searchTerm) {
+                $qb->andWhere(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('a.name', ':searchTerm'),
+                        $qb->expr()->like('a.adresse', ':searchTerm'),
+                        $qb->expr()->like('a.email', ':searchTerm'),
+                        $qb->expr()->like('a.id_association', ':searchTerm')
+                    )
+                );
+                $qb->setParameter('searchTerm', '%' . $searchTerm . '%');
+            }
+    
+            // Ajouter une option de tri
+           
+    
+            $result = $qb->getQuery()->getResult();
+        }
+    
+        return $this->render('association/index.html.twig', [
+            'associations' => $result,
+        ]);
     }
 
 
 
     
 
-    // #[Route('/add_association', name: 'add_association', methods: ['GET', 'POST'])]
-    // public function addAssociation(Request $request, ManagerRegistry $mr): Response
-    // {
-    // // ... other controller logic
-
-    // $associationAlreadyHasAccount = false; // By default, the association doesn't have an account yet
-
-    // if ($request->isMethod('POST')) {
-    //     // Check if the form was submitted
-
-    //     // Vérifier si l'association existe déjà dans la base de données
-    //     $associationName = $request->request->get('AssociationType')['name']; // Adjust the key based on your form
-
-    //     // Access the entity manager using the injected EntityManagerInterface
-    //     $existingAssociation = $mr->getManager()->getRepository(Association::class)->findOneBy(['name' => $associationName]);
-
-    //     if ($existingAssociation) {
-    //         $associationAlreadyHasAccount = true;
-    //     }
-
-    //     // ... other controller logic
-    // }
-
-    // return $this->render('association/compte.html.twig', [
-    //     'associationAlreadyHasAccount' => $associationAlreadyHasAccount,
-    //     // ... other variables to pass to the template
-    // ]);
-    // }
-
-
-   
-
-    
-
-   
 }
