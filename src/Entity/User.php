@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 3, max: 255, minMessage: 'Your last name should be at least {{ limit }} characters', maxMessage: 'Your last name cannot be longer than {{ limit }} characters')]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]+$/',
-        message: 'Your name should contain only alphabetic letters'
+        message: 'Your LastName should contain only alphabetic letters'
     )]
     private ?string $LastName = null;
 

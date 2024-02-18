@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\DataTransformerInterface;
 use App\Form\DataTransformer\BooleanTransformer;
 
 class UserType extends AbstractType
@@ -36,6 +37,11 @@ class UserType extends AbstractType
                 ],
                 'placeholder' => 'Account category',
             ])
+            ->add('ImagePath', FileType::class, [
+                'label' => 'Image (JPG, PNG or GIF file)',
+                'data_class' => null,
+                
+            ])
             ->add('isBanned', CheckboxType::class, [
                 'label' => 'Is Banned',
                 'required' => false,
@@ -47,7 +53,29 @@ class UserType extends AbstractType
             ->add('ddn', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'string',
-            ]);
+
+            ])
+            ->get('ImagePath')
+            ->addModelTransformer(new class implements DataTransformerInterface {
+                public function transform($value)
+                {
+                    return null;
+                }
+
+                public function reverseTransform($value)
+                {
+                    if (!$value) {
+                        return;
+                    }
+
+                    if (is_string($value)) {
+                        return new File($this->uploadsDirectory.'/'.$value);
+                    }
+
+                    return $value;
+                }
+                });;
+
 
         
     }
