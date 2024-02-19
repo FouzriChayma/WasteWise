@@ -17,6 +17,7 @@ class Association
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Name is required")]
+    
     #[Assert\Length(
         min: 2,
         max: 100,
@@ -40,9 +41,7 @@ class Association
     private Collection $donations;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Image(
-        mimeTypesMessage: 'Please upload a valid PDF',
-    )]
+    #[Assert\NotBlank(message:"Image is required")]
     private ?string $ImagePath = null;
 
     public function __construct()

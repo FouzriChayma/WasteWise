@@ -46,7 +46,7 @@ class DonationController extends AbstractController
             $entityManager->persist($donation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('thanks', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('donation/new.html.twig', [

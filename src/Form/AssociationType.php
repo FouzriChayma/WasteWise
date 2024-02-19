@@ -19,9 +19,8 @@ class AssociationType extends AbstractType
             ->add('adresse')
             ->add('email')
             ->add('ImagePath', FileType::class, [
-                'label' => 'Votre fichier (pdf, png, jpg)',
-                'mapped' =>false,
-                'required' =>false,
+                'label' => 'Submit your identification file (pdf, png, jpg)',
+                
 
                 
                 'attr' => [
