@@ -1,0 +1,14 @@
+{% extends 'truck/index.html.twig' %}
+
+
+
+{% block body %}
+    <h1>Edit Truck</h1>
+	<h2 class="auth-heading text-center mb-4">EDIT Truck</h2>					
+
+    {{ include('truck/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_truck_index') }}">back to list</a>
+
+    {{ include('truck/_delete_form.html.twig') }}
+{% endblock %}

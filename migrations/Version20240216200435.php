@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240204155900 extends AbstractMigration
+final class Version20240216200435 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,15 @@ final class Version20240204155900 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE waste');
+        $this->addSql('ALTER TABLE truck DROP INDEX matricule_2, ADD UNIQUE INDEX UNIQ_CDCCF30A12B2DC9C (matricule)');
+        $this->addSql('DROP INDEX matricule ON truck');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE waste (id INT AUTO_INCREMENT NOT NULL, type_w VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB COMMENT = \'\' ');
+        $this->addSql('CREATE UNIQUE INDEX matricule ON truck (matricule)');
+        $this->addSql('DROP INDEX uniq_cdccf30a12b2dc9c ON truck');
+        $this->addSql('CREATE UNIQUE INDEX matricule_2 ON truck (matricule)');
     }
 }

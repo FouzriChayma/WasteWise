@@ -1,0 +1,13 @@
+{% extends 'waste/index.html.twig' %}
+
+{% block title %}Edit Waste{% endblock %}
+
+{% block body %}
+	<h2 class="auth-heading text-center mb-4">EDIT Waste</h2>					
+
+    {{ include('waste/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_waste_index') }}">back to list</a>
+
+    {{ include('waste/_delete_form.html.twig') }}
+{% endblock %}
