@@ -1,29 +1,103 @@
 {% extends 'baseBack.html.twig' %}
 
-{% block content %}
-    <div class="app-wrapper">
-        <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container-xl">
-                <h1 class="app-page-title" >Edit Stock</h1>
-                <hr class="mb-4">
-                <div class="row g-4 settings-section justify-content-center align-items-center">
+{% block title %}Edit Stock{% endblock %}
 
-                    <div class="col-12 col-md-8">
-                        <div class="app-card app-card-settings shadow-sm p-4">
-                            <div class="app-card-body">
-                                {{ include('stock/_form.html.twig', {'button_label': 'Update'}) }}
-                            </div><!--//app-card-body-->
+{% block stylesheets %}
+    <style>
+        /* Your styles here */
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style="background-color: #D4EDDA;">
+                    <h2 class="mb-0">Edit Stock</h2>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                    {{ form_widget(form._token) }}
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>{{ form_label(form.name_st, 'Name') }}</td>
+                                <td>
+                                    {{ form_widget(form.name_st) }}
+                                    {% if form_errors(form.name_st) %}
+                                        <div class="text-danger">{{ form_errors(form.name_st) }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.quantity_st, 'Quantity') }}</td>
+                                <td>
+                                    {{ form_widget(form.quantity_st) }}
+                                    {% if form_errors(form.quantity_st) %}
+                                        <div class="text-danger">{{ form_errors(form.quantity_st) }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.buying_price, 'Buying Price') }}</td>
+                                <td>
+                                    {{ form_widget(form.buying_price) }}
+                                    {% if form_errors(form.buying_price) %}
+                                        <div class="text-danger">{{ form_errors(form.buying_price) }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.selling_price, 'Selling Price') }}</td>
+                                <td>
+                                    {{ form_widget(form.selling_price) }}
+                                    {% if form_errors(form.selling_price) %}
+                                        <div class="text-danger">{{ form_errors(form.selling_price) }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.storehouse, 'Storehouse') }}</td>
+                                <td>
+                                    {{ form_widget(form.storehouse) }}
+                                    {% if form_errors(form.storehouse) %}
+                                        <div class="text-danger">{{ form_errors(form.storehouse) }}</div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ form_label(form.image_st, 'Image') }}</td>
+                                <td>
+                                    {{ form_widget(form.image_st, { 'attr': {'class': 'form-control'} }) }}
+                                    {% if form_errors(form.image_st) %}
+                                                        <div class="text-danger">{{ form_errors(form.image_st) }}</div>
+                                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">{{ button_label|default('Update') }}</button>
+                            <div class="ms-2">
+                                <a href="{{ path('app_stock_index') }}" class="btn btn-secondary">Back to List</a>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-12 text-center mt-4">
-                        <button onclick="window.location.href='{{ path('app_stock_index') }}'" class="btn app-btn-secondary">Back to List</button>
-                    </div>
-
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    
+        </div>
+    </div>
+</div>
 {% endblock %}

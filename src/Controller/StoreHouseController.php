@@ -10,7 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\StockRepository;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 
 #[Route('/store/house')]
@@ -43,7 +44,7 @@ class StoreHouseController extends AbstractController
             'form' => $form,
         ]);
     }
-
+    
     #[Route('/{idSh}', name: 'app_store_house_show', methods: ['GET'])]
     public function show(StoreHouse $storeHouse): Response
     {
@@ -51,18 +52,6 @@ class StoreHouseController extends AbstractController
             'store_house' => $storeHouse,
         ]);
     }
-
-    #[Route('/{idSh}/stocks', name: 'app_store_house_stocks', methods: ['GET'])]
-public function showStocks(StoreHouse $storeHouse, StockRepository $stockRepository): Response
-{
-    $stocks = $stockRepository->findBy(['storehouse' => $storeHouse]);
-
-    return $this->render('store_house/show_stocks.html.twig', [
-        'store_house' => $storeHouse,
-        'stocks' => $stocks,
-    ]);
-}
-
 
     #[Route('/{idSh}/edit', name: 'app_store_house_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, StoreHouse $storeHouse, EntityManagerInterface $entityManager): Response

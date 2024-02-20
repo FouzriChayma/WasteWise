@@ -1,0 +1,29 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block content %}
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+                <h1 class="app-page-title" >Add New StoreHouse</h1>
+                <hr class="mb-4">
+                <div class="row g-4 settings-section justify-content-center align-items-center">
+
+                    <div class="col-12 col-md-8">
+                        <div class="app-card app-card-settings shadow-sm p-4">
+                            <div class="app-card-body">
+    {{ include('store_house/_form.html.twig') }}
+                            </div><!--//app-card-body-->
+                        </div>
+                    </div>
+
+                    <div class="col-12 text-center mt-4">
+                        <button onclick="window.location.href='{{ path('app_store_house_index') }}'" class="btn app-btn-secondary">Back to List</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+{% endblock %}

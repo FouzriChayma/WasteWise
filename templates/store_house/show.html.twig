@@ -1,7 +1,60 @@
 {% extends 'baseBack.html.twig' %}
-{% block content %}
-{% block body %}
-{% endblock %}
-       {{ include('store_house/_delete_form.html.twig') }}
 
+{% block title %}
+    Stocks in Storehouse: {{ store_house.nameSh }}
+{% endblock %}
+
+{% block content %}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #D4EDDA;">
+                                <h2 class="mb-0">Stocks in Storehouse: {{ store_house.nameSh }}</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Name</th>
+                                                <th>Quantity</th>
+                                                <th>Buying Price</th>
+                                                <th>Selling Price</th>
+                                                <!-- Add other table headers as needed -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for stock in store_house.stocks %}
+                                            <tr>
+                                                <td class="cell"><img src="{{ asset(stock.getImageSt()) }}" alt="{{ stock.getNameSt() }} Image" width="100" height="100"></td>
+                                                <td class="cell">{{ stock.getNameSt() }}</td>
+                                                <td class="cell">{{ stock.getQuantitySt() }}</td>
+                                                <td class="cell">{{ stock.getBuyingPrice() }}</td>
+                                                <td class="cell">{{ stock.getSellingPrice() }}</td>
+                                                <!-- Add other table cells for additional stock properties -->
+                                            </tr>
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="5">No stocks found for this storehouse.</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card-footer text-muted">
+                                <a href="{{ path('app_store_house_index') }}" class="btn btn-secondary">Back to Storehouses</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
