@@ -45,19 +45,13 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
-                ],
+               
             ])
-            ->add('role', ChoiceType::class, [
+            ->add('confirm_password', PasswordType::class, [
+                'mapped' => false, // This field is not mapped to the entity
+              
+            ])
+            ->add('prefrole', ChoiceType::class, [
                 'choices' => [
                     'Admin' => 'Admin',
                     'Supplier' => 'Supplier',

@@ -44,6 +44,8 @@
                     <td>{% if user.IsVerified == 1 %}<span class="badge bg-success">Yes{% else %}<span class="badge bg-danger">No{% endif %}</td>
                     <td>
                         <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-sm btn-secondary">Show</a>
+                        <a href="{{ path('edit_password', {'id': user.id}) }}" class="btn btn-warning mx-2">Edit Password</a>
+                        <a href="{{ path('confirm_role', {'id': user.id}) }}" class="btn btn-primary">Confirm Role</a>
                     </td>
                 </tr>
             {% else %}

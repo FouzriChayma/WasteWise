@@ -76,10 +76,7 @@
                             {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'edit-email'}}) }}
                         </div>
                         
-                        <div class="mb-2">
-                            <label for="edit-password" class="form-label">Password</label>
-                            {{ form_widget(form.password, {'attr': {'class': 'form-control', 'id': 'edit-password'}}) }}
-                        </div>
+                       
                         
                         <div class="mb-2">
                             <label for="edit-name" class="form-label">Name</label>
@@ -95,21 +92,22 @@
                             <label for="edit-username" class="form-label">UserName</label>
                             {{ form_widget(form.UserName, {'attr': {'class': 'form-control', 'id': 'edit-username'}}) }}
                         </div>
-                        
+                       <div class="mb-3">
+    <label for="image" class="form-label">Image</label>
+    <div class="input-group">
+        <input type="file" class="form-control" id="image" name="image">
+        <label class="input-group-text" for="image">
+            <i class="bi bi-camera-fill"></i>
+        </label>
+    </div>
+</div>
+
                         <div class="mb-2">
                             <label for="edit-role" class="form-label">Role</label>
                             {{ form_widget(form.role, {'attr': {'class': 'form-control', 'id': 'edit-role'}}) }}
                         </div>
                         
-                        <div class="mb-2">
-                            <label for="edit-isBanned" class="form-label">Is Banned</label>
-                            {{ form_widget(form.isBanned, {'attr': {'class': 'form-check-input', 'id': 'edit-isBanned'}}) }}
-                        </div>
-                        
-                        <div class="mb-2">
-                            <label for="edit-IsVerified" class="form-label">Is Verified</label>
-                            {{ form_widget(form.IsVerified, {'attr': {'class': 'form-check-input', 'id': 'edit-IsVerified'}}) }}
-                        </div>
+                       
                         
                         <div class="mb-2">
                             <label for="edit-ddn" class="form-label">Birth Date</label>

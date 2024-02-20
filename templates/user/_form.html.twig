@@ -1,4 +1,47 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'name': 'my-form', 'id': 'my-form'}}) }}
+
+<div class="form-group">
+    {{ form_label(form.email, 'Email', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email'}}) }}
+    {{ form_errors(form.email) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.name, 'Name', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter your name'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.LastName, 'Last Name', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.LastName, {'attr': {'class': 'form-control', 'placeholder': 'Enter your last name'}}) }}
+    {{ form_errors(form.LastName) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.UserName, 'Username', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.UserName, {'attr': {'class': 'form-control', 'placeholder': 'Enter your username'}}) }}
+    {{ form_errors(form.UserName) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.ImagePath, 'Image', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.ImagePath, {'attr': {'class': 'form-control-file'}}) }}
+    {{ form_errors(form.ImagePath) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.role, 'Role', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.role) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.ddn, 'Date of Birth', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.ddn, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.ddn) }}
+</div>
+
+
+
+<button type="submit" class="btn btn-warning btn-rounded btn-fw">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form) }}

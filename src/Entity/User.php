@@ -29,13 +29,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    
+    #[Assert\Regex(
+        pattern :"/^(?=.*[A-Z])(?=.*\d).+$/",
+        message : "Your password must contain at least one uppercase letter and one numeric character"
+    )]
+   
     private ?string $password = null;
     #[ORM\Column(type: 'string', length: 255, nullable: true)]  
     #[Assert\NotBlank(message: 'Please enter your name')]
     #[Assert\Length(min: 3, max: 255, minMessage: 'Your name should be at least {{ limit }} characters', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z]+$/',
-        message: 'Your name should contain only alphabetic letters'
+        message: 'Your Name should contain only alphabetic letters'
     )]
     private ?string $name;
 
@@ -54,6 +60,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?string $role = null;
+    #[ORM\Column]
+    private ?string $prefrole = null;
 
     #[ORM\Column]
     private ?string $ImagePath = null;
@@ -194,6 +202,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRole(string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+    public function getPrefrole(): ?string
+    {
+        return $this->prefrole;
+    }
+
+    public function setPrefrole(string $prefrole): static
+    {
+        $this->prefrole = $prefrole;
 
         return $this;
     }
