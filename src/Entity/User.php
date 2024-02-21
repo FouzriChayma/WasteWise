@@ -29,13 +29,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    
-    #[Assert\Regex(
-        pattern :"/^(?=.*[A-Z])(?=.*\d).+$/",
-        message : "Your password must contain at least one uppercase letter and one numeric character"
-    )]
    
-    private ?string $password = null;
+    #[Assert\Regex(
+   pattern: '/[A-Z]/',
+   message: 'Your password must contain at least one uppercase letter'
+)]
+#[Assert\Regex(
+   pattern: '/[A-Z]/',
+   message: 'Your password must contain at least one lowercase letter'
+)]
+#[Assert\Regex(
+   pattern: '/\d/',
+   message: 'Your password must contain at least one numeric character'
+)]
+
+private ?string $password = null;
+
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]  
     #[Assert\NotBlank(message: 'Please enter your name')]
     #[Assert\Length(min: 3, max: 255, minMessage: 'Your name should be at least {{ limit }} characters', maxMessage: 'Your name cannot be longer than {{ limit }} characters')]

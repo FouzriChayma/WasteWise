@@ -1,7 +1,16 @@
 {% extends 'baseLogin.html.twig' %}
 
 {% block title %}Log in!{% endblock %}
-
+{% block stylesheets %}
+    <style>
+        .auth-form-container {
+            border: 2px solid green;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f8f9fa; /* Couleur de fond clair */
+        }
+    </style>
+{% endblock %}
 {% block body %}
 <div class="row g-0 app-auth-wrapper">
     <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">

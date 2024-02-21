@@ -49,7 +49,8 @@ class UserType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid JPG document',
                     ])
                 ],
-            ]) ;
+            ])
+             ;
             
            
             

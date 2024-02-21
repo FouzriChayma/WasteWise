@@ -4,12 +4,7 @@
 
 {% block stylesheets %}
     <style>
-        /* Style pour la barre de navigation */
-        .navbar {
-            background-color:#D4EDDA; /* Couleur verte naturelle */
-        }
-
-        /* Style pour le formulaire */
+        /* Styles pour le formulaire */
         .card {
             background-color: #f8f9fa; /* Couleur de fond du formulaire */
             border-radius: 15px; /* Bordures arrondies */
@@ -28,12 +23,6 @@
             padding: 15px; /* Espacement interne du contenu du formulaire réduit */
         }
 
-        /* Style pour les champs de formulaire */
-        .form-label {
-            color: #495057; /* Couleur du texte des étiquettes */
-            font-size: 14px; /* Taille de police réduite */
-        }
-
         .form-control {
             background-color: #fff; /* Couleur de fond des champs de formulaire */
             border: 1px solid #ced4da; /* Bordure des champs de formulaire */
@@ -42,20 +31,48 @@
             padding: 8px; /* Espacement interne des champs de formulaire réduit */
         }
 
-        .form-control:focus {
-            border-color: #80bdff; /* Couleur de la bordure lorsqu'un champ de formulaire est en focus */
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Ombre légère lorsqu'un champ de formulaire est en focus */
-        }
-
-        .btn-primary,
-        .btn-secondary {
+        .btn-primary {
             font-size: 14px; /* Taille de police réduite pour les boutons */
             padding: 8px 16px; /* Espacement interne des boutons réduit */
         }
 
-        .btn-primary:hover,
-        .btn-secondary:hover {
-            font-size: 14px; /* Taille de police réduite pour les boutons au survol */
+        /* Style pour le champ d'image */
+        .custom-file-label {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .custom-file-label::after {
+            content: "Browse";
+        }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: 'Choose file';
+            display: inline-block;
+            background: linear-gradient(top, #f9f9f9, #e3e3e3);
+            border: 1px solid #999;
+            border-radius: 3px;
+            padding: 5px 8px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            text-shadow: 1px 1px #fff;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .custom-file-input:hover::before {
+            border-color: black;
+        }
+
+        .custom-file-input:active::before {
+            background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
         }
     </style>
 {% endblock %}
@@ -69,56 +86,63 @@
                     <h2 class="mb-0">Edit User</h2>
                 </div>
                 <div class="card-body">
-                    <form method="post">
-                        {{ form_widget(form._token) }}
-                        <div class="mb-2">
-                            <label for="edit-email" class="form-label">Email</label>
-                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'edit-email'}}) }}
-                        </div>
-                        
-                       
-                        
-                        <div class="mb-2">
-                            <label for="edit-name" class="form-label">Name</label>
-                            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'edit-name'}}) }}
-                        </div>
-                        
-                        <div class="mb-2">
-                            <label for="edit-last-name" class="form-label">Last Name</label>
-                            {{ form_widget(form.LastName, {'attr': {'class': 'form-control', 'id': 'edit-last-name'}}) }}
-                        </div>
-                        
-                        <div class="mb-2">
-                            <label for="edit-username" class="form-label">UserName</label>
-                            {{ form_widget(form.UserName, {'attr': {'class': 'form-control', 'id': 'edit-username'}}) }}
-                        </div>
-                       <div class="mb-3">
-    <label for="image" class="form-label">Image</label>
-    <div class="input-group">
-        <input type="file" class="form-control" id="image" name="image">
-        <label class="input-group-text" for="image">
-            <i class="bi bi-camera-fill"></i>
-        </label>
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'name': 'my-form', 'id': 'my-form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.email, 'Email', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your email'}}) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.name, 'Name', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter your name'}}) }}
+                        {{ form_errors(form.name) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.LastName, 'Last Name', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.LastName, {'attr': {'class': 'form-control', 'placeholder': 'Enter your last name'}}) }}
+                        {{ form_errors(form.LastName) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.UserName, 'Username', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.UserName, {'attr': {'class': 'form-control', 'placeholder': 'Enter your username'}}) }}
+                        {{ form_errors(form.UserName) }}
+                    </div>
+
+                 <div class="form-group">
+    {{ form_label(form.ImagePath, 'Image', {'label_attr': {'class': 'control-label'}}) }}
+    <div class="custom-file">
+        {{ form_widget(form.ImagePath, {'attr': {'class': 'custom-file-input', 'id': 'image'}}) }}
+        <label class="custom-file-label" for="image">
     </div>
+    {{ form_errors(form.ImagePath) }}
 </div>
 
-                        <div class="mb-2">
-                            <label for="edit-role" class="form-label">Role</label>
-                            {{ form_widget(form.role, {'attr': {'class': 'form-control', 'id': 'edit-role'}}) }}
-                        </div>
-                        
-                       
-                        
-                        <div class="mb-2">
-                            <label for="edit-ddn" class="form-label">Birth Date</label>
-                            {{ form_widget(form.ddn, {'attr': {'class': 'form-control', 'id': 'edit-ddn'}}) }}
-                        </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
-                            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Back to List</a>
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        {{ form_label(form.role, 'Role', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.role) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.ddn, 'Date of Birth', {'label_attr': {'class': 'control-label'}}) }}
+                        {{ form_widget(form.ddn, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.ddn) }}
+                    </div>
+                    
+                    <!-- Espace entre le dernier champ et les boutons -->
+                    <div style="margin-bottom: 20px;"></div>
+
+                    <!-- Boutons -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                        <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Back to List</a>
+                    </div>
+
+                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
