@@ -4,7 +4,8 @@ namespace App\Entity;
 
 use App\Repository\WasteRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Truck;
 #[ORM\Entity(repositoryClass: WasteRepository::class)]
 class Waste
 {
@@ -13,41 +14,36 @@ class Waste
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $id_waste = null;
-
+    
+    #[Assert\NotBlank(message:"type is required")]
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[Assert\NotBlank(message:"Location is required")]
     #[ORM\Column(length: 255)]
     private ?string $location = null;
 
+    #[Assert\NotBlank(message:"etat is required")]
     #[ORM\Column(length: 255)]
     private ?string $etat = null;
 
+    #[Assert\NotBlank(message:"quantite is required")]
     #[ORM\Column(length: 255)]
     private ?string $quantite = null;
 
-    /*#[ORM\ManyToOne(inversedBy: 'waste')]
-    private ?Truck $truck = null;*/
+    #[ORM\ManyToOne(inversedBy: 'wastes')]
+    private ?Truck $truck = null;
+
+   
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdWaste(): ?string
-    {
-        return $this->id_waste;
-    }
+    
 
-    public function setIdWaste(string $id_waste): static
-    {
-        $this->id_waste = $id_waste;
-
-        return $this;
-    }
-
+    
     public function getType(): ?string
     {
         return $this->type;
@@ -96,7 +92,13 @@ class Waste
         return $this;
     }
 
-    /*public function getTruck(): ?Truck
+   
+    /*public function __toString()
+    {
+        return $this->$truck;
+    }*/
+
+    public function getTruck(): ?Truck
     {
         return $this->truck;
     }
@@ -106,5 +108,5 @@ class Waste
         $this->truck = $truck;
 
         return $this;
-    }*/
+    }
 }

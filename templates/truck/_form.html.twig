@@ -52,14 +52,7 @@
 	
 					<div class="auth-form-container text-start mx-auto">
 						<form class="auth-form auth-signup-form">         
-							<div class="email mb-3">
-                            {{ form_widget(form.id_truck,{attr: {'class':'form-control','placeholder':'Id_truck...'}}) }}
-                             {% if form_errors(form.id_truck)|length > 0 %}
-        <div class="error-message">{{ form_errors(form.id_truck) }}</div>
-    {% endif %}
-								
-								
-							</div>
+							
 							<div class="email mb-3">
 								{{ form_widget(form.matricule,{attr: {'class':'form-control','placeholder':'matriclule'}}) }}
                                 {% if form_errors(form.matricule)|length > 0 %}

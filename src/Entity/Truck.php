@@ -17,41 +17,31 @@ class Truck
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Id truck is required")]
-    private ?string $id_truck = null;
+    
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Matricule is required")]
-    /*#[Assert\Unique(message:"unique")]*/
     private ?string $matricule = null;
 
     #[ORM\Column(length: 255)]
     private ?string $disponibilite = null;
 
     #[ORM\OneToMany(targetEntity: Waste::class, mappedBy: 'truck')]
-    private Collection $waste;
+    private Collection $wastes;
 
     public function __construct()
     {
-        $this->waste = new ArrayCollection();
+        $this->wastes = new ArrayCollection();
     }
+
+    
+    
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdTruck(): ?string
-    {
-        return $this->id_truck;
-    }
-
-    public function setIdTruck(string $id_truck): static
-    {
-        $this->id_truck = $id_truck;
-
-        return $this;
-    }
+    
 
     public function getMatricule(): ?string
     {
@@ -80,15 +70,15 @@ class Truck
     /**
      * @return Collection<int, Waste>
      */
-    public function getWaste(): Collection
+    public function getWastes(): Collection
     {
-        return $this->waste;
+        return $this->wastes;
     }
 
     public function addWaste(Waste $waste): static
     {
-        if (!$this->waste->contains($waste)) {
-            $this->waste->add($waste);
+        if (!$this->wastes->contains($waste)) {
+            $this->wastes->add($waste);
             $waste->setTruck($this);
         }
 
@@ -97,7 +87,7 @@ class Truck
 
     public function removeWaste(Waste $waste): static
     {
-        if ($this->waste->removeElement($waste)) {
+        if ($this->wastes->removeElement($waste)) {
             // set the owning side to null (unless already changed)
             if ($waste->getTruck() === $this) {
                 $waste->setTruck(null);
@@ -106,4 +96,9 @@ class Truck
 
         return $this;
     }
+ public function __toString()
+    {
+        return $this->matricule;
+    }
+    
 }

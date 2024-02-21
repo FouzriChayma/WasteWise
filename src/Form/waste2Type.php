@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Truck;
-class WasteType extends AbstractType
+class Waste2Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -32,7 +32,7 @@ class WasteType extends AbstractType
                 
             ->add('quantite')
             
-            ->add('truck')
+          
         ;
     }
 

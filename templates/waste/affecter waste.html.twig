@@ -1,0 +1,283 @@
+{% extends 'waste/indexFront.html.twig' %}
+
+{% block title %}Create Waste{% endblock %}
+
+{% block body %}
+<head>
+  <style>
+  
+  .header {
+      background-image: url("{{ asset('Front/waste.png') }}");
+  background-size: cover;
+  color: white;
+  text-align: center;
+  padding: 255px 0;
+  position: relative; /* Add this line to position the pseudo-element */
+  z-index: 1; /* Add this line to ensure the pseudo-element is behind the header text */
+}
+
+.header:before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.5); /* Add this line to set the black shade */
+  position: absolute; /* Add this line to position the pseudo-element */
+  top: 0; /* Add this line to position the pseudo-element at the top of the header */
+  left: 0; /* Add this line to position the pseudo-element at the left of the header */
+  width: 100%; /* Add this line to make the pseudo-element the full width of the header */
+  height: 100%; /* Add this line to make the pseudo-element the full height of the header */
+  z-index: -1; /* Add this line to ensure the pseudo-element is behind the header text */
+}
+
+    .header h1 {
+      font-size: 70px;
+      color:white;
+        padding: -180px 0;
+
+    }
+    @keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 2s ease-in-out;
+}
+    .card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  color: white;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 10px;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-control {
+    -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: block;
+  width: 100%;
+}
+
+.form-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: block;
+  width: 100%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 8'><polygon points='0,0 14,0 7,8'/></svg>"), linear-gradient(#f9f9f9, #f9f9f9);
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+
+
+.btn {
+  padding: 1.3em 3em;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn:hover {
+  background-color: #23c483;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #265936;
+  transform: translateY(-7px);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+.background-green {
+  background-color: #265936;
+  height: 100%; /* This will make the green background fill the entire height of the page */
+}
+.about_section {
+            background-color: #f8f9fa; /* Light gray background color */
+            padding: 80px 0;
+        }
+
+        .img-box img {
+            width: 100%;
+            border-radius: 10px; /* Add rounded corners to the image */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+        }
+
+        .detail-box {
+            padding-left: 40px; /* Add some spacing to the text box */
+        }
+
+        .heading_container h2 {
+            font-size: 36px;
+            color: #28a745; /* Green color for the heading */
+        }
+
+        .heading_container hr {
+            margin: 20px 0;
+            border: 2px solid #28a745; /* Green border for the hr element */
+        }
+
+        .detail-box p {
+            font-size: 18px;
+            color: #495057; /* Dark gray text color */
+        }
+
+        .detail-box a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #28a745; /* Green color for the link text */
+        }
+
+        .detail-box a span {
+            border-bottom: 2px solid #28a745; /* Green underline effect on hover */
+            transition: border-bottom 0.3s ease;
+        }
+
+        .detail-box a:hover span {
+            border-bottom: 2px solid transparent; /* Remove the underline on hover */
+        }
+  </style>
+</head>
+<body>
+
+<div class="header">
+    <h1 class="animate-fade-in">Welcome to Waste Disposal Menu</h1>
+  </div>
+  
+</body>
+
+<h1>hhhhhhhhhhhhhhhhhh</h1>
+
+<section class="about_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="img-box">
+                        <img src="{{ asset('Front/disposal.png') }}" alt="About Us Image" />
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <div class="card">
+  <div class="card-header">
+
+    <h1>Create Waste:</h1>
+  </div>
+  <div class="card-body">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}} ) }}
+
+
+ 	
+    <div class="row g-0 app-auth-wrapper d-flex justify-content-center">
+	    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+		    <div class="d-flex flex-column align-content-end">
+			    <div class="app-auth-body mx-auto">	
+	
+					<div class="auth-form-container text-start mx-auto">
+						<form class="auth-form auth-signup-form">         
+							
+							<div class="email mb-3">
+								{{ form_widget(form.type,{attr: {'class':'form-control','placeholder':'type'}}) }}
+                                {% if form_errors(form.type)|length > 0 %}
+            <div class="error-message">{{ form_errors(form.type) }}</div>
+        {% endif %}
+								
+							</div>
+
+                            <div class="email mb-3">
+                            
+								{{ form_widget(form.location,{attr: {'class':'form-select','placeholder':'location'}}) }}
+                                 {% if form_errors(form.location)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.location) }}</div>
+    {% endif %}
+								
+							</div>
+							<div class="email mb-3">
+                            
+								{{ form_widget(form.etat,{attr: {'class':'form-select','placeholder':'etat'}}) }}
+                                 {% if form_errors(form.etat)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.etat) }}</div>
+    {% endif %}
+								
+							</div>
+                            <div class="email mb-3">
+                            
+								{{ form_widget(form.quantite,{attr: {'class':'form-select','placeholder':'quantite'}}) }}
+                                 {% if form_errors(form.quantite)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.quantite) }}</div>
+        
+    {% endif %}
+								
+							</div>
+                           
+                            
+							<div class="text-center">
+                                <button class="btn app-btn-primary w-100 theme-btn mx-auto">{{ button_label|default('Save') }}</button>
+                            </div>
+						</form><!--//auth-form-->
+						
+						
+					
+					
+				    
+			    </div><!--//auth-body-->
+		    
+			    	
+		    </div><!--//flex-column-->   
+	    </div><!--//auth-main-col-->
+    
+
+    {{ form_end(form) }}
+  </div><!--//card-body-->
+</div><!--//card-->
+</div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

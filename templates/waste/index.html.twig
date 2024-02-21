@@ -278,24 +278,27 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Id_waste</th>
+                
                 <th>Type</th>
                 <th>Location</th>
                 <th>Etat</th>
                 <th>Quantite</th>
+				                <th>Truck</th>
+
                 <th>actions</th>
+				
             </tr>
         </thead>
         <tbody>
         {% for waste in wastes %}
             <tr>
-                <td>{{ waste.id }}</td>
-                <td>{{ waste.idWaste }}</td>
+           
                 <td>{{ waste.type }}</td>
                 <td>{{ waste.location }}</td>
                 <td>{{ waste.etat }}</td>
                 <td>{{ waste.quantite }}</td>
+				                <td>{{ waste.truck }}</td>
+
                 <td>
                     <a href="{{ path('app_waste_show', {'id': waste.id}) }}" class="badge bg-success">show</a>
                     <a href="{{ path('app_waste_edit', {'id': waste.id}) }}"class="badge bg-warning"">edit</a>

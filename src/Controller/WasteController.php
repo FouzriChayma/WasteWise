@@ -78,4 +78,5 @@ class WasteController extends AbstractController
 
         return $this->redirectToRoute('app_waste_index', [], Response::HTTP_SEE_OTHER);
     }
+    
 }

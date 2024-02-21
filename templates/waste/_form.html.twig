@@ -42,7 +42,6 @@
 
 <body>
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}} ) }}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 
 <body class="app app-signup p-0"> 
@@ -55,14 +54,7 @@
 	
 					<div class="auth-form-container text-start mx-auto">
 						<form class="auth-form auth-signup-form">         
-							<div class="email mb-3">
-                            {{ form_widget(form.id_waste,{attr: {'class':'form-control','placeholder':'Id_waste...'}}) }}
-                             {% if form_errors(form.id_waste)|length > 0 %}
-        <div class="error-message">{{ form_errors(form.id_waste) }}</div>
-    {% endif %}
-								
-								
-							</div>
+							
 							<div class="email mb-3">
 								{{ form_widget(form.type,{attr: {'class':'form-control','placeholder':'type'}}) }}
                                 {% if form_errors(form.type)|length > 0 %}
@@ -92,6 +84,15 @@
 								{{ form_widget(form.quantite,{attr: {'class':'form-select','placeholder':'quantite'}}) }}
                                  {% if form_errors(form.quantite)|length > 0 %}
         <div class="error-message">{{ form_errors(form.quantite) }}</div>
+        
+    {% endif %}
+								
+							</div>
+                            <div class="email mb-3">
+								{{ form_label(form.truck) }}
+								{{ form_widget(form.truck,{attr: {'class':'form-select'}}) }}
+                                 {% if form_errors(form.truck)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.truck) }}</div>
         
     {% endif %}
 								
