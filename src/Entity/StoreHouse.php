@@ -44,12 +44,29 @@ class StoreHouse
     #[ORM\OneToMany(targetEntity: Stock::class, mappedBy: 'storehouse', cascade: ['remove'])]
     private Collection $stocks;
 
+    #[ORM\Column]
+    #[Assert\NotBlank(message: 'Please enter the storehouse name')]
+    private $descriptionSh = null;
+
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
     }
 
     // Getters and setters
+     // Getter and Setter for descriptionSh
+     public function getDescriptionSh(): ?string
+     {
+         return $this->descriptionSh;
+     }
+ 
+     public function setDescriptionSh(?string $descriptionSh): self
+     {
+         $this->descriptionSh = $descriptionSh;
+ 
+         return $this;
+     }
 
     public function getIdSh(): ?int
     {

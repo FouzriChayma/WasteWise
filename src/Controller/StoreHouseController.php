@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -45,6 +44,32 @@ class StoreHouseController extends AbstractController
         ]);
     }
     
+
+    #[Route('/{id}/orders', name: 'storehouse_orders')]
+    public function showOrders(StoreHouse $storehouse): Response
+    {
+        // Retrieve all stocks belonging to the storehouse
+        $stocks = $storehouse->getStocks();
+
+        // Initialize an empty array to store orders
+        $orders = [];
+
+        // Iterate over each stock to retrieve its associated orders
+        foreach ($stocks as $stock) {
+            // Retrieve orders associated with the current stock
+            $stockOrders = $stock->getOurOrders();
+            
+            // Add the orders to the $orders array
+            foreach ($stockOrders as $order) {
+                $orders[] = $order;
+            }
+        }
+
+        return $this->render('store_house/show.html.twig', [
+            'storehouse' => $storehouse,
+            'orders' => $orders,
+        ]);
+    }
     #[Route('/{idSh}', name: 'app_store_house_show', methods: ['GET'])]
     public function show(StoreHouse $storeHouse): Response
     {

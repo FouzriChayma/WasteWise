@@ -37,7 +37,9 @@ class Stock
 
     #[ORM\Column(type:"datetime")]
     private $date_d_ajout_st;
-
+    
+    #[ORM\OneToMany(targetEntity: OurOrder::class, mappedBy: 'stock', cascade: ['remove'])]
+    private Collection $ourOrders;
 
     #[ORM\Column(type: 'decimal', precision: 10, scale: 3, nullable: true)]
     #[Assert\NotBlank(message: 'Please enter the buying price')]
@@ -58,6 +60,8 @@ class Stock
     {
         // Set the default value for date_d_ajout_st to the current date and time
         $this->setDefaultDate();
+        $this->ourOrders = new ArrayCollection();
+
     }
 
     
@@ -151,7 +155,38 @@ class Stock
         return $this;
     }
 
-    
+
+    public function getOurOrders(): Collection
+    {
+        return $this->ourOrders;
+    }
+
+    public function addOurOrder(OurOrder $ourOrder): self
+    {
+        if (!$this->ourOrders->contains($ourOrder)) {
+            $this->ourOrders[] = $ourOrder;
+            $ourOrder->setStock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOurOrder(OurOrder $ourOrder): self
+    {
+        if ($this->ourOrders->removeElement($ourOrder)) {
+            // set the owning side to null (unless already changed)
+            if ($ourOrder->getStock() === $this) {
+                $ourOrder->setStock(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name_st;
+    }
     
 
 }

@@ -5,12 +5,33 @@
 {% endblock %}
 
 {% block content %}
+{% block stylesheets %}
+    <style>
+        .table-container {
+            display: flex;
+            justify-content: space-between; /* Align items at the start and end of the container */
+        }
+        .table-wrapper {
+            width: 48%; /* Adjust width as needed */
+        }
+        .back-button {
+            float: right;
+            margin-top: 10px; /* Adjust margin-top as needed */
+            margin-bottom: 10px; /* Adjust margin-top as needed */
+            margin-right: 10px; /* Adjust margin-right as needed */
+        }
+    </style>
+{% endblock %}
+
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="card-footer text-muted">
+            <a href="{{ path('app_store_house_index') }}" class="btn btn-secondary back-button">Back to Storehouses</a>
+        </div>
         <div class="container-xl">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-10">
+            <div class="container table-container">
+                <div class="table-wrapper">
+                    <div class="col-md-15">
                         <div class="card">
                             <div class="card-header" style="background-color: #D4EDDA;">
                                 <h2 class="mb-0">Stocks in Storehouse: {{ store_house.nameSh }}</h2>
@@ -47,8 +68,45 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="card-footer text-muted">
-                                <a href="{{ path('app_store_house_index') }}" class="btn btn-secondary">Back to Storehouses</a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <div class="col-md-15">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #D4EDDA;">
+                                <h2 class="mb-0">Orders in {{ store_house.nameSh }}</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Quantity</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for stock in store_house.stocks %}
+                                                {% for order in stock.ourOrders %}
+                                                    <tr>
+                                                        <td>{{ order.idO }}</td>
+                                                        <td>{{ order.quantityO }}</td>
+                                                        <td>{{ order.statusO }}</td>
+                                                        <!-- Display other order details as needed -->
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td colspan="5">No Orders yet.</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

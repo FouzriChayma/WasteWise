@@ -10,7 +10,6 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="mb-0">Stock Managment</h1>
     <a href="{{ path('app_stock_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
-
 </div>
 
 <div class="table-responsive">
@@ -18,12 +17,11 @@
         <thead class="table-success"> <!-- Modification: changer la couleur en vert -->
             <tr>
 				<th>
-					<span class="custom-checkbox">
-					<input type="checkbox" id="selectAll">
-					<label for="selectAll"></label>
-					</span>
-				</th>
-                <th>Id</th>
+                    <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" class="selectAll">
+                        <label for="selectAll"></label>
+                    </span>
+                </th>
 				<th>Image</th>
 				<th>Name</th>
 				<th>Quantity</th>
@@ -37,11 +35,12 @@
         <tbody>
             {% for stock in stocks %}
                 <tr>
-                <td><span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span></td>
-                    <td>{{ stock.idSt }}</td>
+                    <td>
+                        <span class="custom-checkbox">
+                            <input type="checkbox" id="checkbox{{ stock.idSt }}" class="selectAll">
+                            <label for="checkbox{{ stock.idSt }}"></label>
+                        </span>
+                    </td>
                     <td style="text-align: center;">{% dump(stock.imageSt) %}<img src="{{ asset(stock.imageSt) }}" alt="Stock Image" width="50"></td>
                     <td>{{ stock.nameSt }}</td>
                     <td>{{ stock.quantitySt }}</td>
@@ -115,5 +114,22 @@
 </nav>
 </div></div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the "Select All" checkbox
+        const selectAllCheckbox = document.getElementById('selectAll');
 
+        // Get all individual checkboxes
+        const checkboxes = document.querySelectorAll('.selectAll');
+
+        // Add a click event listener to the "Select All" checkbox
+        selectAllCheckbox.addEventListener('click', function() {
+            // Loop through all checkboxes
+            checkboxes.forEach(function(checkbox) {
+                // Set each checkbox's checked property to be the same as the "Select All" checkbox
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        });
+    });
+</script>
 {% endblock %}

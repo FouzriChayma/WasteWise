@@ -15,6 +15,7 @@ class StoreHouseType extends AbstractType
     {
         $builder
             ->add('nameSh')
+            ->add('descriptionSh')
             ->add('locationSh', ChoiceType::class, [
                 'choices' => [
                     'Ariana' => 'Ariana',

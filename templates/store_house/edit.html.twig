@@ -23,6 +23,15 @@
                                             <div class="text-danger">{{ form_errors(form.nameSh) }}</div>
                                         {% endif %}
                                     </div>
+
+                                    <div class="mb-3">
+                                        {{ form_label(form.descriptionSh, 'Description') }}
+                                        {{ form_widget(form.descriptionSh, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.descriptionSh) %}
+                                            <div class="text-danger">{{ form_errors(form.descriptionSh) }}</div>
+                                        {% endif %}
+                                    </div>
+
                                     <div class="mb-3">
                                         {{ form_label(form.locationSh, 'Location') }}
                                         {{ form_widget(form.locationSh, {'attr': {'class': 'form-control'}}) }}
