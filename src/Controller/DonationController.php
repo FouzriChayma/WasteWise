@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 #[Route('/donation')]
@@ -106,6 +108,8 @@ class DonationController extends AbstractController
            ]);
        
     }
+
+   
 
     
 

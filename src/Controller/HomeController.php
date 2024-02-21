@@ -9,6 +9,10 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Association;
 use App\Form\AssociationType;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Repository\DonationRepository;
+use App\Repository\AssociationRepository;
 
 class HomeController extends AbstractController
 {
@@ -16,6 +20,13 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+    #[Route('/home2', name: 'app_home2')]
+    public function index2(): Response
+    {
+        return $this->render('home/index2.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
@@ -69,6 +80,67 @@ class HomeController extends AbstractController
         // Afficher la page de connexion avec le message d'erreur
         return $this->render('association/compte.html.twig', ['errorMessage' => $errorMessage]);
     }
+
+    #[Route('/PDF_Reserver', name: 'PDF_Reserver', methods: ['GET'])]
+    public function PDF_Reserver(DonationRepository $donationRepository)
+    {   
+        $result=$donationRepository->findAll();
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+    
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('donation/print.html.twig', [
+            'donations' => $result
+        ]);
+    
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("List_of_donations.pdf",[
+            "Attachment" => false
+        ]);
+    }
+
+    #[Route('/PDF_Reserver2', name: 'PDF_Reserver2', methods: ['GET'])]
+    public function PDF_Reserver2(AssociationRepository $associationRepository)
+    {   
+        $result=$associationRepository->findAll();
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+    
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('association/print.html.twig', [
+            'associations' => $result
+        ]);
+    
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("List_of_Associations.pdf",[
+            "Attachment" => false
+        ]);
+    }
+
+
+
    
 
     

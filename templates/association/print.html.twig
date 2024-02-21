@@ -1,0 +1,118 @@
+<style>
+
+
+    @font-face {
+  font-family: 'Roboto', sans-serif; /* Web-safe font */
+  src: local('Roboto'), url('path/to/Roboto.woff2') format('woff2'); /* Add fallback */
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0; /* Remove default margins */
+}
+
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  page-break-inside: avoid; /* Keep entire table on one page */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.actions {
+  text-align: center;
+}
+
+.badge {
+  display: inline-block; /* Avoid horizontal spacing issues */
+  background-color: #f0f0f0; /* Neutral background */
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  text-decoration: none; /* Remove underline, as CSS may not apply consistently */
+}
+
+.badge:hover {
+  background-color: #ddd;
+}
+
+/* Optional table headers/footers styling */
+table thead, table tfoot {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Adjust header/footer content as needed */
+table thead tr th:first-child, table tfoot tr th:first-child {
+  text-align: left;
+}
+</style>
+<h1>List of Associations</h1>
+
+<div class="table-responsive">
+							        <table class="table app-table-hover mb-0 text-left">
+                                    
+										<thead>
+											<tr>
+												<th class="cell">ID</th>
+												<th class="cell">Name</th>
+												<th class="cell">Adresse</th>
+												<th class="cell">Email</th>
+												<th class="cell">Image</th>
+												<th class="cell">actions</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											{% for association in associations %}
+                                                <tr>
+                                                    <td>{{ association.id_association }}</td>
+                                                     <td>{{ association.name }}</td>
+                                                     <td>{{ association.adresse }}</td>
+                                                    <td>{{ association.email }}</td>
+													 <td>
+													 {% if association.ImagePath ends with '.pdf' %}
+       												 <a href="{{ asset(association.ImagePath) }}" target="_blank">View PDF</a>
+   													 {% else %}
+													 <img src="{{ asset(association.ImagePath) }}" alt="Association Image" class="img-thumbnail" width="100"></td>
+													 {% endif %}
+                                                    <td>
+                                                    <a href="{{ path('app_association_edit', {'id': association.id_association}) }}" class="badge bg-warning">Edit</a>
+                                                    <a href="{{ path('app_association_delete', {'id': association.id_association}) }}" onclick="return confirm('Are you sure you want to delete this item?');" class="badge bg-danger">Delete</a>
+                                                    
+                    
+                    
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                            <tr>
+                                            <td colspan="5">no records found</td>
+                                             </tr>
+                                            {% endfor %}
+                                        </tbody>
+										</tbody>
+									</table>
+						        </div><!--//table-responsive-->
+                                

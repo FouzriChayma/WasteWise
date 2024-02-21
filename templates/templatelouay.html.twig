@@ -1,0 +1,237 @@
+
+{% extends 'baseFront.html.twig' %}
+ {% block navbar %}
+    <div class="yo">
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                <img src="{{asset('Front/img/logoW.png')}}" alt="" style="width: 78px; height: 73px;">
+                <a href="index.html" class="navbar-brand" style="padding-top: 120px;">
+                 
+                </a>
+
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+               
+                    <div class="navbar-nav ms-auto">
+                        <a href="{{ path('app_home') }}" class="nav-item nav-link active">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="project.html" class="nav-item nav-link">Projects</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu bg-light mt-2">
+                                <a href="feature.html" class="dropdown-item">Features</a>
+                                <a href="team.html" class="dropdown-item">Our Team</a>
+                                <a href="faq.html" class="dropdown-item">FAQs</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                        <a href="{{ path('app_association_new') }}" class=""><button class="bt">Get involved !</button></a>
+                    </div>
+                    
+                
+            </nav>
+        </div>
+    </div>
+    </div>
+    {% endblock %}
+
+    {% block body %}
+
+    <style>
+.yo {
+  
+  background-color: #265936;
+}
+
+.slider_section {
+    position: relative;
+}
+
+.image-container {
+    
+    width: 100%;
+     /* ajustez la largeur de l'image selon vos besoins */
+     /* pour centrer l'image horizontalement */
+    overflow: hidden;
+}
+
+ .btn.btn-light:hover {
+            background-color: #265936; /* Green color on hover */
+            color: #fff; /* Text color on hover */
+        }
+
+.text-on-image {
+     position: absolute;
+    top: 37%;
+    left: 20%; /* Ajustez la position à gauche selon vos besoins */
+    transform: translate(-50%, -50%);
+    text-align: left; /* Aligner le texte à gauche */
+
+    padding: 20px;
+    
+    width: 80%; /* Ajustez la largeur du texte selon vos besoins */
+
+    max-width: 500px; /* Définissez une largeur maximale pour le texte */
+}
+
+.about_section {
+            background-color: #f8f9fa; /* Light gray background color */
+            padding: 80px 0;
+        }
+
+        .img-box img {
+            width: 100%;
+            border-radius: 10px; /* Add rounded corners to the image */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+        }
+
+        .detail-box {
+            padding-left: 40px; /* Add some spacing to the text box */
+        }
+
+        .heading_container h2 {
+            font-size: 36px;
+            color: #28a745; /* Green color for the heading */
+        }
+
+        .heading_container hr {
+            margin: 20px 0;
+            border: 2px solid #28a745; /* Green border for the hr element */
+        }
+
+        .detail-box p {
+            font-size: 18px;
+            color: #495057; /* Dark gray text color */
+        }
+
+        .detail-box a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #28a745; /* Green color for the link text */
+        }
+
+        .detail-box a span {
+            border-bottom: 2px solid #28a745; /* Green underline effect on hover */
+            transition: border-bottom 0.3s ease;
+        }
+
+        .detail-box a:hover span {
+            border-bottom: 2px solid transparent; /* Remove the underline on hover */
+        }
+
+        .parallax-section {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.btn:hover {
+    transform: scale(1.1);
+}
+.gradient-background {
+    background: linear-gradient(to right, #4caf50, #00bcd4);
+}
+
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #4caf50;
+}
+/* Ajoutez tout style supplémentaire selon les besoins */
+
+/* Ajoutez tout style supplémentaire selon les besoins */
+
+</style>
+<section class="slider_section position-relative">
+    <div class="image-container">
+        <img src="{{ asset('Front/img/dog2.jpg') }}" alt="" class="img-fluid">
+        <div class="text-on-image">
+            
+            <h1 class="display-4 text-black mb-4 animated slideInRight">Because They Need our help !</h1>
+            <h2 class="text-black mb-4 animated slideInRight">So let's do it!</h2>
+            <p class="text-black mb-4 animated slideInRight">Welcome to Waste Wise, where compassion meets care for our furry friends. As a dedicated organization committed to the well-being of pets, we strive to make a difference in the lives of animals in need. Our online platform serves as a gateway for animal lovers and philanthropists to contribute towards the welfare of pets through donations.</p>
+            <a href="{{ path('app_association_new') }}" class="btn btn-light py-sm-3 px-sm-5 rounded-pill me-3 animated slideInRight">Ask for donation !</a>
+            <a href="" class="btn btn-outline-light py-sm-3 px-sm-5 rounded-pill animated slideInRight">Contact Us</a>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+
+ <section class="about_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="img-box">
+                        <img src="{{ asset('Front/img/about3-img.jpg') }}" alt="About Us Image" />
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <h2>What Makes Us Care<br>
+                                About Pets ?</h2>
+                            <hr>
+                        </div>
+                        <p>
+If it wasn’t for our founder’s childhood spent on a ranch in northern Texas, surrounded by domestic animals and pets all the time till she went to college – there might have been no Anilove animal shelter now. So as soon as she graduated with her Veterinary degree 12 years ago, she already knew what she will be doing for a living.                        </p>
+                         <a href="{{ path('app_association_new') }}" class="btn btn-light py-sm-3 px-sm-5 rounded-pill me-3 animated slideInRight">Ask for donation !</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br />
+    <br />
+    <br />
+
+    <section class="what_we_do_heading text-center">
+    <div class="container">
+        <div class="heading_container">
+            <h2>What We Do ? </h2>
+            
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+   <section class="what_we_do_section layout_padding">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="img-box">
+                    <img src="{{ asset('Front/img/whatwedo4.jpg') }}" alt="What We Do Image" />
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="detail-box ">
+                    <p class="">
+                        Our mission is to empower associations and nonprofits by providing a platform to seek financial support for their noble causes. We understand the challenges faced by organizations dedicated to making a difference in the world, and we are here to help. Through our online platform, associations can easily create campaigns, share their stories, and connect with compassionate individuals and donors who are willing to contribute to their impactful initiatives. Join us in fostering a community of giving and making a collective impact on the causes that matter the most.
+                    </p>
+                    <a href="{{ path('app_home') }}" class="btn btn-light py-sm-3 px-sm-5 rounded-pill me-3 animated slideInRight">Explore More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br />
+<br />
+
+
+
+ 
+
+{% endblock %}
+    

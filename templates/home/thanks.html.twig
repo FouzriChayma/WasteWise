@@ -1,9 +1,64 @@
 {% extends 'baseFront.html.twig' %}
+ {% block navbar %}
+    <div class="yo">
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                <img src="{{asset('Front/img/logoW.png')}}" alt="" style="width: 78px; height: 73px;">
+                <a href="index.html" class="navbar-brand" style="padding-top: 120px;">
+                 
+                </a>
 
-    {% block navbar %}
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+               
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="project.html" class="nav-item nav-link">Projects</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu bg-light mt-2">
+                                <a href="feature.html" class="dropdown-item">Features</a>
+                                <a href="team.html" class="dropdown-item">Our Team</a>
+                                <a href="faq.html" class="dropdown-item">FAQs</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                        <a href="{{ path('app_association_new') }}" class=""><button class="bt">Get involved !</button></a>
+                    </div>
+                    
+                
+            </nav>
+        </div>
+    </div>
+    </div>
     {% endblock %}
+
     {% block body %}
-        <div class="vh-100 d-flex justify-content-center align-items-center">
+
+    <style>
+.yo {
+  
+  background-color: #265936;
+}
+
+.custom-container {
+             /* Change the height as needed */
+            margin-top: 10vh; /* Adjust the margin-top as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+</style>
+
+    <body>
+
+        <div class="custom-container">
             <div class="col-md-4">
                 <div class="border border-3 border-success"></div>
                 <div class="card  bg-white shadow p-5">
@@ -29,7 +84,13 @@
                 }, 6000);
             </script>
     
+    </body>
+
     {% endblock%}
+
+    {% block footer%}
+    {% endblock%}
+
 
 
 

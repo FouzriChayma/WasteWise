@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+
 #[Route('/association')]
 class AssociationController extends AbstractController
 {
@@ -139,6 +140,10 @@ class AssociationController extends AbstractController
             'associations' => $result,
         ]);
     }
+
+    
+
+
 
     
 
