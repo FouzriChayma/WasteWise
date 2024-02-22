@@ -30,6 +30,7 @@ class MissionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $mission->setStatus('Undone');
             $entityManager->persist($mission);
             $entityManager->flush();
 

@@ -16,10 +16,7 @@ class Planification
     #[ORM\Column]
     private ?int $id_plan = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message:"id driver is required")]
-    #[Assert\Positive(message:"id driver is invalid")]
-    private ?int $id_driver = null;
+    
 
     
 
@@ -28,29 +25,24 @@ class Planification
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"location is required")]
     private ?string $location = null;
 
     #[ORM\ManyToOne(inversedBy: 'planification')]
     #[ORM\JoinColumn(name: 'id_mission',referencedColumnName:'id_mission')]
+    #[Assert\NotBlank(message:"id mission is required")]
     private ?Mission $mission = null;
+
+    #[ORM\ManyToOne(inversedBy: 'planification')]
+    #[ORM\JoinColumn(name: 'id_driver',referencedColumnName:'id')]
+    #[Assert\NotBlank(message:"id driver is required")]
+    private ?User $id_driver = null;
 
     public function getIdPlan(): ?int
     {
         return $this->id_plan;
     }
 
-    public function getIdDriver(): ?int
-    {
-        return $this->id_driver;
-    }
-
-    public function setIdDriver(int $id_driver): static
-    {
-        $this->id_driver = $id_driver;
-
-        return $this;
-    }
+    
 
     
     public function getDate(): ?\DateTimeInterface
@@ -85,6 +77,18 @@ class Planification
     public function setMission(?Mission $mission): static
     {
         $this->mission = $mission;
+
+        return $this;
+    }
+
+    public function getIdDriver(): ?User
+    {
+        return $this->id_driver;
+    }
+
+    public function setIdDriver(?User $id_driver): static
+    {
+        $this->id_driver = $id_driver;
 
         return $this;
     }

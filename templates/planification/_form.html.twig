@@ -72,7 +72,7 @@ select:focus {
 						<form class="auth-form auth-signup-form">         
 							<div class="email mb-3">
                             {{form_label(form.id_driver,"id_driver:",{'label_attr': {'class': 'form-label'}})}}
-                            {{ form_widget(form.id_driver,{attr: {'class':'form-control','placeholder':'Id driver'}}) }}
+                            {{ form_widget(form.id_driver,{attr: {'placeholder':'Id driver'}}) }}
                              {% if form_errors(form.id_driver)|length > 0 %}
         <div class="error-message">{{ form_errors(form.id_driver) }}</div>
     {% endif %}

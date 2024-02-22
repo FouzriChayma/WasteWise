@@ -20,7 +20,10 @@ class PlanificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_driver')
+            ->add('id_driver',null, [
+                'attr' => [
+                    'placeholder' => 'Mission',
+                ]])
             ->add('date',DateTimeType::class)
             ->add('mission',null, [
                 'attr' => [

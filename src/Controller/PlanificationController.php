@@ -31,6 +31,7 @@ class PlanificationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $planification->setLocation($planification->getMission()->getLocation());
             $entityManager->persist($planification);
             $entityManager->flush();
 

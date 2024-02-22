@@ -45,4 +45,28 @@ class MissionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function getMissionsByPlannification($id)
+    {
+        return $this->createQueryBuilder('p')
+        ->join('p.planification', 'm')
+        ->where('m.id_plan = :id')
+        ->setParameter('id', $id)
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult()
+       ;
+    }
+    public function getMissionsByDriver($driver_id)
+{
+    $query = $this->createQueryBuilder('m')
+        ->join('m.planification', 'p')
+        ->where('p.id_driver = :driver_id')
+        ->setParameter('driver_id', $driver_id)
+        ->getQuery();
+
+    return $query->getResult();
+}    
+
+
+  
 }
