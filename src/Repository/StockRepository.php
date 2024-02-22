@@ -58,4 +58,13 @@ class StockRepository extends ServiceEntityRepository
             ->createQuery('SELECT COUNT(s.idSt) FROM App\Entity\Stock s')
             ->getSingleScalarResult();
     }
+
+     // Custom method to fetch the first 4 stocks
+     public function findFirstFour(): array
+     {
+         return $this->createQueryBuilder('s')
+             ->setMaxResults(4)
+             ->getQuery()
+             ->getResult();
+     }
 }

@@ -24,6 +24,14 @@ class StockController extends AbstractController
         ]);
     }
 
+    #[Route('/Recyclable/materials', name: 'app_stock_recyclable_materials', methods: ['GET'])]
+    public function allfront(StockRepository $stockRepository): Response
+    {
+        return $this->render('stock/show.html copy.twig', [
+            'stocks' => $stockRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_stock_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, StoreHouseRepository $storeHouseRepository): Response
     {

@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stock;
-use App\Entity\StoreHouse;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 #[Route('/our/order')]
@@ -27,46 +26,50 @@ class OurOrderController extends AbstractController
     }
 
     #[Route('/new', name: 'app_our_order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $ourOrder = new OurOrder();
-    
-        // Set default statusO to "Pending" only if the form is being submitted (POST request)
-        if ($request->isMethod('POST')) {
-            $ourOrder->setStatusO('Pending');
-        }
-    
-        $form = $this->createForm(OurOrderType::class, $ourOrder, ['exclude_status' => true]);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Update the quantity in stock
-            $stock = $ourOrder->getStock();
-            if ($stock instanceof Stock) {
-                $quantityOrdered = $ourOrder->getQuantityO();
-                $currentStockQuantity = $stock->getQuantitySt();
-                if ($quantityOrdered <= $currentStockQuantity) {
-                    $stock->setQuantitySt($currentStockQuantity - $quantityOrdered);
-                    $entityManager->persist($stock);
-                } else {
-                    // Handle insufficient stock error here
-                }
-            } else {
-                // Handle missing stock error here
-            }
-    
-            // Persist the new order
-            $entityManager->persist($ourOrder);
-            $entityManager->flush();
-    
-            return $this->redirectToRoute('app_our_order_index', [], Response::HTTP_SEE_OTHER);
-        }
-    
-        return $this->renderForm('our_order/new.html.twig', [
-            'our_order' => $ourOrder,
-            'form' => $form,
-        ]);
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $ourOrder = new OurOrder();
+
+    // Set default statusO to "Pending" only if the form is being submitted (POST request)
+    if ($request->isMethod('POST')) {
+        $ourOrder->setStatusO('Pending');
     }
+
+    $form = $this->createForm(OurOrderType::class, $ourOrder, ['exclude_status' => true]);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Update the quantity in stock
+        $stock = $ourOrder->getStock();
+        if ($stock instanceof Stock) {
+            $quantityOrdered = $ourOrder->getQuantityO();
+            $currentStockQuantity = $stock->getQuantitySt();
+            if ($quantityOrdered <= $currentStockQuantity) {
+                $stock->setQuantitySt($currentStockQuantity - $quantityOrdered);
+                $entityManager->persist($stock);
+            } else {
+                // Handle insufficient stock error here
+            }
+        } else {
+            // Handle missing stock error here
+        }
+
+        // Persist the new order
+        $entityManager->persist($ourOrder);
+        $entityManager->flush();
+
+        // Add a success flash message
+        $this->addFlash('success', 'Your order has been successfully added.');
+
+        return $this->redirectToRoute('app_stock_recyclable_materials'); // Update redirection here
+    }
+
+    return $this->renderForm('our_order/new.html.twig', [
+        'our_order' => $ourOrder,
+        'form' => $form,
+    ]);
+}
+
     
 
 
@@ -95,6 +98,8 @@ class OurOrderController extends AbstractController
             'form' => $form,
         ]);
     }
+ 
+
 
     #[Route('/{idO}', name: 'app_our_order_delete', methods: ['POST'])]
     public function delete(Request $request, OurOrder $ourOrder, EntityManagerInterface $entityManager): Response
@@ -106,4 +111,6 @@ class OurOrderController extends AbstractController
 
         return $this->redirectToRoute('app_our_order_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
