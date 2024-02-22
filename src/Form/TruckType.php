@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Truck;
+use App\Repository\TruckRepository;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

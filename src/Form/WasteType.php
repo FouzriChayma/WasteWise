@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use App\Entity\Truck;
+use App\Repository\TruckRepository;
+
 class WasteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -28,12 +30,13 @@ class WasteType extends AbstractType
                     'collected'=>'collected',
                     'not collected'=>'not collected',
                 ] ,
-                'placeholder'=>'choose a location',])
+                'placeholder'=>'status',])
                 
             ->add('quantite')
             
-            ->add('truck')
-        ;
+            ->add('truck');
+           
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -42,5 +45,6 @@ class WasteType extends AbstractType
             'data_class' => Waste::class,
         ]);
     }
+    
     
 }

@@ -28,7 +28,7 @@ class Waste2Type extends AbstractType
                     'collected'=>'collected',
                     'not collected'=>'not collected',
                 ] ,
-                'placeholder'=>'choose a location',])
+                'placeholder'=>'Status',])
                 
             ->add('quantite')
             
