@@ -3,3 +3,27 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+front:
+    path: /front
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+        template: 'baseFront.html.twig'
+
+back:
+    path: /back
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+        template: 'baseBack.html.twig'
+
+admin:
+   path: /complaint/admin/
+   controller: App\Controller\ComplaintController::list
+
+complaints_by_user:
+   path: /complaint/user/{userId}
+   controller: App\Controller\ComplaintController::user_index
+
+app_complaint_show:
+   path: /{userType}/complaints/{id}
+   controller: App\Controller\ComplaintController::show

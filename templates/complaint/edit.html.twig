@@ -1,0 +1,126 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Edit Complaint{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Style for the navigation bar */
+        .navbar {
+            background-color:#D4EDDA; /* Natural green color */
+        }
+
+        /* Style for the form */
+        .card {
+            background-color: #f8f9fa; /* Form background color */
+            border-radius: 15px; /* Rounded borders */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+            font-size: 14px; /* Reduced font size */
+        }
+
+        .card-header {
+            background-color: #D4EDDA; /* Dark green color for the form header */
+            color: #fff; /* White text for the form header */
+            border-radius: 15px 15px 0 0; /* Rounded border only at the top */
+            font-size: 16px; /* Slightly larger font size */
+        }
+
+        .card-body {
+            padding: 15px; /* Reduced internal spacing of the form content */
+        }
+
+        /* Style for the form fields */
+        .form-label {
+            color: #495057; /* Text color of the labels */
+            font-size: 14px; /* Reduced font size */
+        }
+
+        .form-control {
+            background-color: #fff; /* Form field background color */
+            border: 1px solid #ced4da; /* Form field border */
+            border-radius: 5px; /* Rounded borders of the form fields */
+            font-size: 14px; /* Reduced font size */
+            padding: 8px; /* Reduced internal spacing of the form fields */
+        }
+
+        .form-control:focus {
+            border-color: #80bdff; /* Border color when a form field is in focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Light shadow when a form field is in focus */
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            font-size: 14px; /* Reduced font size for the buttons */
+            padding: 8px 16px; /* Reduced internal spacing of the buttons */
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            font-size: 14px; /* Reduced font size for the buttons on hover */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Edit Complaint</h2>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {{ form_widget(form._token) }}
+              <div class="mb-3">
+                <label for="edit-user_id" class="form-label">User_id</label>
+                {{ form_widget(form.user_id, {'attr': {'class': 'form-control', 'id': 'edit-user_id'}}) }}
+              </div>
+              <div class="mb-3">
+                <label for="edit-title" class="form-label">Title</label>
+                {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'edit-title'}}) }}
+              </div>
+
+              <div class="mb-3">
+                <label for="edit-description" class="form-label">Description</label>
+                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'edit-description'}}) }}
+              </div>
+
+              <div class="mb-3">
+                <label for="edit-location" class="form-label">Location</label>
+                {{ form_widget(form.location, {'attr': {'class': 'form-control', 'id': 'edit-location'}}) }}
+              </div>
+
+              <div class="mb-3">
+                <label for="edit-submissionDate" class="form-label">Submission Date</label>
+                {{ form_widget(form.submissionDate, {'attr': {'class': 'form-control', 'id': 'edit-submissionDate'}}) }}
+              </div>
+
+              <div class="mb-3">
+                <label for="edit-picture" class="form-label">Picture</label>
+                {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'id': 'edit-picture'}}) }}
+              </div>
+
+              <div class="mb-3">
+                <label for="edit-status" class="form-label">Status</label>
+                {{ form_widget(form.status, {'attr': {'class': 'form-control', 'id': 'edit-status'}}) }}
+              </div>
+
+              <div class="text-center">
+                <div class="btn-group">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                  <div class="ms-2">
+                    <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary">Back to List</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary mb-3">Back to list</a>
+
+  {{ include('complaint/_delete_form.html.twig') }}
+{% endblock %}

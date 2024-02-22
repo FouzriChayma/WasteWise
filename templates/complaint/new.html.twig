@@ -1,0 +1,70 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}New Complaint{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Votre style ici */
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New Complaint</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {{ form_widget(form._token) }}
+                         <div class="mb-3">
+                            <label for="edit-user_id" class="form-label">User_id</label>
+                            {{ form_widget(form.user_id, {'attr': {'class': 'form-control', 'id': 'edit-user_id'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-title" class="form-label">Title</label>
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'edit-title'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-description" class="form-label">Description</label>
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'edit-description'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-location" class="form-label">Location</label>
+                            {{ form_widget(form.location, {'attr': {'class': 'form-control', 'id': 'edit-location'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-submissionDate" class="form-label">Submission Date</label>
+                            {{ form_widget(form.submissionDate, {'attr': {'class': 'form-control', 'id': 'edit-submissionDate'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-picture" class="form-label">Picture</label>
+                            {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'id': 'edit-picture'}}) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-status" class="form-label">Status</label>
+                            {{ form_widget(form.status, {'attr': {'class': 'form-control', 'id': 'edit-status'}}) }}
+                        </div>
+
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
+                                <div class="ms-2">
+                                    <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary">Back to List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
