@@ -1,37 +1,51 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBackUser.html.twig' %}
 
 {% block title %}Reponse index{% endblock %}
 
-{% block body %}
-    <h1>Reponse index</h1>
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Reponse List</h1>
+    </div>
 
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="table-success">
             <tr>
                 <th>Id</th>
                 <th>Complaint_id</th>
                 <th>Message</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for reponse in reponses %}
-            <tr>
-                <td>{{ reponse.id }}</td>
-                <td>{{ reponse.complaintId }}</td>
-                <td>{{ reponse.message }}</td>
-                <td>
-                    <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}">show</a>
-                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for reponse in reponses %}
+                <tr>
+                    <td>{{ reponse.id }}</td>
+                    <td>{{ reponse.complaintId }}</td>
+                    <td>{{ reponse.message }}</td>
+                    <td>
+                        <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}" class="btn btn-sm btn-secondary">Show</a>
+                        <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}" class="btn btn-sm btn-primary">Edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_reponse_new') }}">Create new</a>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4 custom-pagination">
+            <li class="page-item disabled">
+                <span class="page-link custom-link text-dark">Previous</span>
+            </li>
+            <li class="page-item active"><a class="page-link custom-link text-dark" href="#">1</a></li>
+            <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
+            <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link custom-link text-dark" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 {% endblock %}

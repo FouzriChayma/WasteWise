@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ComplaintRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,16 +35,9 @@ class Complaint
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    #[ORM\OneToMany(targetEntity: Reponse::class, mappedBy: 'complaint')]
-    private Collection $reponses;
+    #[ORM\OneToOne(targetEntity: "App\Entity\Reponse", mappedBy: "complaint")]
+    private $reponse;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Reponse $reponse = null;
-
-    public function __construct()
-    {
-        $this->reponses = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -144,36 +135,6 @@ class Complaint
         return $this;
     }
 
-    /**
-     * @return Collection<int, Reponse>
-     */
-    public function getReponses(): Collection
-    {
-        return $this->reponses;
-    }
-
-    public function addReponse(Reponse $reponse): static
-    {
-        if (!$this->reponses->contains($reponse)) {
-            $this->reponses->add($reponse);
-            $reponse->setComplaint($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReponse(Reponse $reponse): static
-    {
-        if ($this->reponses->removeElement($reponse)) {
-            // set the owning side to null (unless already changed)
-            if ($reponse->getComplaint() === $this) {
-                $reponse->setComplaint(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getReponse(): ?Reponse
     {
         return $this->reponse;
@@ -181,6 +142,16 @@ class Complaint
 
     public function setReponse(?Reponse $reponse): static
     {
+        // unset the owning side of the relation if necessary
+        if ($reponse === null && $this->reponse !== null) {
+            $this->reponse->setComplaint(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($reponse !== null && $reponse->getComplaint() !== $this) {
+            $reponse->setComplaint($this);
+        }
+
         $this->reponse = $reponse;
 
         return $this;

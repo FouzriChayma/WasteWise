@@ -1,4 +1,4 @@
-{% extends 'baseBack.html.twig' %}
+{% extends 'baseBackUser.html.twig' %}
 
 {% block title %}Complaint index{% endblock %}
 
@@ -14,13 +14,13 @@
     <table class="table table-bordered table-hover">
         <thead class="table-success">
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>User_id</th>
                 <th>Title</th>
-                <th>Description</th>
+                {# <th>Description</th> #}
                 <th>Location</th>
                 <th>SubmissionDate</th>
-                <th>Picture</th>
+                {# <th>Picture</th> #}
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -28,16 +28,16 @@
         <tbody>
             {% for complaint in complaints %}
     <tr>
-        <td>{{ complaint.id }}</td>
+        {# <td>{{ complaint.id }}</td> #}
         <td>{{ complaint.userId }}</td>
         <td>{{ complaint.title }}</td>
-<td style="max-width:200px; word-wrap:break-word;">{{ complaint.description }}</td>
+{# <td style="max-width:200px; word-wrap:break-word;">{{ complaint.description }}</td> #}
         <td>{{ complaint.location }}</td>
         <td>{{ complaint.submissionDate ? complaint.submissionDate|date('Y-m-d') : '' }}</td>
-        <td>{{ complaint.picture }}</td>
+        {# <td>{{ complaint.picture }}</td> #}
         <td>{{ complaint.status }}</td>
         <td>
-            <a href="{{ path('app_complaint_show', {'id': complaint.id}) }}" class="btn btn-sm btn-secondary">Show</a>
+            <a href="{{ path('user_complaint_show', {'id': complaint.id}) }}" class="btn btn-sm btn-secondary">Show</a>
             <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-sm btn-primary">Edit</a>
         </td>
     </tr>

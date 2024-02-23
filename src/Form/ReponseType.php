@@ -6,6 +6,7 @@ use App\Entity\Complaint;
 use App\Entity\Reponse;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,13 +15,9 @@ class ReponseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('complaint_id')
-            ->add('message')
-            ->add('complaint', EntityType::class, [
-                'class' => Complaint::class,
-'choice_label' => 'id',
-            ])
-        ;
+            ->add('message', TextareaType::class, [
+                'attr' => ['class' => 'form-control', 'rows' => '5', 'style' => 'width: 500px; height: 150px;']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -30,3 +27,5 @@ class ReponseType extends AbstractType
         ]);
     }
 }
+
+

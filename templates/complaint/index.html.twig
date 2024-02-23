@@ -37,9 +37,9 @@
         {# <td>{{ complaint.picture }}</td> #}
         <td>{{ complaint.status }}</td>
         <td>
-<a href="{{ path('app_complaint_show', {'id': complaint.id, 'userType': app.user ? (app.user.roles[0] == 'ROLE_USER' ? 'user' : 'admin') : 'admin'}) }}" class="btn btn-sm btn-secondary">Show</a>
+            <a href="{{ path('app_complaint_show', {'id': complaint.id}) }}" class="btn btn-sm btn-secondary">Show</a>
             <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-sm btn-primary">Edit</a>
-        </td>x
+        </td>
     </tr>
 {% else %}
     <tr>

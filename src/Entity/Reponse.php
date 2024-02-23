@@ -19,8 +19,9 @@ class Reponse
     #[ORM\Column(length: 255)]
     private ?string $message = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reponses')]
-    private ?Complaint $complaint = null;
+    #[ORM\OneToOne(targetEntity: "App\Entity\Complaint", inversedBy: "reponse")]
+    #[ORM\JoinColumn(name: "complaint_id", referencedColumnName: "id", nullable: false)]
+    private $complaint;
 
     public function getId(): ?int
     {
@@ -63,10 +64,10 @@ class Reponse
         return $this->complaint;
     }
 
-    public function setComplaint(?Complaint $complaint): static
-    {
-        $this->complaint = $complaint;
+    public function setComplaint(?Complaint $complaint): self
+{
+    $this->complaint = $complaint;
 
-        return $this;
-    }
+    return $this;
+}
 }

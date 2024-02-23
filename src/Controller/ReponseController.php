@@ -78,4 +78,13 @@ class ReponseController extends AbstractController
 
         return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/userreponse/{userId}', name: 'reponses_by_user', methods: ['GET'])]
+    public function reponsesByUser(ReponseRepository $reponseRepository, $userId): Response
+    {
+        $reponses = $reponseRepository->findBy(['user_id' => $userId]);
+
+        return $this->render('reponse/index.html.twig', [
+            'reponses' => $reponses,
+        ]);
+    }
 }
