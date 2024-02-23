@@ -122,4 +122,4 @@
 
 ---
 
-Ceci est une fiche technique décrivant les attributs et les relations des entités OurOrder, Stock et StoreHouse dans votre application Symfony. Les entités sont liées entre elles par des relations ManyToOne et OneToMany selon les besoins fonctionnels de votre application.
+Ceci est une fiche technique décrivant les attributs et les relations des entités OurOrder, Stock et StoreHouse.
