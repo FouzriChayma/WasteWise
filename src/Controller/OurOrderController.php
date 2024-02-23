@@ -39,6 +39,12 @@ class OurOrderController extends AbstractController
     }
 
 
+    #[Route('/thanks', name: 'thanks')]
+    public function thanks(): Response
+    {
+        return $this->render('our_order/thanks.html.twig');
+    }
+
     #[Route('/new', name: 'app_our_order_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
@@ -72,10 +78,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         $entityManager->persist($ourOrder);
         $entityManager->flush();
 
-        // Add a success flash message
-        $this->addFlash('success', 'Your order has been successfully added.');
-
-        return $this->redirectToRoute('app_stock_recyclable_materials'); // Update redirection here
+        return $this->redirectToRoute('thanks'); // Update redirection here
     }
 
     return $this->renderForm('our_order/new.html.twig', [
