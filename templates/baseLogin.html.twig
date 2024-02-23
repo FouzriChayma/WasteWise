@@ -10,16 +10,105 @@
     
     <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
     <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-    <link rel="shortcut icon" href="{{asset('Back/favicon.ico')}}"> 
+    <link rel="shortcut icon" href="favicon.ico"> 
     
     <!-- FontAwesome JS-->
     <script defer src="{{asset('Back/assets/plugins/fontawesome/js/all.min.js')}}"></script>
     
     <!-- App CSS -->  
     <link id="theme-style" rel="stylesheet" href="{{asset('Back/assets/css/portal.css')}}">
+    
+    <!-- Custom Styles -->
+    {% block stylesheets %}
+    <style>
+        /* Style des champs du formulaire */
+        .form-control {
+            border-radius: 30px; /* Rendre les champs ronds */
+            border: 1px solid #ced4da; /* Bordure par défaut */
+        }
 
+        /* Style des champs lorsque actifs */
+        .form-control:focus {
+            border-color: #28a745; /* Bordure verte lorsqu'actif */
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Effet de mise en évidence */
+        }
+
+        /* Style du bouton Register */
+        .btn-primary {
+            border-radius: 40px; /* Rendre le bouton rond */
+            background-color: #28a745; /* Couleur verte */
+            border-color: #28a745; /* Bordure verte */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Couleur verte plus foncée au survol */
+            border-color: #1e7e34; /* Bordure plus foncée au survol */
+        }
+
+        /* Style du fond du formulaire */
+        
+
+        /* Style pour aligner les champs deux à deux */
+        .auth-form-container .form-row {
+            margin-bottom: 20px; /* Espacement entre chaque paire de champs */
+        }
+        .text-center {
+    text-align: center; /* Centrer le texte horizontalement */
+    margin-bottom: 20px; /* Espacement en bas du texte */
+    color:green;
+}
+ .auth-main-col {
+    background-color: white;
+}
+.btn-primary {
+    border-radius: 20px; /* Rendre le bouton rond */
+    background-color: #28a745; /* Couleur verte */
+    border-color: #28a745; /* Bordure verte */
+    width: 100%; /* Largeur du bouton */
+    padding: 10px 20px; /* Ajouter du rembourrage pour améliorer l'apparence */
+    font-size: 16px; /* Taille de police */
+    font-weight: bold; /* Gras */
+    text-transform: uppercase; /* Mettre en majuscules */
+    transition: background-color 0.3s, border-color 0.3s; /* Ajouter une transition fluide */
+}
+
+.btn-primary:hover {
+    background-color: #218838; /* Couleur verte plus foncée au survol */
+    border-color: #1e7e34; /* Bordure plus foncée au survol */
+    cursor: pointer; /* Changer le curseur au survol */
+}
+/* Agrandir la taille du formulaire */
+        .auth-form-container {
+            max-width: 400px; /* Augmenter la largeur maximale du formulaire */
+            margin: 0 auto; /* Centrer horizontalement */
+        }
+
+        /* Ajuster la taille des champs */
+        .form-control {
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+            margin-bottom: 20px; /* Augmenter l'espacement entre chaque champ */
+            padding: 15px; /* Augmenter le rembourrage pour un champ plus grand */
+            font-size: 16px; /* Augmenter la taille de la police */
+        }
+
+        /* Ajuster la taille du bouton */
+        .btn-primary {
+            border-radius: 20px;
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%;
+            padding: 15px; /* Augmenter le rembourrage pour un bouton plus grand */
+            font-size: 18px; /* Augmenter la taille de la police */
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+    </style>
+    {% endblock %}
 </head> 
+<body>
 {% block body %}
 {% endblock %}
-</html> 
-
+</body>
+</html>

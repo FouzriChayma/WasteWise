@@ -15,4 +15,11 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+    #[Route('/', name: 'app_guest')]
+    public function indexGuest(): Response
+    {
+        return $this->render('HomeGuest.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
 }

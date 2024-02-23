@@ -64,6 +64,7 @@
                 <div class="card">
                     <div class="card-header"><strong>Edit Password</strong></div>
                     <div class="card-body">
+                            <form method="POST" action="{{ path('edit_password_db', {'id': user.id}) }}">
                                  <div class="mb-3">
                                 <label for="password" class="form-label">New Password</label>
                                 <input type="password" id="password" name="password" class="form-control" required>
@@ -96,5 +97,12 @@
                 return true;
             }
         }
+
+        // Attach the validation function to the form submission event
+        document.querySelector("form").addEventListener("submit", function(event) {
+            if (!validatePassword()) {
+                event.preventDefault(); // Prevent form submission if passwords don't match
+            }
+        });
     </script>
 {% endblock %}

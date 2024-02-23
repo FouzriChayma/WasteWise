@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Form\PassType;
+use App\Form\RoleType;
+use App\Form\PassTypeFront;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 #[Route('/user')]
@@ -53,6 +57,14 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
+    #[Route('/profile/{id}', name: 'app_profile', methods: ['GET'])]
+    public function showFront(User $utilisateur): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        return $this->render('user/profile.html.twig', [
+            'user' => $utilisateur,
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
 public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager): Response
@@ -75,7 +87,7 @@ public function edit(Request $request, User $user, UserPasswordHasherInterface $
             // Déplacer le fichier vers le répertoire où les images sont stockées
             try {
                 $file->move(
-                    $this->getParameter('kernel.project_dir') . '/public/images',
+                    $this->getParameter('kernel.project_dir') . '/public',
                     $fileName
                 );
             } catch (FileException $e) {
@@ -91,7 +103,7 @@ public function edit(Request $request, User $user, UserPasswordHasherInterface $
         $dateObject = $form->get('ddn')->getData();
         $user->setDdn($dateObject);
         $user->setIsBanned($isb);
-        $user->setIsBanned($isv);
+        $user->setIsVerified($isv);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -114,13 +126,32 @@ public function edit(Request $request, User $user, UserPasswordHasherInterface $
             'form' => $form,
         ]);
     }
+    #[Route('/{id}/editPassUser', name: 'app_pass_front', methods: ['GET', 'POST'])]
+    public function editPassFront(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PassTypeFront::class);
+        $form->handleRequest($request);
+       
+
+        return $this->renderForm('user/editPassFront.html.twig', [
+            
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}/confirmRole', name: 'confirm_role', methods: ['GET', 'POST'])]
     public function ConfirmRole(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager): Response
     {
-      $prefrole=$user->getPrefrole();
-      $user->setRole($prefrole);
-      $entityManager->flush();
-      return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+      
+        $form = $this->createForm(RoleType::class);
+        $form->handleRequest($request);
+       
+
+        return $this->renderForm('user/RoleEdit.html.twig', [
+            
+            'user' => $user,
+            'form' => $form,
+        ]);
 
     }
     #[Route('/{id}/editPassword/DB', name: 'edit_password_db', methods: ['GET', 'POST'])]
@@ -135,7 +166,70 @@ public function edit(Request $request, User $user, UserPasswordHasherInterface $
         $entityManager->flush();
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/AssignRole/DB', name: 'assign_role', methods: ['GET', 'POST'])]
+    public function AssignRole(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager): Response
+    {
+        $role=$request->request->get('role');
+        $user->setRole($role);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/{id}/editPassword/Front', name: 'edit_password_db_front', methods: ['GET', 'POST'])]
+    public function editPassDBFront(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher,EntityManagerInterface $entityManager,UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $oldPassword = $request->request->get('old-password');
+        
+        // Check if the old password matches the user's current password
+        if (!$passwordEncoder->isPasswordValid($user, $oldPassword)) {
+            // Old password doesn't match, return an error
+            $this->addFlash('error', 'Old password is incorrect.');
+            return $this->redirectToRoute('app_pass_front', ['id' => $user->getId()]);
+        }
+        else{
+        $user->setPassword(
+            $userPasswordHasher->hashPassword(
+                $user,
+                $request->get('password')
+            )
+        );
+        $entityManager->flush();
+        return $this->redirectToRoute('app_profile', ['id'=>$user->getId()], Response::HTTP_SEE_OTHER);
+    }
+    }
+    #[Route('/{id}/editProfile', name: 'app_front_edit', methods: ['GET', 'POST'])]
+    public function editProfile(Request $request, User $user, UserRepository $utilisateurRepository,EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $form = $this->createForm(UserEditType::class, $user);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $uploadedFile = $form->get('ImagePath')->getData();
+
+            if ($uploadedFile) {
+                // generate a unique file name
+                $newFileName = md5(uniqid()) . '.' . $uploadedFile->guessExtension();
+                $targetDirectory = $this->getParameter('kernel.project_dir') . '/public';
+            
+                // move the uploaded file to the target directory
+                $uploadedFile->move(
+                    $targetDirectory, // specify the target directory where the file should be saved
+                    $newFileName      // specify the new file name
+                );
+                    
+                            // set the image path to the path of the uploaded file
+                            $user->setImagePath($newFileName);
+                
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('app_profile', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('user/editProfile.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response

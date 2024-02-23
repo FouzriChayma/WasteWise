@@ -39,6 +39,13 @@
                                     <th>Role</th>
                                     <td>{{ user.role }}</td>
                                 </tr>
+                                 <tr>
+                                    <th>Image</th>
+                                    <td>
+                                        <img src="{{ asset(user.ImagePath) }}" alt=" Image" width="50">
+                                    </td>
+                                </tr>
+                                <tr>
                                 <tr>
                                     <th>Is Banned</th>
                                     <td>{{ user.isBanned ? 'Yes' : 'No' }}</td>

@@ -70,8 +70,7 @@ private ?string $password = null;
 
     #[ORM\Column]
     private ?string $role = null;
-    #[ORM\Column]
-    private ?string $prefrole = null;
+  
 
     #[ORM\Column]
     private ?string $ImagePath = null;
@@ -215,17 +214,7 @@ private ?string $password = null;
 
         return $this;
     }
-    public function getPrefrole(): ?string
-    {
-        return $this->prefrole;
-    }
-
-    public function setPrefrole(string $prefrole): static
-    {
-        $this->prefrole = $prefrole;
-
-        return $this;
-    }
+   
 
     public function getImagePath(): ?string
     {

@@ -58,7 +58,7 @@ class RegistrationFormType extends AbstractType
                     new NotBlank(['message' => 'Please enter your password']),
                     new Regex([
                         'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/',
-                        'message' => 'Your password must contain at least one lowercase letter, one uppercase letter, one number, and be at least 8 characters long',
+                        'message' => 'Password must contain at least one lowercase, one uppercase, one number, and be at least 8 characters long',
                     ]),
                 ],
             ])
@@ -69,18 +69,7 @@ class RegistrationFormType extends AbstractType
                    
                 ],
             ])
-            ->add('prefrole', ChoiceType::class, [
-                'choices' => [
-                    'Admin' => 'Admin',
-                    'Supplier' => 'Supplier',
-                    'Client' => 'Client',
-                    'Driver' => 'Driver',
-                ],
-                'placeholder' => 'Account category',
-                'constraints' => [
-                    new NotBlank(['message' => 'Please select your preferred role']),
-                ],
-            ])
+        
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

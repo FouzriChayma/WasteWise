@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TermsAndConditionsController extends AbstractController
 {
-    #[Route('/terms_and_conditions', name: 'app_terms_and_conditions')]
+    #[Route('/terms_and_conditions', name: 'terms_and_conditions')]
     public function index(): Response
     {
         return $this->render('terms_and_conditions.html.twig', [
@@ -16,3 +16,4 @@ class TermsAndConditionsController extends AbstractController
         ]);
     }
 }
+
