@@ -96,7 +96,7 @@
 
     <!-- Hero Start -->
     <div class="container-fluid pt-5 bg-primary hero-header">
-        <div class="container pt-5">
+        <div class="container pt-1">
             <div class="row g-5 pt-5">
                 <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
                     <h1 class="display-4 mb-4 animated slideInRight" style="color: lightgreen;">Recyclable materials</h1>
@@ -139,53 +139,63 @@
 
 <!-- Contact Start -->
 <div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 500px;">
-            <h1 class="mb-4">New Order</h1>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="wow fadeIn" data-wow-delay="0.3s">
-                    <form method="post">
-                        {{ form_widget(form._token) }}
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-6">
-                                <div>
-                                    {{ form_label(form.quantityO, 'Quantity') }}
-                                    {{ form_widget(form.quantityO, {'attr': {'class': 'form-control'}}) }}
-                                    {% if form_errors(form.quantityO) %}
-                                        <div class="text-danger">{{ form_errors(form.quantityO) }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div>
-                                    {{ form_label(form.stock, 'Stock') }}
-                                    {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
-                                    {% if form_errors(form.stock) %}
-                                        <div class="text-danger">{{ form_errors(form.stock) }}</div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                                <div "col-12 mt-3 d-flex align-items-center">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="">
+                    <img class="img-fluid" src="{{asset('Front/img/orr.png')}}">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="mb-4">New Order</h1>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                    <p class="mb-4">Place a new order for recyclable materials.</p>
+                        <div class="wow fadeIn" data-wow-delay="0.3s">
+                            <form method="post">
+                                {{ form_widget(form._token) }}
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-6">
+                                        <div>
+                                            {{ form_label(form.quantityO, 'Quantity') }}
+                                            {{ form_widget(form.quantityO, {'attr': {'class': 'form-control'}}) }}
+                                            {% if form_errors(form.quantityO) %}
+                                                <div class="error-message">{{ form_errors(form.quantityO) }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div>
+                                            {{ form_label(form.stock, 'Stock') }}
+                                            {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+                                            {% if form_errors(form.stock) %}
+                                                <div  class="error-message">{{ form_errors(form.stock) }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <p class="mb-4 custom-p-margin">Calculate the total order :</p>
                                     <div class="col-12 mt-3 d-flex align-items-center">
-                                    <!-- Calculator Icon -->
-                                    <button type="button" class="btn btn-primary py-3" onclick="calculateTotal()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
-                                            <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                            <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
-                                        </svg>
-                                    </button>
-                                    <!-- End Calculator Icon -->
-                                    <div id="total" class="ms-3"></div>
+                                    
+                                        <!-- Calculator Icon -->
+                                        <button type="button" class="btn btn-secondary py-3 custom-gray-btn" onclick="calculateTotal()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                                                <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                                <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                                            </svg>
+                                        </button>
+                                        <!-- End Calculator Icon -->
+                                        <div id="total" class="ms-3"></div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end mt-3">
+                                        <button type="submit" class="btn btn-primary py-3">Buy Now!</button>
+                                        <a href="{{ path('app_stock_recyclable_materials') }}" class="btn btn-secondary py-3 ms-4">Cancel</a>
+                                    </div>
                                 </div>
-                                </div>
-                            <div class="col-12 d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-primary py-3">Buy Now!</button>
-                                <a href="{{ path('app_stock_recyclable_materials') }}" class="btn btn-secondary py-3 ms-2">Cancel</a>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -227,6 +237,34 @@
         font-size: 1.2rem;
         margin-left: 10px; /* Adjust spacing between button and total */
     }
+    .custom-gray-btn {
+    background-color: gray;
+    border-color: black;
+}
+
+.custom-gray-btn:hover {
+    background-color: gray;
+    border-color: black;
+}
+.custom-p-margin {
+    margin-bottom: 0 !important;
+}
+.error-message {
+    display: block; /* Display as block to make it appear on its own line */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 5px 5px 0px;
+    margin-top: 2px; /* Adjust margin for smaller space between elements */
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px; /* Adjust the maximum width as needed */
+    /* Add more styles as needed */
+}
+
+
+
+
 </style>
 
 </body>

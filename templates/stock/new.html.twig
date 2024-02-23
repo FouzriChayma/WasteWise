@@ -34,7 +34,7 @@
                 <td>
                     {{ form_widget(form.name_st) }}
                     {% if form_errors(form.name_st) %}
-                        <div class="text-danger">{{ form_errors(form.name_st) }}</div>
+                        <div class="error-message">{{ form_errors(form.name_st) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -43,7 +43,7 @@
                 <td>
                     {{ form_widget(form.quantity_st) }}
                     {% if form_errors(form.quantity_st) %}
-                        <div class="text-danger">{{ form_errors(form.quantity_st) }}</div>
+                        <div class="error-message">{{ form_errors(form.quantity_st) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -52,7 +52,7 @@
                 <td>
                     {{ form_widget(form.buying_price) }}
                     {% if form_errors(form.buying_price) %}
-                        <div class="text-danger">{{ form_errors(form.buying_price) }}</div>
+                        <div class="error-message">{{ form_errors(form.buying_price) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -61,7 +61,7 @@
                 <td>
                     {{ form_widget(form.selling_price) }}
                     {% if form_errors(form.selling_price) %}
-                        <div class="text-danger">{{ form_errors(form.selling_price) }}</div>
+                        <div class="error-message">{{ form_errors(form.selling_price) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -70,7 +70,7 @@
                 <td>
                     {{ form_widget(form.storehouse) }}
                     {% if form_errors(form.storehouse) %}
-                        <div class="text-danger">{{ form_errors(form.storehouse) }}</div>
+                        <div class="error-message">{{ form_errors(form.storehouse) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -79,7 +79,7 @@
                 <td>
                     {{ form_widget(form.image_st, { 'attr': {'class': 'form-control'} }) }}
                     {% if form_errors(form.image_st) %}
-                        <div class="text-danger">{{ form_errors(form.image_st) }}</div>
+                        <div class="error-message">{{ form_errors(form.image_st) }}</div>
                     {% endif %}
                 </td>
             </tr>
@@ -100,4 +100,20 @@
         </div>
     </div>
 </div>
+ <style>
+.error-message {
+    display: block; /* Display as block to make it appear on its own line */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 5px 5px 0px;
+    margin-top: 2px; /* Adjust margin for smaller space between elements */
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px; /* Adjust the maximum width as needed */
+    /* Add more styles as needed */
+}
+
+
+</style>
 {% endblock %}

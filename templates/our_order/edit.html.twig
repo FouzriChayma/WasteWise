@@ -21,7 +21,7 @@
                                         {{ form_label(form.quantityO, 'Quantity') }}
                                         {{ form_widget(form.quantityO, {'attr': {'class': 'form-control'}}) }}
                                         {% if form_errors(form.quantityO) %}
-                                            <div class="text-danger">{{ form_errors(form.quantityO) }}</div>
+                                            <div class="error-message">{{ form_errors(form.quantityO) }}</div>
                                         {% endif %}
                                     </div>
                                     
@@ -29,7 +29,7 @@
                                         {{ form_label(form.statusO, 'Status') }}
                                         {{ form_widget(form.statusO, {'attr': {'class': 'form-control'}}) }}
                                         {% if form_errors(form.statusO) %}
-                                            <div class="text-danger">{{ form_errors(form.statusO) }}</div>
+                                            <div class="error-message">{{ form_errors(form.statusO) }}</div>
                                         {% endif %}
                                     </div>
 
@@ -37,7 +37,7 @@
                                         {{ form_label(form.stock, 'Stock') }}
                                         {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
                                         {% if form_errors(form.stock) %}
-                                            <div class="text-danger">{{ form_errors(form.stock) }}</div>
+                                            <div class="error-message">{{ form_errors(form.stock) }}</div>
                                         {% endif %}
                                     </div>
                         
@@ -52,4 +52,17 @@
         </div>
     </div>
 </div>
+
+<style>
+.error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    /* Add more styles as needed */
+}
+</style>
 {% endblock %}
