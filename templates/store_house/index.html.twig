@@ -12,7 +12,12 @@
                 <a href="{{ path('app_store_house_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
 
 </div>
-
+<form action="{{ path('app_store_house_index') }}" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
                     <thead class="table-success">
@@ -122,19 +127,22 @@
     </style>
 {% endblock %}
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
-        <li class="page-item disabled">
-            <span class="page-link custom-link text-dark">Previous</span>
-        </li>
-        <li class="page-item active "><a class="page-link custom-link text-dark" href="#">1</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link custom-link text-dark" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
+ <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mt-4 custom-pagination">
+                        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                            <a class="page-link custom-link text-dark" href="{{ path('app_store_house_index', {'page': page - 1}) }}">Previous</a>
+                        </li>
+                        {% for pageNumber in 1..total_pages %}
+                            <li class="page-item {% if page == pageNumber %}active{% endif %}">
+                                <a class="page-link custom-link text-dark" href="{{ path('app_store_house_index', {'page': pageNumber}) }}">{{ pageNumber }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                            <a class="page-link custom-link text-dark" href="{{ path('app_store_house_index', {'page': page + 1}) }}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
 </div></div>
 </div>
 <script>

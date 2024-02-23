@@ -16,21 +16,51 @@ use App\Repository\StoreHouseRepository;
 #[Route('/stock')]
 class StockController extends AbstractController
 {
-    #[Route('/', name: 'app_stock_index', methods: ['GET'])]
-    public function index(StockRepository $stockRepository): Response
-    {
-        return $this->render('stock/index.html.twig', [
-            'stocks' => $stockRepository->findAll(),
-        ]);
+    // StockController.php
+
+#[Route('/', name: 'app_stock_index', methods: ['GET'])]
+public function index(StockRepository $stockRepository, Request $request): Response
+{
+    // Pagination
+    $page = $request->query->getInt('page', 1);
+    $pageSize = 5; // Number of items per page
+    $totalStocksCount = count($stockRepository->findAll());
+    $totalPages = ceil($totalStocksCount / $pageSize);
+
+    // Fetch the stocks for the current page
+    $offset = ($page - 1) * $pageSize;
+
+    // Handle search query
+    $searchQuery = $request->query->get('search');
+    if ($searchQuery) {
+        $stocks = $stockRepository->findBySearchQuery($searchQuery);
+        $totalStocksCount = count($stocks);
+        $totalPages = ceil($totalStocksCount / $pageSize);
+    } else {
+        $stocks = $stockRepository->findBy([], [], $pageSize, $offset);
     }
 
-    #[Route('/Recyclable/materials', name: 'app_stock_recyclable_materials', methods: ['GET'])]
-    public function allfront(StockRepository $stockRepository): Response
-    {
-        return $this->render('stock/show.html copy.twig', [
-            'stocks' => $stockRepository->findAll(),
-        ]);
-    }
+    return $this->render('stock/index.html.twig', [
+        'stocks' => $stocks,
+        'page' => $page,
+        'total_pages' => $totalPages,
+    ]);
+}
+
+
+#[Route('/Recyclable/materials', name: 'app_stock_recyclable_materials', methods: ['GET'])]
+public function allfront(Request $request, StockRepository $stockRepository): Response
+{
+    $searchQuery = $request->query->get('search');
+
+    // Filter stocks based on search query
+    $stocks = $stockRepository->findBy1($searchQuery);
+
+    return $this->render('stock/show.html copy.twig', [
+        'stocks' => $stocks,
+    ]);
+}
+
 
     #[Route('/new', name: 'app_stock_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, StoreHouseRepository $storeHouseRepository): Response

@@ -13,7 +13,13 @@
     <h1 class="mb-0">Orders Management</h1>
 
 </div>
-
+<!-- Add the search form at the top of the page -->
+<form action="{{ path('app_our_order_index') }}" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search by Quantity, Status...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 <div class="table-responsive">
   <table class="table table-bordered table-hover">
                     <thead class="table-success">
@@ -24,10 +30,11 @@
                                     <label for="selectAll"></label>
                                 </span>
                             </th>
-                            <th>Id Commande</th>
-                            <th>QuantityO</th>
-                            <th>StatusO</th>
-                            <th>TotalO</th>
+                            <th>Id Order</th>
+                            <th>Quantity</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Total</th>
                             <th>actions</th>
                         </tr>
                     </thead>
@@ -42,6 +49,7 @@
                                 </td>
                                 <td>{{ our_order.idO }}</td>
                                 <td>{{ our_order.quantityO }}</td>
+                                <td>{{ our_order.stock }}</td>
                                 <td>
                                     {% if our_order.statusO == 'Pending' %}
                                         <span class="badge bg-warning">{{ our_order.statusO }}</span>
@@ -76,17 +84,20 @@
                             </tr>
                         {% endfor %}
                     </tbody>
+                    {% for our_order in our_orders|slice((page - 1) * 5, 5) %}
+                            <!-- Render each order -->
+                        {% endfor %}
                 </table>
 </div>
-{% block stylesheets %}
     <style>
         /* Style pour la pagination */
+         /* Pagination styling */
         .pagination {
             display: flex;
             justify-content: center;
             list-style: none;
             padding: 0;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
+            border: none;
         }
 
         .pagination li {
@@ -99,7 +110,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
+            border: none;
         }
 
         .pagination a:hover {
@@ -114,23 +125,26 @@
         .pagination .disabled a {
             pointer-events: none;
             opacity: 0.6;
-        }
+        } 
     </style>
-{% endblock %}
-
+<!-- Pagination -->
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
-        <li class="page-item disabled">
-            <span class="page-link custom-link text-dark">Previous</span>
+        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_our_order_index', {'page': page - 1}) }}">Previous</a>
         </li>
-        <li class="page-item active "><a class="page-link custom-link text-dark" href="#">1</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link custom-link text-dark" href="#">Next</a>
+        {% for pageNumber in 1..total_pages %}
+            <li class="page-item {% if page == pageNumber %}active{% endif %}">
+                <a class="page-link custom-link text-dark" href="{{ path('app_our_order_index', {'page': pageNumber}) }}">{{ pageNumber }}</a>
+            </li>
+        {% endfor %}
+        <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_our_order_index', {'page': page + 1}) }}">Next</a>
         </li>
     </ul>
 </nav>
+
+
 </div></div>
 </div>
 <script>

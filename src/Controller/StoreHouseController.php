@@ -17,12 +17,36 @@ use Symfony\Component\Routing\Annotation\Route;
 class StoreHouseController extends AbstractController
 {
     #[Route('/', name: 'app_store_house_index', methods: ['GET'])]
-    public function index(StoreHouseRepository $storeHouseRepository): Response
-    {
-        return $this->render('store_house/index.html.twig', [
-            'store_houses' => $storeHouseRepository->findAll(),
-        ]);
+public function index(StoreHouseRepository $storeHouseRepository, Request $request): Response
+{
+    // Pagination
+    $page = $request->query->getInt('page', 1);
+    $pageSize = 5; // Number of items per page
+
+    // Search query
+    $searchQuery = $request->query->get('search');
+
+    if ($searchQuery) {
+        // Fetch store houses matching the search query
+        $storeHouses = $storeHouseRepository->findBySearchQuery($searchQuery);
+        $totalStoreHousesCount = count($storeHouses);
+    } else {
+        // Fetch all store houses
+        $storeHouses = $storeHouseRepository->findAll();
+        $totalStoreHousesCount = count($storeHouses);
+        $offset = ($page - 1) * $pageSize;
+        $storeHouses = array_slice($storeHouses, $offset, $pageSize);
     }
+
+    // Calculate total pages
+    $totalPages = ceil($totalStoreHousesCount / $pageSize);
+
+    return $this->render('store_house/index.html.twig', [
+        'store_houses' => $storeHouses,
+        'page' => $page,
+        'total_pages' => $totalPages,
+    ]);
+}
 
     #[Route('/new', name: 'app_store_house_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -45,31 +69,33 @@ class StoreHouseController extends AbstractController
     }
     
 
-    #[Route('/{id}/orders', name: 'storehouse_orders')]
-    public function showOrders(StoreHouse $storehouse): Response
-    {
-        // Retrieve all stocks belonging to the storehouse
-        $stocks = $storehouse->getStocks();
+   #[Route('/{id}/orders', name: 'storehouse_orders')]
+public function showOrders(StoreHouse $storehouse): Response
+{
+    // Retrieve all stocks belonging to the storehouse
+    $stocks = $storehouse->getStocks();
 
-        // Initialize an empty array to store orders
-        $orders = [];
+    // Initialize an empty array to store orders
+    $orders = [];
 
-        // Iterate over each stock to retrieve its associated orders
-        foreach ($stocks as $stock) {
-            // Retrieve orders associated with the current stock
-            $stockOrders = $stock->getOurOrders();
-            
-            // Add the orders to the $orders array
-            foreach ($stockOrders as $order) {
-                $orders[] = $order;
-            }
+    // Iterate over each stock to retrieve its associated orders
+    foreach ($stocks as $stock) {
+        // Retrieve orders associated with the current stock
+        $stockOrders = $stock->getOurOrders();
+        
+        // Add the orders to the $orders array
+        foreach ($stockOrders as $order) {
+            $orders[] = $order;
         }
-
-        return $this->render('store_house/show.html.twig', [
-            'storehouse' => $storehouse,
-            'orders' => $orders,
-        ]);
     }
+
+    // Pass the $orders variable to the Twig template
+    return $this->render('store_house/show.html.twig', [
+        'storehouse' => $storehouse,
+        'orders' => $orders,
+    ]);
+}
+    
     #[Route('/{idSh}', name: 'app_store_house_show', methods: ['GET'])]
     public function show(StoreHouse $storeHouse): Response
     {

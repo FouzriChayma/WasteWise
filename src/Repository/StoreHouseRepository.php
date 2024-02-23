@@ -45,4 +45,12 @@ class StoreHouseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findBySearchQuery($searchQuery)
+{
+    return $this->createQueryBuilder('sh')
+        ->andWhere('sh.nameSh LIKE :query OR sh.locationSh LIKE :query')
+        ->setParameter('query', '%'.$searchQuery.'%')
+        ->getQuery()
+        ->getResult();
+}
 }

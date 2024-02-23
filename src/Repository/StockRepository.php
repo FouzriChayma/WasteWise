@@ -67,4 +67,23 @@ class StockRepository extends ServiceEntityRepository
              ->getQuery()
              ->getResult();
      }
+     public function findBySearchQuery($searchQuery)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name_st LIKE :query OR s.quantity_st LIKE :query') // Adjust field names as needed
+            ->setParameter('query', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findBy1($searchQuery)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.name_st LIKE :name OR s.selling_price LIKE :price')
+            ->setParameter('name', '%'.$searchQuery.'%')
+            ->setParameter('price', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

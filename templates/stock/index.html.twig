@@ -11,7 +11,13 @@
     <h1 class="mb-0">Stock Managment</h1>
     <a href="{{ path('app_stock_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
 </div>
-
+<!-- Search Form -->
+<form action="{{ path('app_stock_index') }}" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Search...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
 <div class="table-responsive">
     <table class="table table-bordered table-hover">
         <thead class="table-success"> <!-- Modification: changer la couleur en vert -->
@@ -59,59 +65,61 @@
         </tbody>
     </table>
 </div>
-{% block stylesheets %}
-    <style>
-        /* Style pour la pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
-        }
+<style>
+    /* Pagination styling */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        border: none;
+    }
 
-        .pagination li {
-            margin: 0 5px;
-        }
+    .pagination li {
+        margin: 0 5px;
+    }
 
-        .pagination a {
-            color: #555;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
-        }
+    .pagination a {
+        color: #555;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        border: none;
+    }
 
-        .pagination a:hover {
-            background-color: #f0f0f0;
-        }
+    .pagination a:hover {
+        background-color: #f0f0f0;
+    }
 
-        .pagination .active a {
-            background-color: #D4EDDA;
-            color: #fff;
-        }
+    .pagination .active a {
+        background-color: #D4EDDA;
+        color: #fff;
+    }
 
-        .pagination .disabled a {
-            pointer-events: none;
-            opacity: 0.6;
-        }
-    </style>
-{% endblock %}
+    .pagination .disabled a {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+</style>
 
+<!-- Pagination -->
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
-        <li class="page-item disabled">
-            <span class="page-link custom-link text-dark">Previous</span>
+        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_stock_index', {'page': page - 1}) }}">Previous</a>
         </li>
-        <li class="page-item active "><a class="page-link custom-link text-dark" href="#">1</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link custom-link text-dark" href="#">Next</a>
+        {% for pageNumber in 1..total_pages %}
+            <li class="page-item {% if page == pageNumber %}active{% endif %}">
+                <a class="page-link custom-link text-dark" href="{{ path('app_stock_index', {'page': pageNumber}) }}">{{ pageNumber }}</a>
+            </li>
+        {% endfor %}
+        <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_stock_index', {'page': page + 1}) }}">Next</a>
         </li>
     </ul>
 </nav>
+
 </div></div>
 </div>
 <script>

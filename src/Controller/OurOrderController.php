@@ -18,12 +18,26 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class OurOrderController extends AbstractController
 {
     #[Route('/', name: 'app_our_order_index', methods: ['GET'])]
-    public function index(OurOrderRepository $ourOrderRepository): Response
+    public function index(Request $request, OurOrderRepository $ourOrderRepository): Response
     {
+        $page = $request->query->getInt('page', 1); // Get the page number from the request, default to 1 if not provided
+        $perPage = 7; // Number of orders per page
+        $searchQuery = $request->query->get('search'); // Get the search query from the request
+
+        // Fetch paginated orders based on the search query and pagination parameters
+        $ourOrders = $ourOrderRepository->searchOrders($searchQuery, $page, $perPage);
+
+        // Calculate total pages based on total count of orders
+        $totalOrdersCount = $ourOrderRepository->countSearchResults($searchQuery);
+        $totalPages = ceil($totalOrdersCount / $perPage);
+
         return $this->render('our_order/index.html.twig', [
-            'our_orders' => $ourOrderRepository->findAll(),
+            'our_orders' => $ourOrders,
+            'total_pages' => $totalPages,
+            'page' => $page,
         ]);
     }
+
 
     #[Route('/new', name: 'app_our_order_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response

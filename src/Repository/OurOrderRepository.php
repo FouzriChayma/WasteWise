@@ -45,4 +45,42 @@ class OurOrderRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function searchOrders($searchQuery, $page, $perPage)
+{
+    $queryBuilder = $this->createQueryBuilder('o');
+
+    // Filter orders based on the search query (assuming 'quantityO', 'statusO', and 'idO' are fields to search)
+    if (!empty($searchQuery)) {
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->like('o.quantityO', ':searchQuery'))
+            ->orWhere($queryBuilder->expr()->like('o.statusO', ':searchQuery'))
+            ->orWhere($queryBuilder->expr()->like('o.idO', ':searchQuery'))
+            ->setParameter('searchQuery', '%' . $searchQuery . '%');
+    }
+
+    // Paginate the results
+    $queryBuilder
+        ->setFirstResult(($page - 1) * $perPage)
+        ->setMaxResults($perPage);
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
+public function countSearchResults($searchQuery)
+{
+    $queryBuilder = $this->createQueryBuilder('o')
+        ->select('COUNT(o.idO)');
+
+    // Filter orders based on the search query (assuming 'quantityO', 'statusO', and 'idO' are fields to search)
+    if (!empty($searchQuery)) {
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->like('o.quantityO', ':searchQuery'))
+            ->orWhere($queryBuilder->expr()->like('o.statusO', ':searchQuery'))
+            ->orWhere($queryBuilder->expr()->like('o.idO', ':searchQuery'))
+            ->setParameter('searchQuery', '%' . $searchQuery . '%');
+    }
+
+    return $queryBuilder->getQuery()->getSingleScalarResult();
+}
 }
