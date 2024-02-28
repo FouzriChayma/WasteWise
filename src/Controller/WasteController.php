@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Waste;
 use App\Form\WasteType;
+use App\Form\Waste2Type;
+
 use App\Repository\WasteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,4 +81,5 @@ class WasteController extends AbstractController
         return $this->redirectToRoute('app_waste_index', [], Response::HTTP_SEE_OTHER);
     }
     
+  
 }

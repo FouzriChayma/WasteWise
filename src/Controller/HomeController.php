@@ -33,7 +33,7 @@ class HomeController extends AbstractController
             $entityManager->persist($waste);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('thanks', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('waste/affecter waste.html.twig', [

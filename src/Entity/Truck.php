@@ -19,6 +19,10 @@ class Truck
 
     
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/^\d{3}[A-Za-z]{2}\d{4}$/',
+        message: "Matricule must follow the format: 3 numbers, 2 characters, 4 numbers"
+    )]
     #[Assert\NotBlank(message:"Matricule is required")]
     private ?string $matricule = null;
 
