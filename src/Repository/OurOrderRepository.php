@@ -83,4 +83,15 @@ public function countSearchResults($searchQuery)
 
     return $queryBuilder->getQuery()->getSingleScalarResult();
 }
+
+public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): array
+{
+    $queryBuilder = $this->createQueryBuilder('o')
+        ->leftJoin('o.stock', 's') // Make sure to join the related Stock entity if needed
+        ->orderBy("o.{$sortField}", $sortOrder)
+        ->setMaxResults($pageSize)
+        ->setFirstResult($offset);
+
+    return $queryBuilder->getQuery()->getResult();
+}
 }

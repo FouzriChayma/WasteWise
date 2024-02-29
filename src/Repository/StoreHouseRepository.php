@@ -53,4 +53,24 @@ public function findBySearchQuery($searchQuery)
         ->getQuery()
         ->getResult();
 }
+/**
+     * Find all store houses with sorting.
+     *
+     * @param string $sortField
+     * @param string $sortOrder
+     * @param int $pageSize
+     * @param int $offset
+     *
+     * @return StoreHouse[]
+     */
+
+public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): array
+{
+    $queryBuilder = $this->createQueryBuilder('sh')
+        ->orderBy("sh.{$sortField}", $sortOrder)
+        ->setMaxResults($pageSize)
+        ->setFirstResult($offset);
+
+    return $queryBuilder->getQuery()->getResult();
+}
 }

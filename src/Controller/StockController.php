@@ -18,34 +18,47 @@ class StockController extends AbstractController
 {
     // StockController.php
 
+// StockController.php
+
 #[Route('/', name: 'app_stock_index', methods: ['GET'])]
 public function index(StockRepository $stockRepository, Request $request): Response
 {
-    // Pagination
     $page = $request->query->getInt('page', 1);
-    $pageSize = 5; // Number of items per page
+    $pageSize = 5;
     $totalStocksCount = count($stockRepository->findAll());
     $totalPages = ceil($totalStocksCount / $pageSize);
 
-    // Fetch the stocks for the current page
     $offset = ($page - 1) * $pageSize;
 
-    // Handle search query
     $searchQuery = $request->query->get('search');
+    $sortField = $request->query->get('sortField', 'name_st');
+    $sortOrder = $request->query->get('sortOrder', 'asc');
+
     if ($searchQuery) {
         $stocks = $stockRepository->findBySearchQuery($searchQuery);
         $totalStocksCount = count($stocks);
         $totalPages = ceil($totalStocksCount / $pageSize);
     } else {
-        $stocks = $stockRepository->findBy([], [], $pageSize, $offset);
+        $stocks = $stockRepository->findAllWithSorting($sortField, $sortOrder, $pageSize, $offset);
     }
+
+    $sortOptions = [
+        'name_st' => 'Name',
+        'quantity_st' => 'Quantity',
+        'selling_price' => 'Selling Price',
+        'buying_price' => 'Buying Price',
+    ];
 
     return $this->render('stock/index.html.twig', [
         'stocks' => $stocks,
         'page' => $page,
         'total_pages' => $totalPages,
+        'sortOptions' => $sortOptions,
+        'currentSortField' => $sortField,
+        'currentSortOrder' => $sortOrder,
     ]);
 }
+
 
 
 #[Route('/Recyclable/materials', name: 'app_stock_recyclable_materials', methods: ['GET'])]

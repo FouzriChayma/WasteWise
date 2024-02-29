@@ -86,4 +86,14 @@ class StockRepository extends ServiceEntityRepository
     }
 
 
+    public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): array
+{
+    $queryBuilder = $this->createQueryBuilder('s')
+        ->orderBy("s.{$sortField}", $sortOrder)
+        ->setMaxResults($pageSize)
+        ->setFirstResult($offset);
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
 }

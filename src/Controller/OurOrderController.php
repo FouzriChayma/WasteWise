@@ -18,25 +18,42 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class OurOrderController extends AbstractController
 {
     #[Route('/', name: 'app_our_order_index', methods: ['GET'])]
-    public function index(Request $request, OurOrderRepository $ourOrderRepository): Response
-    {
-        $page = $request->query->getInt('page', 1); // Get the page number from the request, default to 1 if not provided
-        $perPage = 7; // Number of orders per page
-        $searchQuery = $request->query->get('search'); // Get the search query from the request
+public function index(Request $request, OurOrderRepository $ourOrderRepository): Response
+{
+    $page = $request->query->getInt('page', 1);
+    $pageSize = 7;
+    $totalOrdersCount = count($ourOrderRepository->findAll());
+    $totalPages = ceil($totalOrdersCount / $pageSize);
 
-        // Fetch paginated orders based on the search query and pagination parameters
-        $ourOrders = $ourOrderRepository->searchOrders($searchQuery, $page, $perPage);
+    $offset = ($page - 1) * $pageSize;
 
-        // Calculate total pages based on total count of orders
-        $totalOrdersCount = $ourOrderRepository->countSearchResults($searchQuery);
-        $totalPages = ceil($totalOrdersCount / $perPage);
+    $searchQuery = $request->query->get('search');
+    $sortField = $request->query->get('sortField', 'idO'); // Default sort field to 'idO' if not provided
+    $sortOrder = $request->query->get('sortOrder', 'asc');
 
-        return $this->render('our_order/index.html.twig', [
-            'our_orders' => $ourOrders,
-            'total_pages' => $totalPages,
-            'page' => $page,
-        ]);
+    if ($searchQuery) {
+        $ourOrders = $ourOrderRepository->searchOrders($searchQuery, $page, $pageSize);
+        $totalOrdersCount = count($ourOrders);
+        $totalPages = ceil($totalOrdersCount / $pageSize);
+    } else {
+        $ourOrders = $ourOrderRepository->findAllWithSorting($sortField, $sortOrder, $pageSize, $offset);
     }
+
+    $sortOptions = [
+        'idO' => 'Order ID',
+        'quantityO' => 'Quantity',
+        'statusO' => 'Status',
+    ];
+
+    return $this->render('our_order/index.html.twig', [
+        'our_orders' => $ourOrders,
+        'page' => $page,
+        'total_pages' => $totalPages,
+        'sortOptions' => $sortOptions,
+        'currentSortField' => $sortField,
+        'currentSortOrder' => $sortOrder,
+    ]);
+}
 
 
     #[Route('/thanks', name: 'thanks')]

@@ -16,37 +16,54 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/store/house')]
 class StoreHouseController extends AbstractController
 {
+   
     #[Route('/', name: 'app_store_house_index', methods: ['GET'])]
-public function index(StoreHouseRepository $storeHouseRepository, Request $request): Response
-{
-    // Pagination
-    $page = $request->query->getInt('page', 1);
-    $pageSize = 5; // Number of items per page
-
-    // Search query
-    $searchQuery = $request->query->get('search');
-
-    if ($searchQuery) {
-        // Fetch store houses matching the search query
-        $storeHouses = $storeHouseRepository->findBySearchQuery($searchQuery);
-        $totalStoreHousesCount = count($storeHouses);
-    } else {
-        // Fetch all store houses
-        $storeHouses = $storeHouseRepository->findAll();
-        $totalStoreHousesCount = count($storeHouses);
+    public function index(StoreHouseRepository $storeHouseRepository, Request $request): Response
+    {
+        // Pagination
+        $page = $request->query->getInt('page', 1);
+        $pageSize = 5; // Number of items per page
+    
+        // Search query
+        $searchQuery = $request->query->get('search');
+    
+        // Sort options
+        $sortOptions = [
+            'nameSh' => 'Name',
+            'locationSh' => 'Location',
+            'capacity' => 'Capacity',
+            'quantitySum' => 'Quantity Sum',
+        ];
+    
+        $sortField = $request->query->get('sortField', 'nameSh');
+        $sortOrder = $request->query->get('sortOrder', 'asc');
+    
         $offset = ($page - 1) * $pageSize;
-        $storeHouses = array_slice($storeHouses, $offset, $pageSize);
+    
+        if ($searchQuery) {
+            // Fetch store houses matching the search query
+            $storeHouses = $storeHouseRepository->findBySearchQuery($searchQuery);
+            $totalStoreHousesCount = count($storeHouses);
+        } else {
+            // Fetch all store houses with sorting
+            $storeHouses = $storeHouseRepository->findAllWithSorting($sortField, $sortOrder, $pageSize, $offset);
+            $totalStoreHousesCount = count($storeHouses);
+        }
+    
+        // Calculate total pages
+        $totalPages = ceil($totalStoreHousesCount / $pageSize);
+    
+        return $this->render('store_house/index.html.twig', [
+            'store_houses' => $storeHouses,
+            'page' => $page,
+            'total_pages' => $totalPages,
+            'sortOptions' => $sortOptions,
+            'currentSortField' => $sortField,
+            'currentSortOrder' => $sortOrder,
+        ]);
     }
-
-    // Calculate total pages
-    $totalPages = ceil($totalStoreHousesCount / $pageSize);
-
-    return $this->render('store_house/index.html.twig', [
-        'store_houses' => $storeHouses,
-        'page' => $page,
-        'total_pages' => $totalPages,
-    ]);
-}
+    
+    
 
     #[Route('/new', name: 'app_store_house_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
