@@ -20,6 +20,14 @@ class TruckRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Truck::class);
     }
+    public function findByDisponibilite($disponibilite)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->where('t.disponibilite = :disponibilite')
+            ->setParameter('disponibilite', $disponibilite);
+
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Truck[] Returns an array of Truck objects

@@ -1,3 +1,52 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_waste_index:
+    path: /waste
+    controller: App\Controller\WasteController::index
+
+app_waste_new:
+    path: /waste/new
+    controller: App\Controller\WasteController::new
+
+app_waste_show:
+    path: /waste/{id}
+    controller: App\Controller\WasteController::show
+
+app_waste_edit:
+    path: /waste/{id}/edit
+    controller: App\Controller\WasteController::edit
+
+app_waste_delete:
+    path: /waste/{id}
+    controller: App\Controller\WasteController::delete
+
+app_waste_search:
+    path: /waste/search
+    controller: App\Controller\WasteController::search
+    methods: ['GET']
+
+app_truck_index:
+    path: /truck
+    controller: App\Controller\TruckController::index
+
+app_truck_new:
+    path: /truck/new
+    controller: App\Controller\TruckController::new
+
+app_truck_show:
+    path: /truck/{id}
+    controller: App\Controller\TruckController::show
+
+app_truck_edit:
+    path: /truck/{id}/edit
+    controller: App\Controller\TruckController::edit
+
+app_truck_delete:
+    path: /truck/{id}/delete
+    controller: App\Controller\TruckController::delete
+
+app_truck_search:
+    path: /truck/search
+    controller: App\Controller\TruckController::search
+    methods: ['GET']

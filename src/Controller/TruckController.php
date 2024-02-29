@@ -11,17 +11,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/truck')]
 class TruckController extends AbstractController
 {
     #[Route('/', name: 'app_truck_index', methods: ['GET'])]
-    public function index(TruckRepository $truckRepository): Response
+    public function index(TruckRepository $truckRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $trucks = $truckRepository->findAll();
+        $articles = $paginator->paginate(   
+            $trucks, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('truck/index.html.twig', [
-            'trucks' => $truckRepository->findAll(),
+            'trucks' => $articles,
         ]);
     }
+   
 
     #[Route('/new', name: 'app_truck_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -90,4 +99,15 @@ class TruckController extends AbstractController
 
         return $this->redirectToRoute('app_truck_index');
     }
+    #[Route('/search', name: 'search_truck', methods: ['GET', 'POST'])]
+    public function search_truck(TruckRepository $truckRepository, Request $request): Response
+    {
+        $searchTerm = $request->query->get('disponibilite', '');
+        $trucks = $truckRepository->findByDisponibilite($searchTerm);
+    
+        return $this->render('truck/search.html.twig', [
+            'trucks' => $trucks,
+        ]);
+    }
 }
+

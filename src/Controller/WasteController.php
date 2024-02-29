@@ -12,15 +12,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/waste')]
 class WasteController extends AbstractController
 {
     #[Route('/', name: 'app_waste_index', methods: ['GET'])]
-    public function index(WasteRepository $wasteRepository): Response
+    public function index(WasteRepository $wasteRepository,PaginatorInterface $paginator,Request $request): Response
     {
+        $wastes = $wasteRepository->findAll();
+        $articles = $paginator->paginate(   
+            $wastes, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('waste/index.html.twig', [
-            'wastes' => $wasteRepository->findAll(),
+            'wastes' => $articles,
         ]);
     }
 
@@ -80,6 +87,15 @@ class WasteController extends AbstractController
 
         return $this->redirectToRoute('app_waste_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/search', name: 'search', methods: ['GET', 'POST'])]
+    public function search(WasteRepository $wasteRepository, Request $request): Response
+    {
+        $searchTerm = $request->query->get('type', '');
+        $wastes = $wasteRepository->findByType($searchTerm);
     
+        return $this->render('waste/search.html.twig', [
+            'wastes' => $wastes,
+        ]);
+    }
   
 }

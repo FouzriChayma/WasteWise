@@ -1,0 +1,2 @@
+parameters:
+    app.waste.max_per_page: 5

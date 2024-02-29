@@ -257,28 +257,117 @@
 		
 {% block body %}
 
-   
+   <style>
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
 
-		                         <div class="app-wrapper">
+.pagination li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pagination a {
+  display: block;
+  padding: 5px 10px;
+  background-color: #f2f2f2;
+  text-decoration: none;
+  color: green;
+  border-radius: 5px;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+}
+
+.pagination .active a {
+  background-color: #563d2d;
+  color: #fff;
+}
+
+.pagination .active a:hover {
+  background-color: green;
+}
+
+.pagination .disabled {
+  color: #999;
+  cursor: not-allowed;
+}
+.input__container--variant {
+  background: linear-gradient(to bottom, #F3FFF9, #F3FFF9);
+  border-radius: 30px;
+  max-width: 13em;
+  padding: 1em 1em;
+  
+}
+
+.shadow__input--variant {
+  filter: blur(25px);
+  border-radius: 30px;
+  background-color: #F3FFF9;
+  opacity: 0.5;
+}
+
+.input__button__shadow--variant {
+  border-radius: 15px;
+  background-color: green;
+  padding: 3px;
+  border: none;
+  height: 30px;
+  margin-left: -11px;
+}
+
+.input__button__shadow--variant:hover {
+  background-color: #3C6659;
+}
+
+.input__search--variant {
+  width: 13em;
+  align-items: center;
+  border-radius: 13em;
+  outline: none;
+  border: none;
+  padding: 0.8em;
+  font-size: 1.2em;
+  color: #002019;
+  background-color: transparent;
+}
+
+.input__search--variant::placeholder {
+  color: #002019;
+  opacity: 0.7;
+}
+
+.input__container--variant {
+  background: linear-gradient(to bottom, #F3FFF9, #F3FFF9);
+  border-radius: 1.5em;
+  max-width: 14em;
+  padding: 1em;
+  box-shadow: 0em 1em 3em #beecdc64;
+}
+
+</style>
+<div class="app-wrapper">
 	    
 	    <div class="app-content pt-3 p-md-3 p-lg-4">
 		    <div class="container-xl">
 			    
 			    <div class="row g-3 mb-4 align-items-center justify-content-between">
 				    <div class="col-auto">
-			            <h1 class="app-page-title mb-0">Table of Trucks</h1>
-						
+			            <h1 >Table of Truck</h1>
 				    </div>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-
-					    </ul><!--//footer-menu-->
-				    </nav>
-			    </div><!--//app-sidepanel-footer-->
-		       
-	        </div><!--//sidepanel-inner-->
-	    </div><!--//app-sidepanel-->
+					<div class="input__container input__container--variant">
+    <div class="shadow__input shadow__input--variant"></div>
+	<form action="{{ path('search_truck') }}" method="get" >
+    <input type="text" id="disponibilite" name="disponibilite" placeholder="Search..." class="input__search input__search--variant" />
+    <button type="submit" class="input__button__shadow input__button__shadow--variant"><svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="1.5em" width="13em">
+            <path d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z" fill-rule="evenodd" fill="#FFF"></path>
+          </svg>
+        </button>
+</form> 
+</div>         
     <table class="table">
         <thead>
             <tr>
@@ -294,7 +383,7 @@
                 <td>{{ truck.disponibilite }}</td>
                 <td>
                     <a href="{{ path('app_truck_show', {'id': truck.id}) }}" class="badge bg-success">show</a>
-                    <a href="{{ path('app_truck_edit', {'id': truck.id}) }}"class="badge bg-warning"">edit</a>
+                    <a href="{{ path('app_truck_edit', {'id': truck.id}) }}"class="badge bg-warning">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -305,7 +394,8 @@
         </tbody>
     </table>
 
-  
+  	{{ knp_pagination_render(trucks) }}
+
     <a href="{{ path('app_truck_new') }}" class="btn btn-primary">Create new</a>
 {% endblock %}
 
