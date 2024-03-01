@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Stock;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 #[Route('/our/order')]
@@ -45,6 +47,7 @@ public function index(Request $request, OurOrderRepository $ourOrderRepository):
         'statusO' => 'Status',
     ];
 
+
     return $this->render('our_order/index.html.twig', [
         'our_orders' => $ourOrders,
         'page' => $page,
@@ -52,6 +55,37 @@ public function index(Request $request, OurOrderRepository $ourOrderRepository):
         'sortOptions' => $sortOptions,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
+    ]);
+}
+
+
+#[Route('/PDF_Reserver', name: 'PDF_Reserver', methods: ['GET'])]
+public function PDF_Reserver(OurOrderRepository $ourOrderRepository)
+{   
+    $result = $ourOrderRepository->findAll();
+
+    // Configure Dompdf according to your needs
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Arial');
+
+    // Instantiate Dompdf with our options
+    $dompdf = new Dompdf($pdfOptions);
+    
+    // Retrieve the HTML generated in our twig file
+    $html = $this->renderView('our_order/pdf_list.html.twig', [
+        'our_orders' => $result  // Pass 'our_orders' instead of 'orders'
+    ]);
+
+    // Load HTML to Dompdf
+    $dompdf->loadHtml($html);
+    // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render the HTML as PDF
+    $dompdf->render();
+    // Output the generated PDF to Browser (inline view)
+    $dompdf->stream("List_of_orders.pdf", [
+        "Attachment" => false
     ]);
 }
 
