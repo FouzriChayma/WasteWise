@@ -84,8 +84,6 @@ class StockRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
     public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): array
 {
     $queryBuilder = $this->createQueryBuilder('s')
@@ -94,6 +92,18 @@ class StockRepository extends ServiceEntityRepository
         ->setFirstResult($offset);
 
     return $queryBuilder->getQuery()->getResult();
+}
+
+public function findMostOrderedStocks(): array
+{
+    return $this->createQueryBuilder('s')
+    ->leftJoin('s.ourOrders', 'o')
+    ->select('s', 'COUNT(o) as orderCount')
+    ->groupBy('s.idSt')
+    ->orderBy('orderCount', 'DESC')
+    ->setMaxResults(4)
+    ->getQuery()
+    ->getResult();
 }
 
 }

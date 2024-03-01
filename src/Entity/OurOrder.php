@@ -28,7 +28,7 @@ class OurOrder
     private $statusO;
 
     #[ORM\Column(type: "float", nullable: true)]
-    private $totalO=0;
+    private $totalO;
 
     #[ORM\Column(type: "datetime")]
     private $createdAt; // Add this line

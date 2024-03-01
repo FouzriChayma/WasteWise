@@ -29,6 +29,14 @@ public function index(Request $request, OurOrderRepository $ourOrderRepository):
      $totalOrders = $ourOrderRepository->getTotalOrders();
      $mostOrderedStock = $ourOrderRepository->getMostOrderedStock();
 
+     $totalSalesCount = $ourOrderRepository->getTotalSalesCount();
+
+     $cancelledOrders = $ourOrderRepository->getCancelledOrdersCount();
+    $pendingOrders = $ourOrderRepository->getPendingOrdersCount();
+    $deliveredOrders = $ourOrderRepository->getDeliveredOrdersCount();
+
+    
+
     $totalOrdersCount = count($ourOrderRepository->findAll());
     $totalPages = ceil($totalOrdersCount / $pageSize);
 
@@ -62,6 +70,10 @@ public function index(Request $request, OurOrderRepository $ourOrderRepository):
         'currentSortOrder' => $sortOrder,
         'totalOrders' => $totalOrders, // Pass totalOrders to the template
         'mostOrderedStock' => $mostOrderedStock,
+        'totalSalesCount' => $totalSalesCount,
+        'cancelledOrders' => $cancelledOrders,
+        'pendingOrders' => $pendingOrders,        
+        'deliveredOrders' => $deliveredOrders,
 
 
     ]);

@@ -49,6 +49,7 @@ public function index(StockRepository $stockRepository, Request $request): Respo
         'buying_price' => 'Buying Price',
     ];
 
+
     return $this->render('stock/index.html.twig', [
         'stocks' => $stocks,
         'page' => $page,
@@ -56,6 +57,7 @@ public function index(StockRepository $stockRepository, Request $request): Respo
         'sortOptions' => $sortOptions,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
+
     ]);
 }
 
@@ -65,6 +67,7 @@ public function index(StockRepository $stockRepository, Request $request): Respo
 public function allfront(Request $request, StockRepository $stockRepository): Response
 {
     $searchQuery = $request->query->get('search');
+    
 
     // Filter stocks based on search query
     $stocks = $stockRepository->findBy1($searchQuery);

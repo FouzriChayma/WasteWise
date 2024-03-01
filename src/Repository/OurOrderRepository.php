@@ -124,7 +124,54 @@ public function getMostOrderedStock(): array
     return $query->getResult();
 }
 
+// OurOrderRepository.php
 
+public function getTotalSalesCount(): float
+{
+    $orders = $this->createQueryBuilder('o')
+    ->getQuery()
+    ->getResult();
+
+$totalSum = 0;
+
+foreach ($orders as $order) {
+    $totalSum += $order->getTotalO();
+}
+
+return $totalSum;
+}
+
+public function getCancelledOrdersCount(): int
+    {
+        // Implement the logic to get the count for Cancelled Orders
+        return $this->createQueryBuilder('o')
+            ->select('COUNT(o.idO)')
+            ->where('o.statusO = :cancelled')
+            ->setParameter('cancelled', 'Cancelled') // Assuming this is the status for cancelled orders
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getPendingOrdersCount(): int
+    {
+        // Implement the logic to get the count for Pending Orders
+        return $this->createQueryBuilder('o')
+            ->select('COUNT(o.idO)')
+            ->where('o.statusO = :pending')
+            ->setParameter('pending', 'Pending') // Assuming this is the status for pending orders
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    public function getDeliveredOrdersCount(): int
+    {
+        // Implement the logic to get the count for Delivered Orders
+        return $this->createQueryBuilder('o')
+            ->select('COUNT(o.idO)')
+            ->where('o.statusO = :delivered')
+            ->setParameter('delivered', 'Delivered') // Assuming this is the status for delivered orders
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
 
 
