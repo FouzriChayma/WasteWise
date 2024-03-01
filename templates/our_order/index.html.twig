@@ -4,6 +4,7 @@
 
 
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="app-wrapper">
 	    
@@ -13,6 +14,66 @@
     <h1 class="mb-0">Orders Management</h1>
 
 </div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-lg-3">
+    <div class="app-card app-card-chart h-100 shadow-sm">
+        <div class="app-card-header p-3 border-0">
+            <h4 class="stats-type mb-1">Most Ordered Stock</h4>
+            <h4 class="app-card-title">Total Orders :{{ totalOrders }} </h4>
+        </div><!--//app-card-header-->
+        <div class="app-card-body p-4">
+            <div class="chart-container">
+                <canvas id="chart-pie"></canvas>
+            </div>
+        </div><!--//app-card-body-->
+    </div><!--//app-card-->
+     </div>
+
+
+<script>
+    // Assuming mostOrderedStock is an array with name_st and totalQuantity properties
+    var mostOrderedStock = {{ mostOrderedStock|json_encode|raw }};
+
+    // Extracting data for the pie chart
+    var labels = mostOrderedStock.map(function(stock) {
+        return stock.name_st;
+    });
+
+    var data = mostOrderedStock.map(function(stock) {
+        return stock.totalQuantity;
+    });
+
+    // Create the pie chart
+    var ctx = document.getElementById('chart-pie').getContext('2d');
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    'rgba(0, 100, 0, 0.8)',    // Dark Green
+                        'rgba(255, 170, 0, 0.8)',  // Darker Yellow
+
+                    'rgba(139, 69, 19, 0.8)',  // Saddle Brown
+                    'rgba(153, 102, 255, 0.8)',
+                ],
+
+            }],
+        },
+    });
+</script>
+<!-- Add this inside the Twig template -->
+
+
+
+
+
+
+
+</div><!--//row-->
+
 <!-- Add the search form at the top of the page -->
 <!-- Add this to your Twig template -->
 <div class="row mb-3">
@@ -81,6 +142,7 @@
                             <th>Stock</th>
                             <th>Status</th>
                             <th>Total</th>
+                            <th>Order on :</th>
                             <th>actions</th>
                         </tr>
                     </thead>
@@ -109,7 +171,7 @@
                                 </td>
 
                                 <td>{{ our_order.totalO }}</td>
-                                
+                                <td>{{ our_order.createdAt|date('Y-m-d') }}</td>
                                 <td style="width: 200px;" class="text-center">
                                     <a href="{{ path('app_our_order_show', {'idO': our_order.idO}) }}" class="btn btn-sm btn-secondary" title="Show">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">

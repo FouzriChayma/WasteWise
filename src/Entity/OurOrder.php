@@ -30,10 +30,16 @@ class OurOrder
     #[ORM\Column(type: "float", nullable: true)]
     private $totalO=0;
 
+    #[ORM\Column(type: "datetime")]
+    private $createdAt; // Add this line
+
+
     public function __construct()
     {
         // Set the default status to "Pending" when creating a new OurOrder
         $this->statusO = 'Pending';
+        $this->createdAt = new \DateTime(); // Set the default value for createdAt
+
     }
 
     public function getIdO(): ?int
@@ -44,6 +50,10 @@ class OurOrder
     public function getStock(): ?Stock
     {
         return $this->stock;
+    }
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
     }
 
     public function setStock(?Stock $stock): self

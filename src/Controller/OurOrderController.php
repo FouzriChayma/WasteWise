@@ -23,7 +23,12 @@ class OurOrderController extends AbstractController
 public function index(Request $request, OurOrderRepository $ourOrderRepository): Response
 {
     $page = $request->query->getInt('page', 1);
-    $pageSize = 7;
+    $pageSize = 3;
+
+     // Get the total number of orders
+     $totalOrders = $ourOrderRepository->getTotalOrders();
+     $mostOrderedStock = $ourOrderRepository->getMostOrderedStock();
+
     $totalOrdersCount = count($ourOrderRepository->findAll());
     $totalPages = ceil($totalOrdersCount / $pageSize);
 
@@ -55,6 +60,10 @@ public function index(Request $request, OurOrderRepository $ourOrderRepository):
         'sortOptions' => $sortOptions,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
+        'totalOrders' => $totalOrders, // Pass totalOrders to the template
+        'mostOrderedStock' => $mostOrderedStock,
+
+
     ]);
 }
 

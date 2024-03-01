@@ -22,7 +22,7 @@ class StoreHouseController extends AbstractController
     {
         // Pagination
         $page = $request->query->getInt('page', 1);
-        $pageSize = 5; // Number of items per page
+        $pageSize = 3; // Number of items per page
     
         // Search query
         $searchQuery = $request->query->get('search');

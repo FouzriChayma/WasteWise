@@ -5,6 +5,12 @@ namespace App\Repository;
 use App\Entity\OurOrder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
+
+
+
 
 /**
  * @extends ServiceEntityRepository<OurOrder>
@@ -94,4 +100,32 @@ public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): 
 
     return $queryBuilder->getQuery()->getResult();
 }
+
+public function getTotalOrders(): int
+{
+    return $this->createQueryBuilder('o')
+        ->select('COUNT(o.idO) as totalOrders')
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+public function getMostOrderedStock(): array
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT s.name_st, SUM(o.quantityO) as totalQuantity
+         FROM App\Entity\OurOrder o
+         JOIN o.stock s
+         GROUP BY s.idSt
+         ORDER BY totalQuantity DESC'
+    );
+
+    return $query->getResult();
+}
+
+
+
+
+
 }

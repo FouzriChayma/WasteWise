@@ -24,7 +24,7 @@ class StockController extends AbstractController
 public function index(StockRepository $stockRepository, Request $request): Response
 {
     $page = $request->query->getInt('page', 1);
-    $pageSize = 5;
+    $pageSize = 3;
     $totalStocksCount = count($stockRepository->findAll());
     $totalPages = ceil($totalStocksCount / $pageSize);
 
