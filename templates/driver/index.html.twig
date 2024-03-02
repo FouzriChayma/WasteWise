@@ -85,33 +85,52 @@
                 {% endif %}
                 
                 <td>
-                    
-                    <a onclick="startTimer()" href="{{ path('start_mission', {'id': mission.getIdMission()}) }}" class="btn app-btn-primary">Start Mission</a>
-                     <a href="{{ path('app_driver_validate', {'id': mission.getIdMission()}) }}" onsubmit="return confirm('Your mission is completed!!');" class="btn app-btn-primary">Complete Mission</a>
+                   {% if mission.status!="completed" %} 
+                    <a onclick="startTimer(event, '{{ mission.startDate|date('Y-m-d H:i:s') }}', '{{ mission.endDate|date('Y-m-d H:i:s') }}')" href="{{ path('start_mission', {'id': mission.getIdMission()}) }}" class="btn app-btn-primary">Start Mission</a>
+                     <a href="{{ path('app_driver_validate', {'id': mission.getIdMission()}) }}" onclick="return alert('Your mission is completed!!');" class="btn app-btn-primary">Complete Mission</a>
+
                      <div id="time"></div>
+                     {% endif %}
                 </td>
-                <script>
-function startTimer() {
-  var duration = 60; // 1 minute
+              
+<script>
+function startTimer(event, startDate, endDate) {
+  event.preventDefault(); // Prevent the default action
+  console.log('startTimer() called');
+  
   var display = document.querySelector('#time');
-  var timer = duration, minutes, seconds;
+  var startTimestamp = new Date(startDate).getTime();
+  var endTimestamp = new Date(endDate).getTime();
+  
+  // Calculate the difference between end date and start date in seconds
+  var timer = Math.floor((endTimestamp - startTimestamp) / 1000);
+  
   setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
+    console.log('setInterval() called');
+    var minutes = Math.floor(timer / 60);
+    var seconds = timer % 60;
 
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     display.textContent = minutes + ":" + seconds;
-    if (--timer === 3) { // 3 seconds left
+
+    if (--timer === (15 * 60)) { // Adjusted this condition to check for exactly 15 mins remaining
       // Show alert to driver
-      alert("3 seconds left! Hurry up!");
+      alert("15 minutes left! Hurry up!");
     }
+    
     if (timer < 0) {
-      timer = duration;
+      timer = 0;
+      display.textContent = "00:00";
+      // Redirect to complete mission page
+      window.location.href = event.target.href; // Use the href from the event target
     }
+    
   }, 1000);
 }
+
+
 </script>
 
                                                 </tr>

@@ -38,7 +38,16 @@ class PlanificationController extends AbstractController
     $sortField = $request->query->get('sortField', 'date');
     $sortOrder = $request->query->get('sortOrder', 'asc');
 
+        //add statistics
+        $PlanificationStatistics = $planificationRepository->getplanStatistics();
 
+        $labels = [];
+        $data = [];
+
+        foreach ($PlanificationStatistics as $statistic) {
+            $labels[] = $statistic['location'];
+            $data[] = $statistic['count'];
+        }
 
     if ($searchQuery) {
         $planifications = $planificationRepository->findBySearch($searchQuery);
@@ -59,6 +68,8 @@ class PlanificationController extends AbstractController
         'sortOptions' => $sortOptions,
         'currentSortField' => $sortField,
         'currentSortOrder' => $sortOrder,
+        'labels' => json_encode($labels),
+            'data' => json_encode($data),
     ]);
     }
 
@@ -143,6 +154,14 @@ class PlanificationController extends AbstractController
 
         return $this->redirectToRoute('app_planification_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
+    #[Route('/stats', name: 'app_planification_stats')]
+    public function statistique( PlanificationRepository $repo,$id_plan, ManagerRegistry $mr)
+    {
+
+    }
+
 
 
 }

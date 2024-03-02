@@ -103,5 +103,12 @@ public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): 
 
     return $queryBuilder->getQuery()->getResult();
 }
-    
+public function getplanStatistics()
+{
+    return $this->createQueryBuilder('h')
+        ->select('h.location, COUNT(h.id_plan) as count')
+        ->groupBy('h.location')
+        ->getQuery()
+        ->getResult();
+}
 }
