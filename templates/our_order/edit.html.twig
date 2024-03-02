@@ -33,12 +33,11 @@
                                         {% endif %}
                                     </div>
 
+                                    {# Display Stock Information #}
                                     <div class="mb-3">
-                                        {{ form_label(form.stock, 'Stock') }}
-                                        {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
-                                        {% if form_errors(form.stock) %}
-                                            <div class="error-message">{{ form_errors(form.stock) }}</div>
-                                        {% endif %}
+                                        <label for="stock" class="form-label">Stock</label>
+                                        <input type="text" class="form-control" id="stock" value="{{ our_order.stock.getNameSt() }}" disabled>
+                                        {# You can customize this based on your stock properties #}
                                     </div>
                         
                                     <button type="submit" class="btn btn-warning">Update</button>

@@ -14,44 +14,73 @@
     <h1 class="mb-0">Orders Management</h1>
 
 </div>
-
 <div class="row g-4 mb-4">
-    <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Total Sales</h4>
-                <div class="stats-figure">{{ totalSalesCount }}</div>
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
-     <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Cancelled Orders</h4>
-                <div class="stats-figure">{{ cancelledOrders }}</div>
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
-    
-    <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Pending Orders</h4>
-                <div class="stats-figure">{{ pendingOrders }}</div>
+<div class="col-6 col-lg-8">
+    <table class="w-100">
+        <tr>
+            <td>
+                <div class="h-70">
+                        <div class="app-card-body p-3 p-lg-2">
+                            <h3 class="mb-3">Statistics</h3>
+                                    <div>Always updated</div>
+                        </div><!--//app-card-body-->
+                </div><!--//app-card-->
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 10px;">
+                <div class="app-card app-card-stat shadow-sm h-100">
+                    <div class="app-card-body p-3 p-lg-4">
+                        <h4 class="stats-type mb-1">Total Sales</h4>
+                        <div class="stats-figure">{{ totalSalesCount }}</div>
+                    </div><!--//app-card-body-->
+                </div><!--//app-card-->
+            </td>
+            <td style="padding: 10px;">
+                <div class="app-card app-card-stat shadow-sm h-100">
+                    <div class="app-card-body p-3 p-lg-4">
+                        <h4 class="stats-type mb-1">Pending Orders</h4>
+                        <div class="stats-figure">{{ pendingOrders }}</div>
+                    </div><!--//app-card-body-->
+                </div><!--//app-card-->
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 11px;">
+                <div class="app-card app-card-stat shadow-sm h-100">
+                    <div class="app-card-body p-3 p-lg-4">
+                        <h4 class="stats-type mb-1">Cancelled Orders</h4>
+                        <div class="stats-figure">{{ cancelledOrders }}</div>
+                    </div><!--//app-card-body-->
+                </div><!--//app-card-->
+            </td>
+            <td style="padding: 11px;">
+                <div class="app-card app-card-stat shadow-sm h-100">
+                    <div class="app-card-body p-3 p-lg-4">
+                        <h4 class="stats-type mb-1">Delivered Orders</h4>
+                        <div class="stats-figure">{{ deliveredOrders }}</div>
+                    </div><!--//app-card-body-->
+                </div><!--//app-card-->
+            </td>
+        </tr>
+    </table>
+</div><!--//col-->
+    <div class="col-12 col-lg-3">
+        <!-- Chart -->
+        <div class="app-card app-card-chart h-70 shadow-sm">
+            <div class="app-card-header p-3 border-0">
+                <h4 class="stats-type mb-1">Most Ordered Stock</h4>
+                <h4 class="app-card-title">Total Orders: {{ totalOrders }}</h4>
+            </div><!--//app-card-header-->
+            <div class="app-card-body p-4">
+                <div class="chart-container">
+                    <canvas id="chart-pie"></canvas>
+                </div>
             </div><!--//app-card-body-->
         </div><!--//app-card-->
     </div><!--//col-->
 
-     <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Delivered Orders</h4>
-                <div class="stats-figure">{{ deliveredOrders }}</div>
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
 </div><!--//row-->
-
 
 
 

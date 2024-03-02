@@ -8,16 +8,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType; // Import ChoiceType
 
-
 class OurOrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        
         $builder
-            ->add('quantityO')
-            ->add('stock')
-        ;
+            ->add('quantityO');
+
         if (!$options['exclude_status']) {
             $builder
                 ->add('statusO', ChoiceType::class, [
@@ -37,8 +34,6 @@ class OurOrderType extends AbstractType
         $resolver->setDefaults([
             'data_class' => OurOrder::class,
             'exclude_status' => false,
-
-
         ]);
     }
 }

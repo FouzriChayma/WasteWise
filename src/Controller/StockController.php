@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Stock;
+use App\Entity\OurOrder;
 use App\Form\Stock2Type;
+use App\Form\OurOrderType;
 use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,6 +76,62 @@ public function allfront(Request $request, StockRepository $stockRepository): Re
 
     return $this->render('stock/show.html copy.twig', [
         'stocks' => $stocks,
+    ]);
+}
+
+#[Route('/stock/{id}/order', name: 'app_stock_order', methods: ['GET', 'POST'])]
+    public function order(Request $request, EntityManagerInterface $entityManager, StockRepository $stockRepository, int $id): Response
+    {
+        $stock = $stockRepository->find($id);
+
+        if (!$stock) {
+            // Handle the case where the stock is not found, redirect or display an error
+            // For example:
+            // return $this->redirectToRoute('error_page', ['message' => 'Stock not found']);
+        }
+
+        $ourOrder = new OurOrder();
+        $ourOrder->setStock($stock);
+
+        // Set default statusO to "Pending" only if the form is being submitted (POST request)
+        if ($request->isMethod('POST')) {
+            $ourOrder->setStatusO('Pending');
+        }
+
+        $form = $this->createForm(OurOrderType::class, $ourOrder, ['exclude_status' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Update the quantity in stock
+            $quantityOrdered = $ourOrder->getQuantityO();
+            $currentStockQuantity = $stock->getQuantitySt();
+
+            if ($quantityOrdered <= $currentStockQuantity) {
+                $stock->setQuantitySt($currentStockQuantity - $quantityOrdered);
+                $entityManager->persist($stock);
+            } else {
+                // Handle insufficient stock error here
+            }
+
+            // Persist the new order
+            $entityManager->persist($ourOrder);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('thanks'); // Update redirection here
+        }
+
+        return $this->renderForm('stock/order.html.twig', [
+            'our_order' => $ourOrder,
+            'stock' => $stock, // Pass the stock variable to the template
+            'form' => $form,
+        ]);
+    }
+
+#[Route('/stock/{id}', name: 'app_stock_details', methods: ['GET'])]
+public function showDetails(Stock $stock): Response
+{
+    return $this->render('stock/details.html.twig', [
+        'stock' => $stock,
     ]);
 }
 

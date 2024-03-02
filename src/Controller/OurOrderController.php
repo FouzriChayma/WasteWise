@@ -171,22 +171,23 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
     }
 
     #[Route('/{idO}/edit', name: 'app_our_order_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, OurOrder $ourOrder, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(OurOrderType::class, $ourOrder);
-        $form->handleRequest($request);
+public function edit(Request $request, OurOrder $ourOrder, EntityManagerInterface $entityManager): Response
+{
+    $form = $this->createForm(OurOrderType::class, $ourOrder);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_our_order_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('our_order/edit.html.twig', [
-            'our_order' => $ourOrder,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_our_order_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('our_order/edit.html.twig', [
+        'our_order' => $ourOrder,
+        'form' => $form,
+    ]);
+}
+
  
 
 
