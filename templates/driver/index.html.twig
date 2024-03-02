@@ -86,32 +86,34 @@
                 
                 <td>
                     
-                    <a onclick="startTimer() href="{{ path('start_mission', {'id': mission.getIdMission()}) }}" class="btn app-btn-primary">Start Mission</a>
-                     <a href="#" class="btn app-btn-primary">Complete Mission</a>
-                     
-
-<script>
+                    <a onclick="startTimer()" href="{{ path('start_mission', {'id': mission.getIdMission()}) }}" class="btn app-btn-primary">Start Mission</a>
+                     <a href="{{ path('app_driver_validate', {'id': mission.getIdMission()}) }}" onsubmit="return confirm('Your mission is completed!!');" class="btn app-btn-primary">Complete Mission</a>
+                     <div id="time"></div>
+                </td>
+                <script>
 function startTimer() {
-    var duration = 30*60;
-    var display = document.querySelector('#time');
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
+  var duration = 60; // 1 minute
+  var display = document.querySelector('#time');
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
-    }, 1000);
+    display.textContent = minutes + ":" + seconds;
+    if (--timer === 3) { // 3 seconds left
+      // Show alert to driver
+      alert("3 seconds left! Hurry up!");
+    }
+    if (timer < 0) {
+      timer = duration;
+    }
+  }, 1000);
 }
 </script>
 
-                </td>
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

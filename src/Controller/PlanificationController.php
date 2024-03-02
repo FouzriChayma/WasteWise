@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Planification;
 use App\Form\PlanificationType;
 use App\Repository\PlanificationRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Dompdf\Dompdf;
@@ -65,6 +66,7 @@ class PlanificationController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $planification = new Planification();
+        $planification->setDate(new DateTimeImmutable());
         $form = $this->createForm(PlanificationType::class, $planification);
         $form->handleRequest($request);
 

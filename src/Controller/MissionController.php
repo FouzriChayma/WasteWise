@@ -28,6 +28,8 @@ class MissionController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $mission = new Mission();
+        $mission ->setStartDate(new \DateTimeImmutable());
+        $mission ->setEndDate(new \DateTimeImmutable());
         $form = $this->createForm(MissionType::class, $mission);
         $form->handleRequest($request);
 

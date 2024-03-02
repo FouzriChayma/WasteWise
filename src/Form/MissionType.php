@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Mission;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,24 +15,31 @@ class MissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('start_date')
-            ->add('end_date')
+            ->add('start_date',DateTimeType::class, [
+                'widget' => 'single_text',
+                
+            ]
+            )
+            ->add('end_date',DateTimeType::class, [
+                'widget' => 'single_text',
+                
+            ])
             ->add('location', ChoiceType::class, [
                 'choices' => [
                     'Ariana' => 'Ariana',
-                    'Béja' => 'Béja',
+                    'Beja' => 'Beja',
                     'Ben Arous' => 'Ben Arous',
                     'Bizerte' => 'Bizerte',
-                    'Gabès' => 'Gabès',
+                    'Gabes' => 'Gabes',
                     'Gafsa' => 'Gafsa',
                     'Jendouba' => 'Jendouba',
                     'Kairouan' => 'Kairouan',
                     'Kasserine' => 'Kasserine',
-                    'Kébili' => 'Kébili',
+                    'Kebili' => 'Kebili',
                     'Le Kef' => 'Le Kef',
                     'Mahdia' => 'Mahdia',
                     'La Manouba' => 'La Manouba',
-                    'Médenine' => 'Médenine',
+                    'Medenine' => 'Medenine',
                     'Monastir' => 'Monastir',
                     'Nabeul' => 'Nabeul',
                     'Sfax' => 'Sfax',

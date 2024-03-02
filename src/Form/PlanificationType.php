@@ -26,7 +26,7 @@ class PlanificationType extends AbstractType
                     'placeholder' => 'Mission',
                 ]])
             ->add('date',DateTimeType::class, [
-                'widget' => 'choice',
+                'widget' => 'single_text',
                 'constraints' => [
                     new Assert\GreaterThan('today')
                 ],

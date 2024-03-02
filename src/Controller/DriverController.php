@@ -49,15 +49,19 @@ function DetailMission($id,MissionRepository $repoM,PlanificationRepository $rep
 }
 
 
-#[Route('/ValidateMission',name:'app_driver_validate')]
-public function validateMission(Request $request,MissionRepository $repoM,PlanificationRepository $repP): Response
+#[Route('/ValidateMission/{id}',name:'app_driver_validate')]
+public function validateMission($id,Request $request,MissionRepository $repoM,ManagerRegistry $mr): Response
 {
+    $mission = $repoM->find($id);
+    $mission->setStatus('completed');
     
+    $entityManager = $mr->getManager();
+    $entityManager->persist($mission);
+    $entityManager->flush();
 
-    return $this->render('driver/index.html.twig', [
-        'controller_name' => 'DriverController',
-        
-    ]);
+    return $this->redirectToRoute('app_driver', [], Response::HTTP_SEE_OTHER);
+
+    
 }
 
   #[Route("/start-mission/{id}", name:"start_mission")]
