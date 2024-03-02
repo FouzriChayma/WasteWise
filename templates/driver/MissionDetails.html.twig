@@ -22,7 +22,7 @@
 		  <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
 		</svg>
 						         </span>
-		                         <span class="nav-link-text">My missions</span>
+		                         <span class="nav-link-text">Overview</span>
 							
 					        </a><!--//nav-link-->
 
@@ -45,15 +45,13 @@
             <div class="container-xl">
                 <div class="row g-3 mb-4 align-items-center justify-content-between">
                     <!-- ... -->
-                    <span class="nav-link-text">My missions</span>
                 </div>
-                
+
                 <div class="tab-content" id="orders-table-tab-content">
                     <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
                         <div class="app-card app-card-orders-table shadow-sm mb-5">
                             <div class="app-card-body">
                                 <div class="table-responsive">
-                                
                                     <table class="table app-table-hover text-left">
                                         <thead>
                                             <tr>
@@ -63,7 +61,6 @@
                                                 <th class="cell">Location</th>
                                                 <th class="cell">Waste Type</th>
                                                 <th class="cell">Status</th>
-                                                <th class="cell">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,42 +73,10 @@
                 <td>{{ mission.location }}</td>
                 <td>{{ mission.typeD }}</td>
                 {% if mission.status=="completed" %}
-                <td><span class="badge bg-success">{{ mission.status }}</span></td>
-                {%elseif mission.status=="ongoing" %}
                 <td><span class="badge bg-warning">{{ mission.status }}</span></td>
-				{% endif %}
-                {% if mission.status=="Undone" %}
+                {%else %}
                 <td><span class="badge bg-danger">{{ mission.status }}</span></td>
-                {% endif %}
-                
-                <td>
-                    
-                    <a onclick="startTimer() href="{{ path('start_mission', {'id': mission.getIdMission()}) }}" class="btn app-btn-primary">Start Mission</a>
-                     <a href="#" class="btn app-btn-primary">Complete Mission</a>
-                     
-
-<script>
-function startTimer() {
-    var duration = 30*60;
-    var display = document.querySelector('#time');
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-            timer = duration;
-        }
-    }, 1000);
-}
-</script>
-
-                </td>
+				{% endif %}
                                                 </tr>
                                             {% endfor %}
                                         </tbody>

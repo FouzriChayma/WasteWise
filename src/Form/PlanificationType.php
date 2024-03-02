@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class PlanificationType extends AbstractType
 {
@@ -24,7 +25,12 @@ class PlanificationType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Mission',
                 ]])
-            ->add('date',DateTimeType::class)
+            ->add('date',DateTimeType::class, [
+                'widget' => 'choice',
+                'constraints' => [
+                    new Assert\GreaterThan('today')
+                ],
+            ])
             ->add('mission',null, [
                 'attr' => [
                     'placeholder' => 'Mission',

@@ -17,22 +17,35 @@ class Mission
     #[ORM\Column]
     private ?int $id_mission = null;
 
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan('today')
+    ]
     private ?\DateTimeInterface $start_date = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\GreaterThan('today')
+    ]
     private ?\DateTimeInterface $end_date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Your Name should contain only alphabetic letters'
+    )]
     #[Assert\NotBlank(message:"Location is required")]
     private ?string $location = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'Your Name should contain only alphabetic letters'
+    )]
     #[Assert\NotBlank(message:"Waste type is required")]
     private ?string $type_d = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"status is required")]
+    
     private ?string $status = null;
 
     #[ORM\OneToMany(targetEntity: Planification::class, mappedBy: 'mission')]

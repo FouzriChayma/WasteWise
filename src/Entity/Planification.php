@@ -25,6 +25,11 @@ class Planification
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
+    
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z]+$/',
+        message: 'location should contain only alphabetic letters'
+    )]
     private ?string $location = null;
 
     #[ORM\ManyToOne(inversedBy: 'planification')]

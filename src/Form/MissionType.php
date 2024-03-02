@@ -15,7 +15,35 @@ class MissionType extends AbstractType
         $builder
             ->add('start_date')
             ->add('end_date')
-            ->add('location')
+            ->add('location', ChoiceType::class, [
+                'choices' => [
+                    'Ariana' => 'Ariana',
+                    'Béja' => 'Béja',
+                    'Ben Arous' => 'Ben Arous',
+                    'Bizerte' => 'Bizerte',
+                    'Gabès' => 'Gabès',
+                    'Gafsa' => 'Gafsa',
+                    'Jendouba' => 'Jendouba',
+                    'Kairouan' => 'Kairouan',
+                    'Kasserine' => 'Kasserine',
+                    'Kébili' => 'Kébili',
+                    'Le Kef' => 'Le Kef',
+                    'Mahdia' => 'Mahdia',
+                    'La Manouba' => 'La Manouba',
+                    'Médenine' => 'Médenine',
+                    'Monastir' => 'Monastir',
+                    'Nabeul' => 'Nabeul',
+                    'Sfax' => 'Sfax',
+                    'Sidi Bouzid' => 'Sidi Bouzid',
+                    'Siliana' => 'Siliana',
+                    'Sousse' => 'Sousse',
+                    'Tataouine' => 'Tataouine',
+                    'Tozeur' => 'Tozeur',
+                    'Tunis' => 'Tunis',
+                    'Zaghouan' => 'Zaghouan',
+                ],
+                'attr' => ['class' => 'form-control'],
+            ])
             ->add('type_d',ChoiceType::class, [
                 'choices' => [
                     'Paper' => 'Paper',
@@ -24,12 +52,7 @@ class MissionType extends AbstractType
                     'Organic' => 'Organic',
                     'Metal'  => 'Metal',
                 ]])
-            ->add('status',ChoiceType::class, [
-                'choices'  => [
-                    'On Going' => 'on going',
-                    'Completed' => 'completed',
-                ],
-            ])
+           
         ;
         
     }

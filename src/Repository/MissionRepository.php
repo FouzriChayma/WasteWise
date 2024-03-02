@@ -51,6 +51,7 @@ public function getMissionsByPlannification($id)
         ->join('p.planification', 'm')
         ->where('m.id_plan = :id')
         ->setParameter('id', $id)
+        ->orderBy('m.date', 'ASC')
         ->setMaxResults(10)
         ->getQuery()
         ->getResult()
@@ -62,6 +63,7 @@ public function getMissionsByPlannification($id)
         ->join('m.planification', 'p')
         ->where('p.id_driver = :driver_id')
         ->setParameter('driver_id', $driver_id)
+        ->orderBy('m.start_date', 'ASC')
         ->getQuery();
 
     return $query->getResult();

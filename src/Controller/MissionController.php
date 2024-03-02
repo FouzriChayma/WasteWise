@@ -6,10 +6,12 @@ use App\Entity\Mission;
 use App\Form\MissionType;
 use App\Repository\MissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/mission')]
 class MissionController extends AbstractController
@@ -43,13 +45,7 @@ class MissionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_mission}', name: 'app_mission_show', methods: ['GET'])]
-    public function show(Mission $mission): Response
-    {
-        return $this->render('mission/show.html.twig', [
-            'mission' => $mission,
-        ]);
-    }
+    
 
     #[Route('/{id_mission}/edit', name: 'app_mission_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Mission $mission, EntityManagerInterface $entityManager): Response
@@ -69,13 +65,14 @@ class MissionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_mission}', name: 'app_mission_delete', methods: ['POST'])]
-    public function delete(Request $request, Mission $mission, EntityManagerInterface $entityManager): Response
+    
+    #[Route('/{id_mission}', name: 'app_mission_delete')]
+    public function delete( MissionRepository $repo,$id_mission, ManagerRegistry $mr): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$mission->getIdMission(), $request->request->get('_token'))) {
-            $entityManager->remove($mission);
-            $entityManager->flush();
-        }
+        $planification=$repo->find($id_mission);
+        $em=$mr->getManager();
+        $em->remove($planification);
+        $em->flush();
 
         return $this->redirectToRoute('app_mission_index', [], Response::HTTP_SEE_OTHER);
     }

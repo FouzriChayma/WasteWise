@@ -321,6 +321,6 @@ public function setIsVerified(bool $isVerified): self
         return $this;
     }
     public function __toString(){
-        return $this->id;
+        return $this->name;
     }
 }
