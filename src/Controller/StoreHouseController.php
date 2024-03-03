@@ -113,13 +113,45 @@ public function showOrders(StoreHouse $storehouse): Response
     ]);
 }
     
-    #[Route('/{idSh}', name: 'app_store_house_show', methods: ['GET'])]
-    public function show(StoreHouse $storeHouse): Response
-    {
-        return $this->render('store_house/show.html.twig', [
-            'store_house' => $storeHouse,
-        ]);
+#[Route('/{idSh}', name: 'app_store_house_show', methods: ['GET'])]
+public function show(StoreHouse $storeHouse, Request $request): Response
+{
+    $stocks = $storeHouse->getStocks();
+    $orders = [];
+
+    foreach ($storeHouse->getStocks() as $stock) {
+        $orders = array_merge($orders, $stock->getOurOrders()->toArray());
     }
+
+    // Paginate Stocks
+    $stocksPerPage = 3;
+    $stocksPage = $request->query->getInt('stocksPage', 1);
+    $stocksArray = $stocks->toArray();
+    $startIndexStocks = ($stocksPage - 1) * $stocksPerPage;
+    $paginatedStocks = array_slice($stocksArray, $startIndexStocks, $stocksPerPage);
+    $stocksCount = count($stocksArray);
+    $stocksPages = ceil($stocksCount / $stocksPerPage);
+
+    // Paginate Orders
+    $ordersPerPage = 3;
+    $ordersPage = $request->query->getInt('ordersPage', 1);
+    $ordersArray = array_values($orders);
+    $startIndexOrders = ($ordersPage - 1) * $ordersPerPage;
+    $paginatedOrders = array_slice($ordersArray, $startIndexOrders, $ordersPerPage);
+    $ordersCount = count($ordersArray);
+    $ordersPages = ceil($ordersCount / $ordersPerPage);
+
+    return $this->render('store_house/show.html.twig', [
+        'store_house' => $storeHouse,
+        'stocks' => $paginatedStocks,
+        'orders' => $paginatedOrders,
+        'stocksPages' => $stocksPages,
+        'ordersPages' => $ordersPages,
+        'stocksPage' => $stocksPage,
+        'ordersPage' => $ordersPage,
+    ]);
+}
+
 
     #[Route('/{idSh}/edit', name: 'app_store_house_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, StoreHouse $storeHouse, EntityManagerInterface $entityManager): Response

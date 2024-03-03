@@ -1,0 +1,21 @@
+{# templates/payment/checkout.html.twig #}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Add your head content here -->
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Checkout</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.price, {'attr': {'class': 'form-control'}}) }}
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        {{ form_end(form) }}
+    </div>
+
+</body>
+
+</html>

@@ -94,4 +94,3 @@ class OurOrder
         return $this->totalO;
     }
 }
-

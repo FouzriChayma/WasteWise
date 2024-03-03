@@ -15,6 +15,7 @@ class OurOrderType extends AbstractType
         $builder
             ->add('quantityO');
 
+            
         if (!$options['exclude_status']) {
             $builder
                 ->add('statusO', ChoiceType::class, [

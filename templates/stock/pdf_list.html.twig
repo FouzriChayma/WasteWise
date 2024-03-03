@@ -1,0 +1,101 @@
+<style>
+    @font-face {
+        font-family: 'Roboto', sans-serif;
+        src: local('Roboto'), url('path/to/Roboto.woff2') format('woff2');
+    }
+
+    html, body {
+        font-family: 'Roboto', sans-serif;
+        margin: 10;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 20px 0;
+        font-size: 22px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    /* Optional table headers/footers styling */
+    table thead, table tfoot {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    .actions {
+        text-align: center;
+    }
+
+    .badge {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin-right: 5px;
+        text-decoration: none;
+    }
+
+    .badge:hover {
+        background-color: #ddd;
+    }
+
+    table thead tr th:first-child, table tfoot tr th:first-child {
+        text-align: left;
+    }
+</style>
+
+<h1>List of Stocks</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-success">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Buying Price</th>
+                <th>Selling Price</th>
+                <th>Storehouse</th>
+            </tr>
+        </thead>
+        <tbody> 
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock.idSt }}</td>
+                    <td>{{ stock.nameSt }}</td>
+                    <td>{{ stock.quantitySt }}</td>
+                    <td>{{ stock.buyingPrice }}</td>
+                    <td>{{ stock.sellingPrice }}</td>
+                    <td>{{ stock.storehouse.nameSh }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div><!--//table-responsive-->
