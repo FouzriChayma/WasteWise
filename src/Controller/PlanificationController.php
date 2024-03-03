@@ -156,11 +156,7 @@ class PlanificationController extends AbstractController
     }
 
     
-    #[Route('/stats', name: 'app_planification_stats')]
-    public function statistique( PlanificationRepository $repo,$id_plan, ManagerRegistry $mr)
-    {
-
-    }
+    
 
 
 

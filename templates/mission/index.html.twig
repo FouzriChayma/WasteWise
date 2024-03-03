@@ -258,6 +258,25 @@
 		{% endblock %} 
 
 {% block body %}
+<script>
+document.getElementById('search-button').addEventListener('click', function() {
+  var searchQuery = document.getElementById('dataTable_filter input[type="search"]').value;
+
+  // Send an Ajax request to the server with the search query
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '{{ path('app_mission_index') }}?search=' + searchQuery, true);
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // Update the table body with the new data
+      var tableBody = document.getElementById('dataTable tbody');
+      tableBody.innerHTML = xhr.responseText;
+    }
+  };
+
+  xhr.send();
+});
+</script>
     <div class="app-wrapper">
 	    
 	    <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -271,12 +290,12 @@
 					     <div class="page-utilities">
 						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
 							    <div class="col-auto">
-								    <form class="table-search-form row gx-1 align-items-center" method='post' action='/dql'>
+								    <form class="table-search-form row gx-1 align-items-center" method='GET' action="{{ path('app_mission_index') }}">
 					                    <div class="col-auto">
-					                        <input type="text" id="search-orders" name="test" class="form-control search-orders" placeholder="Search">
+					                        <input type="text"  id="search-button" name="search" class="form-control search-orders" placeholder="Search">
 					                    </div>
 					                    <div class="col-auto">
-					                        <button type="submit" class="btn app-btn-secondary" value="search">Search</button>
+					                        <button type="submit" id="search-button" class="btn app-btn-secondary" value="search">Search</button>
 					                    </div>
 					                </form>
 					                
@@ -292,22 +311,53 @@
 									</select>
 							    </div>
 							    <div class="col-auto">						    
-								    <a class="btn app-btn-secondary" href="#">
+								    <a class="btn app-btn-secondary" href="{{ path('pdf_dom') }}">
 									    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
 		  <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
 		</svg>
-									    Download CSV
+									    Download PDF
 									</a>
 							    </div>
 						    </div><!--//row-->
 					    </div><!--//table-utilities-->
 				    </div><!--//col-auto-->
+									<div class="col-md-6">
+    <form action="{{ path('app_mission_index') }}" method="GET" class="input-group">
+        <div class="row g-2 align-items-center">
+            <div class="col-md-7">
+                <select name="sortField" class="form-select">
+                    {% for optionKey, optionLabel in sortOptions %}
+                        <option value="{{ optionKey }}" {% if optionKey == currentSortField %}selected{% endif %}>{{ optionLabel }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <!-- Ascending Icon -->
+                <button type="submit" name="sortOrder" value="asc" class="btn btn-outline-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M3.544 10.705A.5.5 0 0 0 4 11h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5a.5.5 0 0 0-.082.537"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-2">
+                <!-- Descending Icon -->
+                <button type="submit" name="sortOrder" value="desc" class="btn btn-outline-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-square" viewBox="0 0 16 16">
+                        <path d="M3.626 6.832A.5.5 0 0 1 4 6h8a.5.5 0 0 1 .374.832l-4 4.5a.5.5 0 0 1-.748 0z"/>
+                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </form>
+   </div>
 			    </div><!--//row-->
                 
 				<div class="tab-content" id="orders-table-tab-content">
                 
-			    <a href="{{ path('app_mission_new') }}" class="badge bg-success" onclick="sendNotification({{ driver.idDriver }}, {{ mission.getIdMission() }})">Create new</a>   
+			    <a href="{{ path('app_mission_new') }}" class="badge bg-success" >Create new</a>   
 				    <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
                     
 					    <div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -364,19 +414,22 @@
 						       
 						    </div><!--//app-card-body-->		
 						</div><!--//app-card-->
-						<nav class="app-pagination">
-							<ul class="pagination justify-content-center">
-								<li class="page-item disabled">
-									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-							    </li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item">
-								    <a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav><!--//app-pagination-->
+						
+						<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
+        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_mission_index', {'page': page - 1}) }}">Previous</a>
+        </li>
+        {% for pageNumber in 1..total_pages %}
+            <li class="page-item {% if page == pageNumber %}active{% endif %}">
+                <a class="page-link custom-link text-dark" href="{{ path('app_mission_index', {'page': pageNumber}) }}">{{ pageNumber }}</a>
+            </li>
+        {% endfor %}
+        <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+            <a class="page-link custom-link text-dark" href="{{ path('app_mission_index', {'page': page + 1}) }}">Next</a>
+        </li>
+    </ul>
+</nav>
 						
 			        </div><!--//tab-pane-->    
 		    </div><!--//container-fluid-->

@@ -69,6 +69,42 @@ public function getMissionsByPlannification($id)
     return $query->getResult();
 }    
 
+public function getMissionStatistics()
+{
+    return $this->createQueryBuilder('h')
+        ->select('h.type_d, COUNT(h.id_mission) as count')
+        ->groupBy('h.type_d')
+        ->getQuery()
+        ->getResult();
+}
+
+public function findBySearchQuery($searchQuery)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere(' p.location LIKE :query') 
+            ->setParameter('query', '%'.$searchQuery.'%')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findBySearch($search)
+{
+    $qb = $this->createQueryBuilder('p');
+    $qb->where(' p.start_date LIKE :search OR p.location LIKE :search')
+        ->setParameter('search', '%' . $search . '%');
+
+    return $qb->getQuery()->getResult();
+}
+
+public function findAllWithSorting($sortField, $sortOrder, $pageSize, $offset): array
+{
+    $queryBuilder = $this->createQueryBuilder('s')
+        ->orderBy("s.{$sortField}", $sortOrder)
+        ->setMaxResults($pageSize)
+        ->setFirstResult($offset);
+
+    return $queryBuilder->getQuery()->getResult();
+}
+
 
   
 }
