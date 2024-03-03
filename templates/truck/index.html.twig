@@ -1,405 +1,162 @@
 {% extends 'baseBack.html.twig' %}
 
 
-	{% block sidepanel %} 
-        <div id="app-sidepanel" class="app-sidepanel"> 
-	        <div id="sidepanel-drop" class="sidepanel-drop"></div>
-	        <div class="sidepanel-inner d-flex flex-column">
-		        <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-		        <div class="app-branding">
-		            <a class="app-logo" href="index.html"><img class="logo-icon me-2" src="{{asset('Back/assets/images/logoW.png')}}" alt="logo"><span class="logo-text" style="color:#563d2d" >WasteWise</span></a>
-	
-		        </div><!--//app-branding-->  
-		        
-			    <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
-				    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="index.html">
-						        <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
-		  <path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-		</svg>
-						         </span>
-		                         <span class="nav-link-text">Overview</span>
-							
-					        </a><!--//nav-link-->
-
-					    </li><!--//nav-item-->
-<li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
-  <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-</svg>
-						         </span>
-		                         <span class="nav-link-text">Users</span>
-		                         <span class="submenu-arrow">
-		                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-	  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-	</svg>
-	                             </span><!--//submenu-arrow-->
-					        </a><!--//nav-link-->
-					        <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
-						        <ul class="submenu-list list-unstyled">
-									<li class="submenu-item"><a class="submenu-link" href="notifications.html">Admin</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="notifications.html">Suppliers</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="account.html">Drivers</a></li>
-							        <li class="submenu-item"><a class="submenu-link" href="settings.html">Clients</a></li>
-
-						        </ul>
-					        </div>
-					    </li><!--//nav-item-->
-
-<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="waste/show.html.twig">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
-  <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
-  <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
-</svg>
-						         </span>
 
 
-</span>
-		                         <span class="nav-link-text">Mission</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
 
-<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="waste/show.html.twig">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
-  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
-  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-</svg>
-						         </span>
-
-
-</span>
-		                         <span class="nav-link-text">Planning</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link active" href="waste/show.html.twig">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-  <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
-</svg>
-						         </span>
-
-
-</span>
-		                         <span class="nav-link-text">Truck</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
-</svg>
-						         </span>
-
-
-</span>
-
-		                         <span class="nav-link-text">Waste
-								 </span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="{{ path('app_waste_index') }}">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box" viewBox="0 0 16 16">
-  <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
-</svg>
-						         </span>
-
-
-</span>
-		                         <span class="nav-link-text">Stock</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="{{ path('app_waste_index') }}">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-  <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
-</svg>
-						         </span>
-
-
-</span>
-		                         <span class="nav-link-text">storehouse</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-					    <li class="nav-item">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link" href="waste/show.html.twig">
-						        
-								
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-heart" viewBox="0 0 16 16">
-  <path d="M8 6.982C9.664 5.309 13.825 8.236 8 12 2.175 8.236 6.336 5.309 8 6.982"/>
-  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.707L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.646a.5.5 0 0 0 .708-.707L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-</svg>
-						         </span>
-
-
-</span>
-		                         <span class="nav-link-text">Association</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-					    <li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box2-heart" viewBox="0 0 16 16">
-  <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982"/>
-  <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z"/>
-</svg>
-						         </span>
-
-
-</span>
-
-		                         <span class="nav-link-text">Donation</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-upside-down" viewBox="0 0 16 16">
-  <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1m0-1a8 8 0 1 1 0 16A8 8 0 0 1 8 0"/>
-  <path d="M4.285 6.433a.5.5 0 0 0 .683-.183A3.5 3.5 0 0 1 8 4.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.5 4.5 0 0 0 8 3.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683M7 9.5C7 8.672 6.552 8 6 8s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5m4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5"/>
-</svg>
-						        
-						         </span>
-
-
-</span>
-
-		                         <span class="nav-link-text">Feedback</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-<li class="nav-item has-submenu">
-					        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-					        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						        <span class="nav-icon">
-						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-
-						        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-heart" viewBox="0 0 16 16">
-  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2.5a2 2 0 0 0-1.6.8L8 14.333 6.1 11.8a2 2 0 0 0-1.6-.8H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-  <path d="M8 3.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
-</svg>
-						         </span>
-
-
-</span>
-
-		                         <span class="nav-link-text">reclamation</span>
-					        </a><!--//nav-link-->
-					    </li><!--//nav-item-->
-
-
-					    </ul><!--//footer-menu-->
-				    </nav>
-			    </div><!--//app-sidepanel-footer-->
-		       
-	        </div><!--//sidepanel-inner-->
-	    </div><!--//app-sidepanel-->
-		{% endblock %} 
-		
 {% block body %}
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+    }
 
-   <style>
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-}
+    .pagination li {
+        display: inline-block;
+        margin: 0 5px;
+    }
 
-.pagination li {
-  display: inline-block;
-  margin: 0 5px;
-}
+    .pagination a {
+        display: block;
+        padding: 5px 10px;
+        background-color: #f2f2f2;
+        text-decoration: none;
+        color: green;
+        border-radius: 5px;
+    }
 
-.pagination a {
-  display: block;
-  padding: 5px 10px;
-  background-color: #f2f2f2;
-  text-decoration: none;
-  color: green;
-  border-radius: 5px;
-}
+    .pagination a:hover {
+        background-color: #ddd;
+    }
 
-.pagination a:hover {
-  background-color: #ddd;
-}
+    .pagination .active a {
+        background-color: #563d2d;
+        color: #fff;
+    }
 
-.pagination .active a {
-  background-color: #563d2d;
-  color: #fff;
-}
+    .pagination .active a:hover {
+        background-color: green;
+    }
 
-.pagination .active a:hover {
-  background-color: green;
-}
+    .pagination .disabled {
+        color: #999;
+        cursor: not-allowed;
+    }
 
-.pagination .disabled {
-  color: #999;
-  cursor: not-allowed;
-}
-.input__container--variant {
-  background: linear-gradient(to bottom, #F3FFF9, #F3FFF9);
-  border-radius: 30px;
-  max-width: 13em;
-  padding: 1em 1em;
-  
-}
+   
 
-.shadow__input--variant {
-  filter: blur(25px);
-  border-radius: 30px;
-  background-color: #F3FFF9;
-  opacity: 0.5;
-}
-
-.input__button__shadow--variant {
-  border-radius: 15px;
-  background-color: green;
-  padding: 3px;
-  border: none;
-  height: 30px;
-  margin-left: -11px;
-}
-
-.input__button__shadow--variant:hover {
-  background-color: #3C6659;
-}
-
-.input__search--variant {
-  width: 13em;
-  align-items: center;
-  border-radius: 13em;
-  outline: none;
-  border: none;
-  padding: 0.8em;
-  font-size: 1.2em;
-  color: #002019;
-  background-color: transparent;
-}
-
-.input__search--variant::placeholder {
-  color: #002019;
-  opacity: 0.7;
-}
-
-.input__container--variant {
-  background: linear-gradient(to bottom, #F3FFF9, #F3FFF9);
-  border-radius: 1.5em;
-  max-width: 14em;
-  padding: 1em;
-  box-shadow: 0em 1em 3em #beecdc64;
-}
+ 
 
 </style>
+
 <div class="app-wrapper">
-	    
-	    <div class="app-content pt-3 p-md-3 p-lg-4">
-		    <div class="container-xl">
-			    
-			    <div class="row g-3 mb-4 align-items-center justify-content-between">
-				    <div class="col-auto">
-			            <h1 >Table of Truck</h1>
-				    </div>
-					<div class="input__container input__container--variant">
-    <div class="shadow__input shadow__input--variant"></div>
-	<form action="{{ path('search_truck') }}" method="get" >
-    <input type="text" id="disponibilite" name="disponibilite" placeholder="Search..." class="input__search input__search--variant" />
-    <button type="submit" class="input__button__shadow input__button__shadow--variant"><svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="1.5em" width="13em">
-            <path d="M4 9a5 5 0 1110 0A5 5 0 014 9zm5-7a7 7 0 104.2 12.6.999.999 0 00.093.107l3 3a1 1 0 001.414-1.414l-3-3a.999.999 0 00-.107-.093A7 7 0 009 2z" fill-rule="evenodd" fill="#FFF"></path>
-          </svg>
-        </button>
-</form> 
-</div>         
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Matricule</th>
-                <th>Disponibilite</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for truck in trucks %}
-            <tr>
-                <td>{{ truck.matricule }}</td>
-                <td>{{ truck.disponibilite }}</td>
-                <td>
-                    <a href="{{ path('app_truck_show', {'id': truck.id}) }}" class="badge bg-success">show</a>
-                    <a href="{{ path('app_truck_edit', {'id': truck.id}) }}"class="badge bg-warning">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-  	{{ knp_pagination_render(trucks) }}
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <div class="row g-3 mb-4 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <h1>Table of Waste</h1>
+                </div>
 
-    <a href="{{ path('app_truck_new') }}" class="btn btn-primary">Create new</a>
+
+                <div class="col-auto">
+                    <div class="input__container input__container--variant d-flex justify-content-end">
+                        <div class="shadow__input shadow__input--variant"></div>
+                   
+                    </div>
+                </div>
+            </div>
+
+			  <form class="form" action="{{ path('search') }}" method="get">
+  
+  <form id="searchForm" action="{{ path('search') }}" method="get">
+<select id="searchTerm" class="input" onchange="filterTable()" required>
+        <option value="" selected disabled hidden>Select a status</option>
+        <option value="available">available</option>
+        <option value="unavailable">unavailable</option>
+    </select>
+</form>
+
+</form>
+            <table id="wasteTable" class="table">
+                <thead>
+                    <tr>
+
+                        <th>Matricule</th>
+                        <th>Disponibilite</th>
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+				
+                    {% for truck in trucks %}
+                    <tr>
+
+                        <td>{{ truck.matricule }}</td>
+                        <td>{{ truck.disponibilite }}</td>
+
+                        <td>
+                            <a href="{{ path('app_waste_show', {'id': truck.id}) }}" class="badge bg-success">Show</a>
+                            <a href="{{ path('app_waste_edit', {'id': truck.id}) }}" class="badge bg-warning">Edit</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7">No records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {{ knp_pagination_render(trucks) }}
+            <a href="{{ path('app_truck_new') }}" class="btn btn-primary">Create new</a>
+            <a href="{{ path('generate_pdf_Truck') }}" class="btn btn-danger">Create PDF</a>
+
+
+        </div>
+    </div>
+</div>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function filterTable() {
+    var searchTerm = document.getElementById("searchTerm").value.toLowerCase();
+    var tableRows = document.getElementById("wasteTable").getElementsByTagName("tr");
+
+    for (var i = 1; i < tableRows.length; i++) {
+        var row = tableRows[i];
+        var typeCell = row.getElementsByTagName("td")[0]; // Assuming the first column contains the waste type
+
+        if (typeCell) {
+            var type = typeCell.textContent.toLowerCase() || typeCell.innerText.toLowerCase();
+
+            console.log("Search Term:", searchTerm);
+            console.log("Type in Row:", type);
+
+            if (type === searchTerm || searchTerm === "") {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+}
+
+   
+
+    
+</script>
 {% endblock %}
-
-
-
-
-

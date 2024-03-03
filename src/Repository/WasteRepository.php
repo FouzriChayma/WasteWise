@@ -20,7 +20,14 @@ class WasteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Waste::class);
     }
-
+    public function findByType($type)
+    {
+        return $this->createQueryBuilder('waste')
+            ->andWhere('waste.type = :type')
+            ->setParameter('type', $type)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Waste[] Returns an array of Waste objects
 //     */

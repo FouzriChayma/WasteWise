@@ -12,29 +12,44 @@ class Waste
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id ;
 
     
     #[Assert\NotBlank(message:"type is required")]
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    public ?string $type ;
 
     #[Assert\NotBlank(message:"Location is required")]
     #[ORM\Column(length: 255)]
-    private ?string $location = null;
+    public ?string $location ;
 
     #[Assert\NotBlank(message:"etat is required")]
     #[ORM\Column(length: 255)]
-    private ?string $etat = null;
+    public ?string $etat ;
 
     #[Assert\NotBlank(message:"quantite is required")]
     #[ORM\Column(length: 255)]
-    private ?string $quantite = null;
+    public ?string $quantite ;
 
     #[ORM\ManyToOne(inversedBy: 'wastes')]
-    private ?Truck $truck = null;
+    public ?Truck $truck ;
 
-   
+    public function __construct(
+        ?int $id = null,
+        ?string $type = null,
+        ?string $location = null,
+        ?string $etat = null,
+        ?string $quantite = null,
+        ?Truck $truck = null
+    ) {
+        $this->id = $id;
+        $this->type = $type;
+        $this->location = $location;
+        $this->etat = $etat;
+        $this->quantite = $quantite;
+        $this->truck = $truck;
+    }
+
 
     public function getId(): ?int
     {
