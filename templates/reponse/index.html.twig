@@ -9,7 +9,7 @@
 
     <table class="table table-bordered table-hover">
         <thead class="table-success">
-            <tr>
+            <tr>    
                 <th>Id</th>
                 <th>Complaint_id</th>
                 <th>Message</th>
@@ -20,7 +20,7 @@
             {% for reponse in reponses %}
                 <tr>
                     <td>{{ reponse.id }}</td>
-                    <td>{{ reponse.complaintId }}</td>
+                    <td>{{ reponse.complaint.id }}</td>
                     <td>{{ reponse.message }}</td>
                     <td>
                         <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}" class="btn btn-sm btn-secondary">Show</a>

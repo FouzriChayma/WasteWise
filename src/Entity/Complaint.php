@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ComplaintRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ComplaintRepository::class)]
 class Complaint
@@ -15,29 +16,40 @@ class Complaint
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Please provide a user ID.")]
     private ?int $user_id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please fill the title.")]
+    #[Assert\Length(max: 255, maxMessage: "The title cannot be longer than {{ limit }} characters.")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please provide a description.")]
+    #[Assert\Length(max: 255, maxMessage: "The description cannot be longer than {{ limit }} characters.")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please provide a location.")]
+    #[Assert\Length(max: 255, maxMessage: "The location cannot be longer than {{ limit }} characters.")]
     private ?string $location = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "Please provide a submission date.")]
     private ?\DateTimeInterface $submissionDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please provide a picture.")]
+    #[Assert\Length(max: 255, maxMessage: "The picture information cannot be longer than {{ limit }} characters.")]
     private ?string $picture = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Please provide a status.")]
+    #[Assert\Length(max: 255, maxMessage: "The status cannot be longer than {{ limit }} characters.")]
     private ?string $status = null;
 
     #[ORM\OneToOne(targetEntity: "App\Entity\Reponse", mappedBy: "complaint")]
     private $reponse;
-
 
     public function getId(): ?int
     {

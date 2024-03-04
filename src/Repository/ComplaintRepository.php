@@ -21,20 +21,14 @@ class ComplaintRepository extends ServiceEntityRepository
         parent::__construct($registry, Complaint::class);
     }
 
-//    /**
-//     * @return Complaint[] Returns an array of Complaint objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+ 
+   public function paginationQuery()
+   {
+       return $this->createQueryBuilder('c')
+           ->orderBy('c.id', 'ASC')
+           ->getQuery()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Complaint
 //    {

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReponseRepository::class)]
 class Reponse
@@ -13,14 +14,14 @@ class Reponse
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $complaint_id = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $message = null;
 
     #[ORM\OneToOne(targetEntity: "App\Entity\Complaint", inversedBy: "reponse")]
     #[ORM\JoinColumn(name: "complaint_id", referencedColumnName: "id", nullable: false)]
+    #[Assert\NotNull]
     private $complaint;
 
     public function getId(): ?int
@@ -31,18 +32,6 @@ class Reponse
     public function setId(string $id): static
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getComplaintId(): ?int
-    {
-        return $this->complaint_id;
-    }
-
-    public function setComplaintId(int $complaint_id): static
-    {
-        $this->complaint_id = $complaint_id;
 
         return $this;
     }
@@ -64,7 +53,7 @@ class Reponse
         return $this->complaint;
     }
 
-    public function setComplaint(?Complaint $complaint): self
+    public function setComplaint(?Complaint $complaint): static
 {
     $this->complaint = $complaint;
 

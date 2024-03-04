@@ -29,7 +29,7 @@ class ReponseController extends AbstractController
         $form = $this->createForm(ReponseType::class, $reponse);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $entityManager->persist($reponse);
             $entityManager->flush();
 
@@ -56,7 +56,7 @@ class ReponseController extends AbstractController
         $form = $this->createForm(ReponseType::class, $reponse);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
@@ -78,13 +78,5 @@ class ReponseController extends AbstractController
 
         return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/userreponse/{userId}', name: 'reponses_by_user', methods: ['GET'])]
-    public function reponsesByUser(ReponseRepository $reponseRepository, $userId): Response
-    {
-        $reponses = $reponseRepository->findBy(['user_id' => $userId]);
-
-        return $this->render('reponse/index.html.twig', [
-            'reponses' => $reponses,
-        ]);
-    }
+ 
 }

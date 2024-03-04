@@ -35,31 +35,33 @@
     {% endblock %}
     <style>
     .bt {
-        background-color: #8B6B42;
-        padding: 0px 20px;
-        color: #fff;
-        text-transform: uppercase;
-        cursor: pointer;
-        border-radius: 5px;
-        border: 2px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-        transition: .4s;
-    }
+ background-color: #8B6B42;
+ padding: 0px 20px;
+ color: #fff;
+ text-transform: uppercase;
+ 
+ cursor: pointer;
+ border-radius: 5px;
+ border: 2px ;
+ box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+ transition: .4s;
+}
 
-    .bt span:last-child {
-        display: none;
-    }
+.bt span:last-child {
+ display: none;
+}
 
-    .bt:hover {
-        transition: .4s;
-        border: 2px;
-        background-color: #fff;
-        color: #00BFA6;
-    }
+.bt:hover {
+ transition: .4s;
+ border: 2px  ;
+ background-color: #fff;
+ color: #00BFA6;
+}
 
-    .bt:active {
-        background-color: #87dbd0;
-    }
+.bt:active {
+ background-color: #87dbd0;
+}
+
     </style>
 </head>
 {% endblock %}
@@ -97,22 +99,13 @@
                         <a href="index.html" class="nav-item nav-link active">Home</a>
                         <a href="about.html" class="nav-item nav-link">About</a>
                         <a href="service.html" class="nav-item nav-link">Services</a>
-                        <a href="{{ path('complaint_index') }}" class="nav-item nav-link">Complaints</a>
-                        <a href="{{ path('response_index') }}" class="nav-item nav-link">Responses</a>
-
-
-
+        
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>
                             <div class="dropdown-menu bg-light mt-2">
                                 {# <a href="{{path('app_profile',{'id':app.user.id})}}" class="dropdown-item">Profile</a> #}
-                                                                <a class="dropdown-item">Profile</a>
-
                                   {# <a href="{{path('app_front_edit',{'id':app.user.id})}}" class="dropdown-item">Settings</a> #}
-                                                                    <a class="dropdown-item">Settings</a>
-
-                                <a class="dropdown-item">Logout</a>
-                                  {# <a href="{{path('app_logout')}}" class="dropdown-item">Logout</a> #}
+                                {# <a href="{{path('app_logout')}}" class="dropdown-item">Logout</a> #}
                             
                             </div>
                            
