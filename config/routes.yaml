@@ -1,0 +1,3 @@
+thanks:
+    path: /thanks/{id}
+    controller: App\Controller\UserController::thanks
