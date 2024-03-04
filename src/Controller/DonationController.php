@@ -15,21 +15,37 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
 
 
 #[Route('/donation')]
 class DonationController extends AbstractController
 {
     #[Route('/show', name: 'app_donation_index', methods: ['GET'])]
-    public function index(DonationRepository $donationRepository): Response
-    {
+    public function index(DonationRepository $donationRepository,PaginatorInterface $paginator,Request $request): Response
+    {   
+        $donations = $donationRepository->findAll();
+        $articles = $paginator->paginate(   
+            $donations, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
         return $this->render('donation/index.html.twig', [
-            'donations' => $donationRepository->findAll(),
+            'donations' => $articles,
+            
         ]);
     }
 
+   
+
     #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, AssociationRepository $associationRepository ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, AssociationRepository $associationRepository, MailerInterface $mailer ): Response
     {
         $donation = new Donation();
         $form = $this->createForm(DonationType::class, $donation);
@@ -48,6 +64,24 @@ class DonationController extends AbstractController
             $entityManager->persist($donation);
             $entityManager->flush();
 
+            
+
+            $email = (new TemplatedEmail())
+            ->from('wastewise@gmail.com')
+            ->to($association->getEmail())
+           
+            ->subject('Confirmation de demande de don')
+            ->htmlTemplate('donation/donation_confirmation.html.twig')
+            ->context([
+                'donation' => $donation,
+                
+
+
+            ]);
+            
+        $mailer->send($email);
+       
+
             return $this->redirectToRoute('thanks', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -57,6 +91,7 @@ class DonationController extends AbstractController
         ]);
     }
 
+    
     
 
     #[Route('/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
@@ -68,6 +103,7 @@ class DonationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donation->setCreatedAt(new \DateTimeImmutable());
             $entityManager->flush();
+            $this->addFlash('success', 'Your donation has been successfully updated'); 
 
             return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -108,6 +144,8 @@ class DonationController extends AbstractController
            ]);
        
     }
+
+   
 
    
 

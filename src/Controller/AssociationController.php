@@ -14,16 +14,21 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/association')]
 class AssociationController extends AbstractController
 {
     #[Route('/show', name: 'app_association_index', methods: ['GET'])]
-    public function index(AssociationRepository $associationRepository): Response
-    {
+    public function index(AssociationRepository $associationRepository,PaginatorInterface $paginator,Request $request): Response
+    {   
+        
         return $this->render('association/index.html.twig', [
             'associations' => $associationRepository->findAll(),
+            
         ]);
+        
     }
 
     #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]
@@ -50,9 +55,11 @@ class AssociationController extends AbstractController
         
             $entityManager->persist($association);
             $entityManager->flush();
+            
 
             $session->set('association_name',$association->getName());
 
+             
             return $this->redirectToRoute('yesorno', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -86,6 +93,7 @@ class AssociationController extends AbstractController
         }
             
             $entityManager->flush();
+            $this->addFlash('success', 'Your association has been successfully updated'); 
 
             return $this->redirectToRoute('app_association_index', [], Response::HTTP_SEE_OTHER);
         }

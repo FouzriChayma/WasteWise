@@ -38,6 +38,15 @@
             "./migrations/.gitignore"
         ]
     },
+    "endroid/qr-code-bundle": {
+        "version": "5.0.1"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
+    "php-flasher/flasher-symfony": {
+        "version": "v1.15.9"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {

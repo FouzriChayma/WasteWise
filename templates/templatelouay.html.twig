@@ -5,9 +5,8 @@
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-dark p-0">
-                <img src="{{asset('Front/img/logoW.png')}}" alt="" style="width: 78px; height: 73px;">
-                <a href="index.html" class="navbar-brand" style="padding-top: 120px;">
-                 
+                <a href="{{ path('app_home') }}" class="navbar-brand">
+                    <h1 class="text-white">Waste<span class="text-dark">.</span>Wise</h1>
                 </a>
 
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
@@ -30,7 +29,7 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="{{ path('app_association_new') }}" class=""><button class="bt">Get involved !</button></a>
+                        <a href="{{ path('app_home2') }}" class=""><button class="bt">Get involved !</button></a>
                     </div>
                     
                 

@@ -8,11 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Association;
+use App\Entity\Donation;
 use App\Form\AssociationType;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Repository\DonationRepository;
 use App\Repository\AssociationRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
 {
@@ -23,6 +25,25 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/statistiques', name: 'app_donation_statistiques', methods: ['GET'])]
+    public function statistiques(ManagerRegistry $managerRegistry): Response
+    {
+        $entityManager = $managerRegistry->getManager();
+
+        $statistiques = $entityManager->getRepository(Donation::class)
+            ->createQueryBuilder('d')
+            ->select('a.name as associationName, SUM(d.quantity) as totalQuantity')
+            ->leftJoin('d.association', 'a')
+            ->groupBy('a.name')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('association/stat.html.twig', [
+            'statistiques' => $statistiques,
+        ]);
+    }
+
     #[Route('/home2', name: 'app_home2')]
     public function index2(): Response
     {
@@ -140,6 +161,49 @@ class HomeController extends AbstractController
     }
 
 
+    #[Route('/tri-quantity', name: 'tri_quantity')]
+    public function triPrix(Request $request, DonationRepository $donationRepository): Response
+    {
+        $tri = $request->query->get('tri', 'asc'); // Par défaut, tri croissant
+        $donations = $donationRepository->findBy([], ['quantity' => $tri]);
+
+        return $this->render('donation/index.html.twig', [
+            'donations' => $donations,
+        ]);
+    }
+
+    #[Route('/tri-quantity2', name: 'tri_quantity2')]
+    public function triPrix2(Request $request, AssociationRepository $associationRepository): Response
+    {
+        $tri = $request->query->get('tri', 'asc'); // Par défaut, tri croissant
+        $associations = $associationRepository->findBy([], ['name' => $tri]);
+
+        return $this->render('association/index.html.twig', [
+            'associations' => $associations,
+        ]);
+    }
+
+
+    #[Route('/total-quantite', name: 'total_quantite', methods: ['GET'])]
+    public function totalPrix(DonationRepository $donationRepository): JsonResponse
+    {
+        // Récupérer tous les produits
+        $donations = $donationRepository->findAll();
+
+        // Initialiser le total à zéro
+        $total = 0;
+
+        // Itérer sur chaque produit et ajouter son prix au total
+        foreach ($donations as $donations) {
+            // Assurez-vous que le prix est un nombre valide avant de l'ajouter
+            if (is_numeric($donations->getQuantity())) {
+                $total += $donations->getQuantity();
+            }
+        }
+
+        // Retourner le total au format JSON
+        return $this->json(['total' => $total]);
+    }
 
    
 
