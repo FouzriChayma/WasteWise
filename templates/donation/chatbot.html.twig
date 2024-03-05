@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot pour les associations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #D1FAE5;
+        }
+        body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('Front/img/background-chat5.jpg'); /* Replace with the path to your image */
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Ensure the background is behind other content */
+}
+
+        #container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        #chat-container {
+            width: 60%;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #F5F5F4;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        #chatbox {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            overflow-y: auto; /* Add this line for the scrollbar */
+            height: 400px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 8px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #4CAF50;
+            color: #fff;
+            align-self: flex-start;
+        }
+
+        .bot-message {
+            background-color: #0084FF;
+            color: #fff;
+            align-self: flex-end;
+        }
+
+        #userInput {
+            width: 70%;
+            padding: 8px;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-radius: 0 0 10px 0;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        #sendButton {
+            width: 30%;
+            padding: 10px; /* Increased padding for a better touch experience */
+            background-color: #4CAF50; /* Updated color to complement the existing styles */
+            color: #fff;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-radius: 0 0 0 10px;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease; /* Smooth hover transition */
+        }
+
+        #sendButton:hover {
+            background-color: #45a049; /* Darker color on hover */
+        }
+
+        #sidebar {
+            width: 30%;
+            padding: 20px;
+            background-color: #F5F5F4; /* Updated color to complement the existing styles */
+            border-radius: 10px;
+            margin: 20px;
+            overflow-y: auto;
+            color: #fff; /* Text color */
+        }
+
+        #sidebar h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em; /* Adjust the font size */
+            color: #265936;
+
+        }
+
+        #sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #sidebar li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Button color */
+            transition: background-color 0.3s ease; /* Smooth transition on hover */
+        }
+
+        #sidebar li:hover {
+            background-color: #45a049; /* Darker color on hover */
+        }
+
+       
+        h1 {
+            margin-top: 50px; /* Adjust the margin as needed */
+            font-size: 3em; /* Adjust the font size */
+            color: #265936; /* Adjust the text color */
+            text-align: center; /* Center the text horizontally */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+        }
+    </style>
+</head>
+<body>
+ <div class="app-auth-branding mb-4"><a class="app-logo" href="{{ path('app_home') }}"><img class="logo-icon me-2" src="{{asset('Back/assets/images/logo.png')}}" alt="logo" style="width: 120px; height: auto;"></a></div>
+    
+    <div id="container">
+        <div id="chat-container">
+            <div id="chatbox">
+                <div class="message user-message">Bienvenue ! Comment puis-je vous aider aujourd'hui ?</div>
+            </div>
+            <div style="display: flex;">
+                <input type="text" id="userInput" placeholder="Tapez votre message...">
+                <button id="sendButton" onclick="sendMessage()">Envoyer</button>
+            </div>
+        </div>
+
+        <div id="sidebar">
+            <h3>Frequently Asked Questions :</h3>
+            <ul>
+                <li onclick="selectQuestion('Comment je peux créer un compte association')">Comment je peux créer un compte association</li>
+                <li onclick="selectQuestion('Comment dommander un don ?')">Comment dommander un don ?</li>
+                <li onclick="selectQuestion('Combien du dons je peux domander ?')">Combien du dons je peux domander ?</li>
+                <li onclick="selectQuestion('Comment savoir si ma demande du don est soumis ?')">Comment savoir si ma demande du don est soumis ?</li>
+                <li onclick="selectQuestion('Combien de temps faut-il pour que la demande soit traitée ?')">Combien de temps faut-il pour que la demande soit traitée ?</li>
+                <li onclick="selectQuestion('Comment je peux vous contacter ?')">Comment je peux vous contacter ?</li>
+                <li onclick="selectQuestion('Ou vous etes localiser ?')">Ou vous etes localiser ?</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("userInput").value;
+            var chatbox = document.getElementById("chatbox");
+
+            // Clear user input
+            document.getElementById("userInput").value = "";
+
+            // Display user message
+            chatbox.innerHTML += `<div class="message bot-message"><strong>Vous :</strong> ${userInput}</div>`;
+
+            // Respond with chatbot message
+            var chatbotResponse = getChatbotResponse(userInput);
+            chatbox.innerHTML += `<div class="message user-message"><strong>Chatbot :</strong> ${chatbotResponse}</div>`;
+
+            // Scroll to bottom of chatbox
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function selectQuestion(question) {
+            // Set the selected question in the input field
+            document.getElementById("userInput").value = question;
+
+            // Trigger the send button click
+            sendMessage();
+        }
+
+       function getChatbotResponse(userInput) {
+    // Implement your chatbot logic here
+    if (userInput.toLowerCase().includes("comment je peux créer un compte association")) {
+        return "Pour créer un compte, veuillez fournir le nom de votre association, Votre localisation, Votre Email et un document d'identification de votre association.";
+    } else if (userInput.toLowerCase().includes("comment dommander un don ?")) {
+        return "Veuillez accéder au formulaire du don pour indiquer la quantité souhaitée.";
+    }  else if (userInput.toLowerCase().includes("combien du dons je peux domander ?")) {
+        return "Il y a un nombre limité de demandes de dons.";
+    } else if (userInput.toLowerCase().includes("comment savoir si ma demande du don est soumise ?")) {
+        return "Un email contenant les informations de votre don sera envoyé à votre adresse email.";
+    } else if (userInput.toLowerCase().includes("combien de temps faut-il pour que la demande soit traitée ?")) {
+        return "L'admin confirmera les dons dans un délai maximum de 2 jours.";
+    } else if (userInput.toLowerCase().includes("comment je peux vous contacter ?")) {
+        return "Pour plus d'informations, veuillez contacter le numéro 52909313 ou envoyer un email à wastewise@gmail.com.";
+    } else if (userInput.toLowerCase().includes("ou vous etes localiser ?")) {
+        return "Nous sommes situés à Ariana, El Ghazela Esprit.";
+    } else {
+        return "Je suis désolé, je ne comprends pas. Pouvez-vous reformuler votre question ?";
+    }
+}
+    </script>
+</body>
+</html>

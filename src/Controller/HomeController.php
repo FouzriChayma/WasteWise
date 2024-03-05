@@ -52,6 +52,8 @@ class HomeController extends AbstractController
         ]);
     }
 
+    
+
     #[Route('/thanks', name: 'thanks')]
     public function thanks(): Response
     {
@@ -60,10 +62,20 @@ class HomeController extends AbstractController
         ]);
     }
 
+    
+
     #[Route('/yesorno', name: 'yesorno')]
     public function yesorno(): Response
     {
         return $this->render('home/yesorno.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/chatbot', name: 'chatbot')]
+    public function chatbot(): Response
+    {
+        return $this->render('donation/chatbot.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
