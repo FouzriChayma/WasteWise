@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demande Acceptée</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bonjour, votre demande de don a été confirmée</h1>
+    
+    <p>Vous pouvez arriver pour prendre votre don, nous sommes localisé a Arienna, Esprit</p>
+
+    <p>Détails de votre donation :</p>
+    <ul>
+        <li>Quantité : {{ donation.quantity }}</li>
+        <li>Date : {{ donation.createdAt|date('Y-m-d H:i:s') }}</li>
+        {# Add more details as needed #}
+    </ul>
+
+    
+
+</body>
+</html>

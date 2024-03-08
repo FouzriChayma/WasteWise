@@ -1,0 +1,133 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Association index{% endblock %}
+
+
+{% block content %}
+	    
+			    <div class="row g-3 mb-4 align-items-center justify-content-between">
+				    <div class="col-auto">
+			            <h1 class="app-page-title mb-0">Table of Associations</h1>
+				    </div>
+				    <div class="col-auto">
+					     <div class="page-utilities">
+						    <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+							    <div class="col-auto">
+								    <div class="d-flex"  >
+										<div class="col-md-12 mx-auto">
+										{# <div class="small fw-light">search input with icon</div> #}
+										<div class="input-group">
+										<input class="form-control border-end-0 border rounded-pill" type="search" placeholder="Search" id="example-search-input">
+										<span class="input-group-append">
+											<button class="btn btn-outline-secondary border-bottom-0 border rounded-pill ms-n5" type="button" id="searchButton">
+												Search
+											</button>
+										</span>
+        								</div>
+    								</div>
+								</div>        
+							</div><!--//col-->
+						<div class="col-auto">
+                     			<button type="button" class="form-select w-auto" data-bs-toggle="dropdown" aria-expanded="false">
+                            	Sort by name
+                    			 </button>
+                  				 <ul class="dropdown-menu">
+                      			<li><a class="dropdown-item" href="{{ path('tri_quantity2', {'tri': 'asc'}) }}">Croissant</a></li>
+                      			<li><a class="dropdown-item" href="{{ path('tri_quantity2', {'tri': 'desc'}) }}">Décroissant</a></li>
+                   				</ul>
+                   		</div>
+							    <div class="col-auto">						    
+								    <a class="btn app-btn-secondary" href="{{path('PDF_Reserver2')}}">
+									    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+										<path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+										</svg>
+									    Export PDF
+									</a>
+					</div>
+				</div><!--//row-->
+			</div><!--//table-utilities-->
+		</div><!--//col-auto-->
+                
+				<div class="tab-content" id="orders-table-tab-content">
+                
+			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+                    
+					    <div class="app-card app-card-orders-table shadow-sm mb-5">
+						    <div class="app-card-body">
+                            
+							    <div class="table-responsive">
+							        <table class="table app-table-hover mb-0 text-left">
+                                    
+										<thead>
+											<tr>
+												<th class="cell">ID</th>
+												<th class="cell">Name</th>
+												<th class="cell">Adresse</th>
+												<th class="cell">Email</th>
+												<th class="cell">Image</th>
+												<th class="cell">actions</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											{% for association in associations %}
+                                                <tr class="islem">
+                                                    <td>{{ association.id_association }}</td>
+                                                     <td>{{ association.name }}</td>
+                                                     <td>{{ association.adresse }}</td>
+                                                    <td>{{ association.email }}</td>
+													 <td>
+													 {% if association.ImagePath ends with '.pdf' %}
+       												 <a href="{{ asset(association.ImagePath) }}" target="_blank">View PDF</a>
+   													 {% else %}
+													 <img src="{{ asset(association.ImagePath) }}" alt="Association Image" class="img-thumbnail" width="100"></td>
+													 {% endif %}
+                                                    <td>
+                                                    <a href="{{ path('app_association_edit', {'id': association.id_association}) }}" class="badge bg-warning">Edit</a>
+                                                    <a href="{{ path('app_association_delete', {'id': association.id_association}) }}" onclick="return confirm('Are you sure you want to delete this item?');" class="badge bg-danger">Delete</a>
+                                                    
+                    
+                    
+                                                    </td>
+                                                </tr>
+                                            {% else %}
+                                            <tr>
+                                            <td colspan="5">no records found</td>
+                                             </tr>
+                                            {% endfor %}
+                                        </tbody>
+										</tbody>
+									</table>
+						        </div><!--//table-responsive-->
+                                
+						   
+						
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#searchButton').click(function () {
+                        var searchQuery = $('#example-search-input').val().toLowerCase();
+                        var noUsersRow = $('#noUsersRow');
+
+                        // Loop through each user row and show/hide based on the search query
+                        $('.islem').each(function () {
+                            var userRowText = $(this).text().toLowerCase();
+
+                            // If the search query is found in the user row, show it; otherwise, hide it
+                            $(this).toggle(userRowText.includes(searchQuery));
+                        });
+
+                        // Show/hide the "No Users Found" row based on search results
+                        noUsersRow.toggle($('.islem:visible').length === 0);
+                    });
+                });
+            </script>
+
+    
+   
+{% endblock %}

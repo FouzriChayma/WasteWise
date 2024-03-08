@@ -1,0 +1,280 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Stock;
+use App\Entity\OurOrder;
+use App\Form\Stock2Type;
+use App\Form\OurOrderType;
+use App\Repository\StockRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\StoreHouseRepository;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+#[Route('/stock')]
+class StockController extends AbstractController
+{
+    // StockController.php
+
+// StockController.php
+
+#[Route('/', name: 'app_stock_index', methods: ['GET'])]
+public function index(StockRepository $stockRepository, Request $request): Response
+{
+    $page = $request->query->getInt('page', 1);
+    $pageSize = 3;
+    $totalStocksCount = count($stockRepository->findAll());
+    $totalPages = ceil($totalStocksCount / $pageSize);
+
+    $offset = ($page - 1) * $pageSize;
+
+    $searchQuery = $request->query->get('search');
+    $sortField = $request->query->get('sortField', 'name_st');
+    $sortOrder = $request->query->get('sortOrder', 'asc');
+
+    if ($searchQuery) {
+        $stocks = $stockRepository->findBySearchQuery($searchQuery);
+        $totalStocksCount = count($stocks);
+        $totalPages = ceil($totalStocksCount / $pageSize);
+    } else {
+        $stocks = $stockRepository->findAllWithSorting($sortField, $sortOrder, $pageSize, $offset);
+    }
+
+    $sortOptions = [
+        'name_st' => 'Name',
+        'quantity_st' => 'Quantity',
+        'selling_price' => 'Selling Price',
+        'buying_price' => 'Buying Price',
+    ];
+
+
+    return $this->render('stock/index.html.twig', [
+        'stocks' => $stocks,
+        'page' => $page,
+        'total_pages' => $totalPages,
+        'sortOptions' => $sortOptions,
+        'currentSortField' => $sortField,
+        'currentSortOrder' => $sortOrder,
+
+    ]);
+}
+
+
+#[Route('/PDF_Reserver3', name: 'PDF_Reserver3')]
+    public function stockgeneratePdf(): Response
+    {
+        // Get the EntityManager
+        $entityManager = $this->getDoctrine()->getManager();
+
+        // Fetch data from the Waste table
+        $stockRepository = $entityManager->getRepository(stock::class);
+        $stocks = $stockRepository->findAll();
+
+        // Create a new Dompdf instance
+        $dompdf = new Dompdf();
+
+        // Load HTML content from a Twig template
+        $html = $this->renderView('stock/pdf_list.html.twig', [
+            'stocks' => $stocks,
+        ]);
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the PDF
+        $dompdf->render();
+
+        // Generate the PDF response
+        $response = new Response($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
+    }
+
+#[Route('/Recyclable/materials', name: 'app_stock_recyclable_materials', methods: ['GET'])]
+public function allfront(Request $request, StockRepository $stockRepository): Response
+{
+    $searchQuery = $request->query->get('search');
+    
+    // Filter stocks based on search query
+    $stocks = $stockRepository->findBy1($searchQuery);
+
+    return $this->render('stock/show.html copy.twig', [
+        'stocks' => $stocks,
+    ]);
+}
+
+#[Route('/stock/{id}/order', name: 'app_stock_order', methods: ['GET', 'POST'])]
+    public function order(Request $request, EntityManagerInterface $entityManager, StockRepository $stockRepository, int $id): Response
+    {
+        $stock = $stockRepository->find($id);
+
+        if (!$stock) {
+            // Handle the case where the stock is not found, redirect or display an error
+            // For example:
+            // return $this->redirectToRoute('error_page', ['message' => 'Stock not found']);
+        }
+
+        $ourOrder = new OurOrder();
+        $ourOrder->setStock($stock);
+
+        // Set default statusO to "Pending" only if the form is being submitted (POST request)
+        if ($request->isMethod('POST')) {
+            $ourOrder->setStatusO('Pending');
+        }
+
+        $form = $this->createForm(OurOrderType::class, $ourOrder, ['exclude_status' => true]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Update the quantity in stock
+            $quantityOrdered = $ourOrder->getQuantityO();
+            $currentStockQuantity = $stock->getQuantitySt();
+
+            if ($quantityOrdered <= $currentStockQuantity) {
+                $stock->setQuantitySt($currentStockQuantity - $quantityOrdered);
+                $entityManager->persist($stock);
+            } else {
+                // Handle insufficient stock error here
+            }
+
+            // Persist the new order
+            $entityManager->persist($ourOrder);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_stock_index'); // Update redirection here
+        }
+
+        return $this->renderForm('stock/order.html.twig', [
+            'our_order' => $ourOrder,
+            'stock' => $stock, // Pass the stock variable to the template
+            'form' => $form,
+        ]);
+    }
+
+#[Route('/stock/{id}', name: 'app_stock_details', methods: ['GET'])]
+public function showDetails(Stock $stock): Response
+{
+    return $this->render('stock/details.html.twig', [
+        'stock' => $stock,
+    ]);
+}
+
+
+    #[Route('/new', name: 'app_stock_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, StoreHouseRepository $storeHouseRepository): Response
+    {
+        $stock = new Stock();
+        $form = $this->createForm(Stock2Type::class, $stock, [
+            'exclude_date_d_ajout' => true,
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $storehouse = $stock->getStorehouse();
+            $stockQuantity = $stock->getQuantitySt();
+            
+            if ($storehouse && $storehouse->getCapacity() < $storehouse->getQuantitySum() + $stockQuantity) {
+                $this->addFlash('error', 'Adding this stock will exceed the capacity of the selected storehouse.');
+                return $this->redirectToRoute('app_stock_new');
+            }
+
+            $stock->setDefaultDate();
+            $file = $form->get('image_st')->getData();
+            if ($file) {
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+    
+            // Move the file to the directory where images are stored
+            $targetDirectory = $this->getParameter('kernel.project_dir') . '/public' ;
+            $file->move(
+                $targetDirectory,
+                $fileName
+            );
+    
+            // Set the image file name in the Stock entity
+            $stock->setImageSt($fileName);
+        }
+            
+            $entityManager->persist($stock);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('stock/new.html.twig', [
+            'stock' => $stock,
+            'form' => $form,
+        ]);
+    }
+
+
+
+    #[Route('/{idSt}', name: 'app_stock_show', methods: ['GET'])]
+    public function show(Stock $stock): Response
+    {
+        return $this->render('stock/show.html.twig', [
+            'stock' => $stock,
+        ]);
+    }
+
+    #[Route('/{idSt}/edit', name: 'app_stock_edit', methods: ['GET', 'POST'])]
+public function edit(Request $request, Stock $stock, EntityManagerInterface $entityManager): Response
+{
+    // Exclude the 'date_d_ajout_st' field from the form
+    $form = $this->createForm(Stock2Type::class, $stock, [
+        'exclude_date_d_ajout' => true,
+    ]);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // If a new file is uploaded, handle it before flushing
+        $file = $form->get('image_st')->getData();
+
+        if ($file) {
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('kernel.project_dir') . '/public',
+                $fileName
+            );
+            $stock->setImageSt($fileName);
+        } elseif (!$file && $stock->getImageSt()) {
+            // If no new file is uploaded, but there is an existing image, keep it
+            $stock->setImageSt($stock->getImageSt());
+        }
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    return $this->renderForm('stock/edit.html.twig', [
+        'stock' => $stock,
+        'form' => $form,
+    ]);
+}
+
+
+
+
+    #[Route('/{idSt}', name: 'app_stock_delete', methods: ['POST'])]
+    public function delete(Request $request, Stock $stock, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$stock->getIdSt(), $request->request->get('_token'))) {
+            $entityManager->remove($stock);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
+    }
+}

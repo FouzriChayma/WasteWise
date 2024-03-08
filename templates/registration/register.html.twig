@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign up to WasteWise{% endblock %}
+
+{% block stylesheet %}
+<style>
+/* Style des champs du formulaire */
+.form-control {
+    border-radius: 20px; /* Rendre les champs ronds */
+    border: 1px solid #ced4da; /* Bordure par défaut */
+}
+
+/* Style des champs lorsque actifs */
+.form-control:focus {
+    border-color: #28a745; /* Bordure verte lorsqu'actif */
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* Effet de mise en évidence */
+}
+
+/* Style des champs lorsque survolés */
+.form-control:hover {
+    border-color: #28a745; /* Bordure verte lorsqu'en survol */
+}
+
+/* Style du bouton Register */
+.btn-primary {
+    border-radius: 20px; /* Rendre le bouton rond */
+    background-color: #28a745; /* Couleur verte */
+    border-color: #28a745; /* Bordure verte */
+}
+
+.btn-primary:hover {
+    background-color: #218838; /* Couleur verte plus foncée au survol */
+    border-color: #1e7e34; /* Bordure plus foncée au survol */
+}
+
+/* Style pour aligner les champs deux à deux */
+.auth-form-container .form-row {
+    margin-bottom: 20px; /* Espacement entre chaque paire de champs */
+}
+
+/* Style du fond du formulaire */
+.auth-form-container {
+    background-color: #28a745; /* Couleur verte pour le fond du formulaire */
+    padding: 20px; /* Ajouter un peu de marge intérieure pour l'espace entre le contenu et le bord */
+}
+.text-center {
+    text-align: center; /* Centrer le texte horizontalement */
+    margin-bottom: 20px; /* Espacement en bas du texte */
+    color:#218838;
+}
+
+/* Style des messages d'erreur */
+.error-message {
+    color: #dc3545; /* Couleur rouge pour les messages d'erreur */
+    margin-top: 5px; /* Espacement en haut des messages d'erreur */
+    font-size: 14px; /* Taille de police des messages d'erreur */
+}
+
+/* Ajout du fond blanc derrière le formulaire */
+.auth-main-col {
+    background-color: white; /* Fond blanc */
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="row g-0 app-auth-wrapper">
+    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+        <div class="d-flex flex-column align-content-end">
+            <div class="app-auth-body mx-auto">
+                <div class="app-auth-branding mb-4" style="font-size: 5px;">
+                    <a class="app-logo" href="index.html">
+                        <img class="logo-icon me-2" src="{{ asset('Back/assets/images/logo (1).png') }}" alt="logo" style="width: 70px; height: auto;">
+                    </a>
+                </div>
+                <h2 class="auth-heading text-center mb-4" style="color: black; font-size: 30px;">Sign up to WasteWise</h2>
+                <p class="text-center mb-4">Begin your Green Adventure - Sign Up with Waste Wise Today!</p>
+
+                <!-- Ajoutez une marge basse au paragraphe pour créer de l'espace -->
+                <p style="margin-bottom: 20px;"></p>
+
+                {% for flash_error in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+
+                <div class="auth-form-container text-start mx-auto" style="max-width: 350px;"> {# Ajustez la largeur maximale du formulaire #}
+                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation','id':'myForm'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(registrationForm) }}
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            {{ form_row(registrationForm.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Name'}}) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(registrationForm.LastName, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Last Name'}}) }}
+                        </div>
+                    </div>
+                  <div class="row mb-3">
+                        <div class="col">
+                            {{ form_row(registrationForm.UserName, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Username'}}) }}
+                        </div>
+                        <div class="col">
+                            {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Email'}}) }}
+                        </div>
+                        </div>
+                 
+                   
+                        <div class="col">
+                            {{ form_row(registrationForm.password, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Password'}}) }}
+
+                        </div>
+                        <div class="col">
+                            {{ form_row(registrationForm.confirm_password, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Confirm Password'}}) }}
+                        </div>
+                    
+                    <label for="ddn" class="form-label">Birth Date</label>
+                    {{ form_widget(registrationForm.ddn, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Date of Birth'}}) }}
+                    {{ form_row(registrationForm.ImagePath, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Image Path'}}) }}
+               <div
+  class="h-captcha"
+ data-sitekey="d1fec662-637c-4c4e-842f-649fdcea9415"
+ 
+  data-error-callback="onError"
+></div>
+              
+               <div style="display: flex; align-items: center;">
+    <div style="flex-grow: 1;">
+        <label for="{{ registrationForm.agreeTerms.vars.id }}" style="margin-bottom: 5px; margin-top: 5px; display: flex; align-items: center;">
+            {{ form_widget(registrationForm.agreeTerms, {'attr': {'style': 'margin-right: 5px;'}}) }}
+            <a href="{{ path('terms_and_conditions') }}" style="color: #28a745; text-decoration: none; font-size: 16px;">I accept the Terms of Use & Conditions</a>
+        </label>
+    </div>
+</div>
+
+
+                    <button type="submit" class="btn btn-primary btn-sm w-100 mt-3"style="color: white; text-decoration: none; font-size: px;">Register</button> {# Utilisez la classe 'btn-sm' pour réduire la taille du bouton #}
+                    {{ form_end(registrationForm) }}
+
+                    <div class="auth-option text-center" style="padding-top: 1rem;">Already have an account? <a class="text-link" href="{{ path('app_login') }}">Log in</a></div> {# Réduire l'espacement en ajustant la valeur de la propriété 'padding-top' #}
+                </div><!--//auth-form-container-->  
+            </div><!--//auth-body-->
+
+            <footer class="app-auth-footer">
+            </footer><!--//app-auth-footer-->   
+        </div><!--//flex-column-->   
+    </div><!--//auth-main-col-->
+
+    <!-- Colonne pour l'image -->
+   <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col" style="background-color: #28a745; background-image: url('{{ asset('Back/assets/images/Green & White Minimal Recycling Poster.png') }}'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+    <div class="auth-background-mask"></div>
+</div><!--//auth-background-col-->
+
+    </div><!--//auth-background-col-->
+</div><!--//row-->
+
+{% endblock %}

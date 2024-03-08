@@ -1,0 +1,119 @@
+<style>
+
+
+    @font-face {
+  font-family: 'Roboto', sans-serif; /* Web-safe font */
+  src: local('Roboto'), url('path/to/Roboto.woff2') format('woff2'); /* Add fallback */
+}
+
+html, body {
+  font-family: 'Roboto', sans-serif;
+  margin: 10; /* Remove default margins */
+}
+
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  page-break-inside: avoid; /* Keep entire table on one page */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.actions {
+  text-align: center;
+}
+
+.badge {
+  display: inline-block; /* Avoid horizontal spacing issues */
+  background-color: #f0f0f0; /* Neutral background */
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin-right: 5px;
+  text-decoration: none; /* Remove underline, as CSS may not apply consistently */
+}
+
+.badge:hover {
+  background-color: #ddd;
+}
+
+/* Optional table headers/footers styling */
+table thead, table tfoot {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Adjust header/footer content as needed */
+table thead tr th:first-child, table tfoot tr th:first-child {
+  text-align: left;
+}
+</style>
+<h1>List of Orders</h1>
+
+<div class="table-responsive">
+                                    
+										  <table class="table table-bordered table-hover">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Id Order</th>
+                            <th>Quantity</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for our_order in our_orders %}
+                            <tr>
+                                <td>{{ our_order.idO }}</td>
+                                <td>{{ our_order.quantityO }}</td>
+                                <td>{{ our_order.stock }}</td>
+                                <td>
+                                    {% if our_order.statusO == 'Pending' %}
+                                        <span class="badge bg-warning">{{ our_order.statusO }}</span>
+                                    {% elseif our_order.statusO == 'Delivered' %}
+                                        <span class="badge bg-success">{{ our_order.statusO }}</span>
+                                    {% elseif our_order.statusO == 'Cancelled' %}
+                                        <span class="badge bg-danger">{{ our_order.statusO }}</span>
+                                    {% else %}
+                                        {{ our_order.statusO }} {# Handle other cases if needed #}
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ our_order.totalO }}</td>
+                                <td>{{ our_order.createdAt|date('Y-m-d') }}</td>
+
+                                
+                               
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">No records found</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+</div><!--//table-responsive-->
+                                

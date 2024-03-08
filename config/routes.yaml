@@ -1,0 +1,23 @@
+thanks:
+    path: /thanks/{id}
+    controller: App\Controller\UserController::thanks
+
+banned_users_chart:
+    path: /banned-users-chart
+    controller: App\Controller\UserController::bannedUsersChart
+    
+complaint_index:
+    path: '/complaints'
+    controller: App\Controller\ComplaintController::index
+
+response_index:
+    path: '/responses'
+    controller: App\Controller\ResponseController::index
+
+complaints_by_user:
+    path: /usercomplaint
+    controller: App\Controller\ComplaintController::user_index
+
+reponses_by_user:
+    path: /userreponse/{userId}
+    controller: App\Controller\ComplaintController::reponsesByUser

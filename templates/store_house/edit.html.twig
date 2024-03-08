@@ -1,0 +1,61 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Edit StoreHouse{% endblock %}
+
+{% block content %}
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="container-xl">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #D4EDDA;">
+                                <br><h2 class="mb-0">Edit StoreHouse</h2>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {{ form_widget(form._token) }}
+                                    <div class="mb-3">
+                                        {{ form_label(form.nameSh, 'Name') }}
+                                        {{ form_widget(form.nameSh, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.nameSh) %}
+                                            <div class="text-danger">{{ form_errors(form.nameSh) }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        {{ form_label(form.descriptionSh, 'Description') }}
+                                        {{ form_widget(form.descriptionSh, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.descriptionSh) %}
+                                            <div class="text-danger">{{ form_errors(form.descriptionSh) }}</div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        {{ form_label(form.locationSh, 'Location') }}
+                                        {{ form_widget(form.locationSh, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.locationSh) %}
+                                            <div class="text-danger">{{ form_errors(form.locationSh) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_label(form.capacity, 'Capacity') }}
+                                        {{ form_widget(form.capacity, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.capacity) %}
+                                            <div class="text-danger">{{ form_errors(form.capacity) }}</div>
+                                        {% endif %}
+                                    </div>
+                        
+                                    <button type="submit" class="btn btn-warning">Update</button>
+                                    <a href="{{ path('app_store_house_index') }}" class="btn btn-secondary">Cancel</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

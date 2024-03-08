@@ -1,0 +1,140 @@
+{% extends 'reponse/baseBack.html.twig' %}
+
+{% block title %}New Complaint{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Style pour les messages d'erreur */
+        .error-message {
+            color: #dc3545; /* Red color for error messages */
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Style spécifique pour les messages d'erreur dans les form-group */
+        .form-group .error-message {
+            padding: 5px;
+            border-radius: 4px;
+            display: inline-block; /* Permet d'ajuster la largeur du conteneur à son contenu */
+        }
+    </style>
+{% endblock %}  
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New Complaint</h2>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                        {{ form_widget(form._token) }}
+
+                        <div class="mb-3">
+                            <label for="edit-user" class="form-label">user</label>
+                            {{ form_widget(form.user, {'attr': {'class': 'form-control', 'id': 'edit-user'}}) }}
+                            {% if form_errors(form.user)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.user) }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-title" class="form-label">Title</label>
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'edit-title'}}) }}
+                            {% if form_errors(form.title)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.title) }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-description" class="form-label">Description</label>
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'id': 'edit-description'}}) }}
+                            {% if form_errors(form.description)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.description) }}</div>
+                            {% endif %}
+                        </div>
+
+         <div class="mb-3">
+    <label for="map" class="form-label">Location</label>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <input id="lat" type="hidden" name="lat">
+    <input id="lng" type="hidden" name="lng">
+    {{ form_widget(form.location, {'attr': {'id': 'location', 'class': 'form-control', 'readonly': true}}) }}
+    <button id="submit-location" type="button" class="btn btn-primary">Submit Location</button>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlaND8AnWh1fG9IJ1WZhRg-fGV6fgCiMQ&callback=initMap"></script>
+
+<script>
+function initMap() {
+    var myLatLng = {lat: 33.8869, lng: 9.5375};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: myLatLng
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        draggable: true
+    });
+
+    google.maps.event.addListener(marker, 'position_changed', function () {
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+    });
+document.getElementById('submit-location').addEventListener('click', function(event) {
+    event.preventDefault();
+    var lat = document.getElementById('lat').value;
+    var lng = document.getElementById('lng').value;
+    document.querySelector('[name="complaint[location]"]').value = lat + ',' + lng;
+});
+
+
+}
+</script>
+
+                        <div class="mb-3">
+                            <label for="edit-submissionDate" class="form-label">Submission Date</label>
+                            {{ form_widget(form.submissionDate, {'attr': {'class': 'form-control', 'id': 'edit-submissionDate'}}) }}
+                            {% if form_errors(form.submissionDate)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.submissionDate) }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-picture" class="form-label">Picture</label>
+                            {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'id': 'edit-picture'}}) }}
+                            {% if form_errors(form.picture)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.picture) }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit-status" class="form-label">Status</label>
+                            {{ form_widget(form.status, {'attr': {'class': 'form-control', 'id': 'edit-status'}}) }}
+                            {% if form_errors(form.status)|length > 0 %}
+                                <div class="error-message">{{ form_errors(form.status) }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
+                                <div class="ms-2">
+                                    <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary">Back to List</a>
+                                </div>
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

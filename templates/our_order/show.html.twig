@@ -1,0 +1,61 @@
+
+
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Order N{{ our_order.idO }}'s Details{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow" style="width: 80%; margin: 0 auto;">
+                <div class="card-header" style="background-color: #D4EDDA;">
+                    Order N{{ our_order.idO }}'s Details
+                </div>
+                <div class="card-body">
+                
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                
+                                <tr>
+                                    <th>Id Commande</th>
+                                    <td>{{ our_order.idO }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <td>{{ our_order.quantityO }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Stock</th>
+                                    <td>{{ our_order.stock }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{% if our_order.statusO == 'Pending' %}
+                                        <span class="badge bg-warning">{{ our_order.statusO }}</span>
+                                    {% elseif our_order.statusO == 'Delivered' %}
+                                        <span class="badge bg-success">{{ our_order.statusO }}</span>
+                                    {% elseif our_order.statusO == 'Cancelled' %}
+                                        <span class="badge bg-danger">{{ our_order.statusO }}</span>
+                                    {% else %}
+                                        {{ our_order.statusO }} {# Handle other cases if needed #}
+                                    {% endif %}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-end">
+                        {{ include('our_order/_delete_form.html.twig') }}
+                        <a href="{{ path('app_our_order_index') }}" class="btn btn-secondary mx-2">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

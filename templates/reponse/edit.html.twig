@@ -1,0 +1,90 @@
+{% extends 'reponse/baseBack.html.twig' %}
+
+{% block title %}Edit Respnse{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Style for the navigation bar */
+        .navbar {
+            background-color:#D4EDDA; /* Natural green color */
+        }
+
+        /* Style for the form */
+        .card {
+            background-color: #f8f9fa; /* Form background color */
+            border-radius: 15px; /* Rounded borders */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+            font-size: 14px; /* Reduced font size */
+        }
+
+        .card-header {
+            background-color: #D4EDDA; /* Dark green color for the form header */
+            color: #fff; /* White text for the form header */
+            border-radius: 15px 15px 0 0; /* Rounded border only at the top */
+            font-size: 16px; /* Slightly larger font size */
+        }
+
+        .card-body {
+            padding: 15px; /* Reduced internal spacing of the form content */
+        }
+
+        /* Style for the form fields */
+        .form-label {
+            color: #495057; /* Text color of the labels */
+            font-size: 14px; /* Reduced font size */
+        }
+
+        .form-control {
+            background-color: #fff; /* Form field background color */
+            border: 1px solid #ced4da; /* Form field border */
+            border-radius: 5px; /* Rounded borders of the form fields */
+            font-size: 14px; /* Reduced font size */
+            padding: 8px; /* Reduced internal spacing of the form fields */
+        }
+
+        .form-control:focus {
+            border-color: #80bdff; /* Border color when a form field is in focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Light shadow when a form field is in focus */
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            font-size: 14px; /* Reduced font size for the buttons */
+            padding: 8px 16px; /* Reduced internal spacing of the buttons */
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover {
+            font-size: 14px; /* Reduced font size for the buttons on hover */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Edit Response</h2>
+          </div>
+          <div class="card-body">
+            {{ include('reponse/_form.html.twig', {'button_label': 'Update'}) }}
+            <div class="text-center">
+              <div class="btn-group">
+                {# <button type="submit" class="btn btn-primary">Update</button> #}
+                <div class="ms-2">
+                  <a href="{{ path('app_reponse_index') }}" class="btn btn-secondary">Back to List</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="{{ path('app_reponse_index') }}" class="btn btn-secondary mb-3">Back to list</a>
+
+  {{ include('reponse/_delete_form.html.twig') }}
+{% endblock %}

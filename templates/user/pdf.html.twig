@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+  <style>
+  /* Définition de la police Roboto */
+  @font-face {
+    font-family: 'Roboto', sans-serif; /* Police web-sécurisée */
+    src: local('Roboto'), url('path/to/Roboto.woff2') format('woff2'); /* Ajouter une alternative */
+  }
+
+  /* Style de base pour le document */
+  html, body {
+    font-family: 'Roboto', sans-serif;
+    margin: 10; /* Supprimer les marges par défaut */
+  }
+
+  /* Style pour les titres */
+  h1 {
+    text-align: center;
+    padding: 20px 0;
+    font-size:30px;
+    font-weight: bold;
+    color: green; /* Titre en vert */
+  }
+
+  /* Style pour les tableaux */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: avoid; /* Empêcher le fractionnement du tableau sur plusieurs pages */
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  /* Style pour les lignes paires du tableau */
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  /* Style pour les actions dans le tableau */
+  .actions {
+    text-align: center;
+  }
+
+  /* Style pour les badges */
+  .badge {
+    display: inline-block; /* Éviter les problèmes d'espacement horizontal */
+    background-color: #f0f0f0; /* Fond neutre */
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-right: 5px;
+    text-decoration: none; /* Supprimer le soulignement, car le CSS peut ne pas s'appliquer de manière cohérente */
+  }
+
+  /* Style pour le survol des badges */
+  .badge:hover {
+    background-color: #ddd;
+  }
+
+  /* Style facultatif pour les en-têtes/pieds de tableau */
+  table thead, table tfoot {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  /* Ajustement du contenu des en-têtes/pieds de tableau si nécessaire */
+  table thead tr th:first-child, table tfoot tr th:first-child {
+    text-align: left;
+  }
+
+  /* Style pour les lignes de tableau avec dégradé de vert */
+  tr {
+    background: linear-gradient(to right, #b2d8b2, #69a369); /* Dégradé de vert */
+  }
+  /* Style pour les lignes de tableau avec dégradé de vert */
+
+/* Style pour toutes les lignes de tableau avec dégradé de vert */
+tr {
+  background-image: linear-gradient(to right, #b2d8b2, #69a369); /* Dégradé de vert */
+}
+//* Style pour chaque deuxième ligne de tableau en blanc */
+tr:nth-child(even) {
+  background-color: white;
+}
+
+/* Style pour chaque première ligne de tableau en vert */
+tr:nth-child(odd) {
+  background: linear-gradient(to right, #b2d8b2, #69a369); /* Dégradé de vert */
+}
+
+
+</style>
+
+</head>
+<body>
+
+    <div>
+    <center><h1>Users List</h1></center>
+    <table>
+        <thead> <!-- Modification: changer la couleur en vert -->
+            <tr>
+             
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Birth Date</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Is Banned</th>
+                <th>Is Verified</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+              
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.LastName }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>{{ user.ddn }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{% if user.isBanned == 1 %}<span>Yes{% else %}<span >No{% endif %}</td>
+                    <td>{% if user.IsVerified == 1 %}<span >Yes{% else %}<span>No{% endif %}</td>
+                     
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10" >No records found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

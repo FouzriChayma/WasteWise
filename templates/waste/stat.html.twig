@@ -1,0 +1,106 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .section {
+            padding: 20px;
+            margin-left: 1px; /* Adjust the left margin as needed */
+        }
+
+        .row {
+            width: 150%;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .col-lg-4 {
+            flex: 0 0 30%; /* Adjust the width as needed */
+            margin: 10px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .echart {
+            min-height: 500px;
+            min-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- Chart 1 -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Waste Locations and Counts</h5>
+                    <div id="wasteLocationChart" class="echart"></div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#wasteLocationChart")).setOption({
+                                tooltip: {
+                                    trigger: 'item'
+                                },
+                                legend: {
+                                    top: '5%',
+                                    left: 'center'
+                                },
+                                series: [{
+                                    name: 'Waste by Location',
+                                    type: 'pie',
+                                    radius: ['40%', '70%'],
+                                    avoidLabelOverlap: false,
+                                    label: {
+                                        show: false,
+                                        position: 'center'
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true,
+                                            fontSize: '18',
+                                            fontWeight: 'bold'
+                                        }
+                                    },
+                                    labelLine: {
+                                        show: false
+                                    },
+                                    data: [
+                                        {% for stat in statistiques %}
+                                        { value: {{ stat.wasteCount }}, name: '{{ stat.wasteLocation }}' },
+                                        {% endfor %}
+                                    ]
+                                }]
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- Add more charts as needed -->
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<?php
+
+namespace App\Controller;
+use App\Entity\Association;
+use App\Entity\Donation;
+use App\Form\DonationType;
+use App\Repository\DonationRepository;
+use App\Repository\AssociationRepository;
+use App\Repository\StockRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Knp\Component\Pager\PaginatorInterface;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+
+
+
+#[Route('/donation')]
+class DonationController extends AbstractController
+{
+    #[Route('/show', name: 'app_donation_index', methods: ['GET'])]
+    public function index(DonationRepository $donationRepository,PaginatorInterface $paginator,Request $request): Response
+    {   
+        $donations = $donationRepository->findAll();
+        $articles = $paginator->paginate(   
+            $donations, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            5 // Nombre de résultats par page
+        );
+        
+        return $this->render('donation/index.html.twig', [
+            'donations' => $articles,
+            
+        ]);
+    }
+
+    
+
+   
+
+    #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session, AssociationRepository $associationRepository, MailerInterface $mailer ): Response
+    {
+        $donation = new Donation();
+        $form = $this->createForm(DonationType::class, $donation);
+
+        $associationName = $session->get('association_name');
+        $association = $associationRepository->findOneBy(['name' => $associationName]);
+        if ($association)
+        {$donation->setAssociation($association);}
+       
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $donation->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->persist($donation);
+            $entityManager->flush();
+
+            
+
+            $email = (new TemplatedEmail())
+            ->from('wastewise@gmail.com')
+            ->to($association->getEmail())
+           
+            ->subject('Confirmation de demande de don')
+            ->htmlTemplate('donation/donation_confirmation.html.twig')
+            ->context([
+                'donation' => $donation,
+                
+
+
+            ]);
+            
+        $mailer->send($email);
+       
+
+            return $this->redirectToRoute('thanks_louay', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('donation/new.html.twig', [
+            'donation' => $donation,
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/{id}/accept', name: 'accept_donation', methods: ['POST'])]
+
+    public function acceptDonation(Donation $donation, EntityManagerInterface $entityManager, AssociationRepository $associationRepository, SessionInterface $session,MailerInterface $mailer,StockRepository $stockRepository): Response
+
+    {   
+        $association = $donation->getAssociation()->getEmail(); 
+    $donation->setAccepted(true);
+   
+            $qt =$donation->getQuantity();
+            $stock=$stockRepository->findOneBy(['name_st' => 'Food']);
+            $stock->setQuantitySt( $stock->getQuantitySt() -$qt);
+    $entityManager->flush();
+
+    $email = (new TemplatedEmail())
+            ->from('wastewise@gmail.com')
+            ->to($association)
+           
+            ->subject('Votre demande de don a été confirmée')
+            ->htmlTemplate('donation/donation_confirmation1.html.twig')
+            ->context([
+                'donation' => $donation,
+                
+
+
+            ]);
+            
+        $mailer->send($email);
+
+ 
+
+    return $this->redirectToRoute('app_donation_index');
+
+    }
+    
+    
+
+    #[Route('/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Donation $donation, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(DonationType::class, $donation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $donation->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->flush();
+            $this->addFlash('success', 'Your donation has been successfully updated'); 
+
+            return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('donation/edit.html.twig', [
+            'donation' => $donation,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_donation_delete')]
+    public function delete(DonationRepository $repo,$id, ManagerRegistry $mr): Response
+    {
+        $donation=$repo->find($id);
+        $em=$mr->getManager();
+        $em->remove($donation);
+        $em->flush();
+
+        return $this->redirectToRoute('app_donation_index');
+    }
+
+    #[Route('/dql', name: 'dql', methods: ['POST'])]//recherche avec dql
+    public function dql(EntityManagerInterface $em, Request $request, DonationRepository $repo):Response
+    {  
+       $result=$repo->findAll();
+       $req=$em->createQuery("select d from App\Entity\Donation d where d.quantity=:n OR d.createdAt=:n OR d.Description=:n OR d.id=:n");
+       if($request->isMethod('post'))
+       {
+           $value=$request->get('test');
+           $req->setParameter('n',$value);
+
+           $result=$req->getResult();
+
+       }
+       
+       return $this->render('donation/index.html.twig',[
+           'donations'=>$result,
+           ]);
+       
+    }
+
+   
+
+   
+
+    
+
+   
+
+    
+
+    
+
+    
+}

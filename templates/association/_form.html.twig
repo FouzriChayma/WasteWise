@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>WASTE WISE</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="{{asset('Back/assets/plugins/fontawesome/js/all.min.js')}}"></script> 
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="{{asset('Back/assets/css/portal.css')}}">
+    <style>
+        /* Style pour les messages d'erreur */
+        .error-message {
+            color: #28a745;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Style spécifique pour les messages d'erreur dans les form-group */
+        .form-group .error-message {
+            
+            padding: 5px;
+            border-radius: 4px;
+            display: inline-block; /* Permet d'ajuster la largeur du conteneur à son contenu */
+        }
+
+        .map-container {
+
+    margin-bottom: 20px;
+
+}
+
+ 
+
+.form-label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+}
+
+ 
+
+.map {
+
+    height: 300px;
+
+    width: 100%;
+
+    border: 1px solid #ddd; /* Add a subtle border for better visibility */
+
+    border-radius: 8px;
+
+    margin-bottom: 12px;
+
+}
+
+ 
+
+.form-control {
+
+    width: 100%;
+
+    padding: 8px;
+
+    margin-bottom: 12px;
+
+    box-sizing: border-box;
+
+}
+
+ 
+
+.btn-primary {
+
+    background-color: #007bff;
+
+    color: #fff;
+
+    border: none;
+
+    padding: 8px 16px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+}
+
+ 
+
+.btn-primary:hover {
+
+    background-color: #0056b3;
+
+}
+    </style>
+
+
+</head>
+
+
+<body>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}} ) }}
+
+<body class="app app-signup p-0"> 
+ 	
+    <div class="row g-0 app-auth-wrapper d-flex justify-content-center">
+	    <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+		    <div class="d-flex flex-column align-content-end">
+			    <div class="app-auth-body mx-auto">	
+                    <div class="app-auth-branding mb-4"><a class="app-logo" href="{{ path('app_home') }}"><img class="logo-icon me-2" src="{{asset('Back/assets/images/logo (1).png')}}" alt="logo" style="width: 120px; height: auto;"></a></div>
+    
+					<h2 class="auth-heading text-center mb-4">Add your association</h2>					
+	
+					<div class="auth-form-container text-start mx-auto">
+						<form class="auth-form auth-signup-form">         
+							<div class="email mb-3">
+                            {{ form_widget(form.name,{attr: {'class':'form-control','placeholder':'Name'}}) }}
+                             {% if form_errors(form.name)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.name) }}</div>
+    {% endif %}
+								
+								
+							</div>
+							<div class="map-container">
+
+    <label for="map" class="form-label">Adresse</label>
+
+    <div id="map" class="map"></div>
+
+    <input id="lat" type="hidden" name="lat">
+
+    <input id="lng" type="hidden" name="lng">
+
+    {{ form_widget(form.adresse, {'attr': {'id': 'adresse', 'class': 'form-control', 'readonly': true}}) }}
+
+    <button id="submit-adresse" type="button" class="btn btn-success">Submit adresse</button>
+
+</div>
+
+ 
+
+<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyDlaND8AnWh1fG9IJ1WZhRg-fGV6fgCiMQ&callback=initMap></script>
+
+ 
+
+<script>
+
+function initMap() {
+
+    var myLatLng = {lat: 33.8869, lng: 9.5375};
+
+ 
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+
+        zoom: 4,
+
+        center: myLatLng
+
+    });
+
+ 
+
+    var marker = new google.maps.Marker({
+
+        position: myLatLng,
+
+        map: map,
+
+        draggable: true
+
+    });
+
+ 
+
+    google.maps.event.addListener(marker, 'position_changed', function () {
+
+        var lat = marker.getPosition().lat();
+
+        var lng = marker.getPosition().lng();
+
+        document.getElementById('lat').value = lat;
+
+        document.getElementById('lng').value = lng;
+
+    });
+
+document.getElementById('submit-adresse').addEventListener('click', function(event) {
+
+    event.preventDefault();
+
+    var lat = document.getElementById('lat').value;
+
+    var lng = document.getElementById('lng').value;
+
+    document.querySelector('[name="association[adresse]"]').value = lat + ',' + lng;
+
+});
+
+ 
+
+ 
+
+}
+
+</script>
+                            
+
+                            <div class="email mb-3">
+								{{ form_widget(form.email,{attr: {'class':'form-control','placeholder':'Email'}}) }}
+                                 {% if form_errors(form.email)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.email) }}</div>
+    {% endif %}	
+							</div>
+
+                            <div class="email mb-3">
+                                {{ field_label(form.ImagePath) }}
+								{{ form_widget(form.ImagePath,{attr: {'class':'form-control','placeholder':'Image'}}) }}
+                                {% if form_errors(form.ImagePath)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.ImagePath) }}</div>
+    {% endif %}	
+                                  
+							</div>
+							
+							
+							<div class="text-center">
+                            <button class="btn app-btn-primary w-100 theme-btn mx-auto">{{ button_label|default('Save') }}</button>
+								
+							</div>
+						</form><!--//auth-form-->
+						
+						<div class="auth-option text-center pt-5">Already have an association? <a class="text-link" href="{{ path('login') }}" >Log in</a></div>
+					</div><!--//auth-form-container-->	
+					
+					
+				    
+			    </div><!--//auth-body-->
+		    
+			    	
+		    </div><!--//flex-column-->   
+	    </div><!--//auth-main-col-->
+    
+
+    {{ form_end(form) }}
+    
+</body>
+</html>

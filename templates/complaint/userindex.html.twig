@@ -1,0 +1,65 @@
+{% extends 'baseBackUser.html.twig' %}
+
+{% block title %}Complaint index{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Complaint List</h1>
+        <a href="{{ path('app_complaint_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
+    </div>
+    <nav class="app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+        <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All Complaints</a>
+    </nav>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-success">
+            <tr>
+                {# <th>Id</th> #}
+                <th>User_id</th>
+                <th>Title</th>
+                {# <th>Description</th> #}
+                <th>Location</th>
+                <th>SubmissionDate</th>
+                {# <th>Picture</th> #}
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+    <tr>
+        {# <td>{{ complaint.id }}</td> #}
+        <td>{{ complaint.user }}</td>
+        <td>{{ complaint.title }}</td>
+{# <td style="max-width:200px; word-wrap:break-word;">{{ complaint.description }}</td> #}
+        <td>{{ complaint.location }}</td>
+        <td>{{ complaint.submissionDate ? complaint.submissionDate|date('Y-m-d') : '' }}</td>
+        {# <td>{{ complaint.picture }}</td> #}
+        <td>{{ complaint.status }}</td>
+        <td>
+            <a href="{{ path('user_complaint_show', {'id': complaint.id}) }}" class="btn btn-sm btn-secondary">Show</a>
+            <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-sm btn-primary">Edit</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="9">No records found</td>
+    </tr>
+{% endfor %}
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4 custom-pagination">
+            <li class="page-item disabled">
+                <span class="page-link custom-link text-dark">Previous</span>
+            </li>
+            <li class="page-item active"><a class="page-link custom-link text-dark" href="#">1</a></li>
+            <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
+            <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link custom-link text-dark" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

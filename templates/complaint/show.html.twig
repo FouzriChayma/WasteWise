@@ -1,0 +1,88 @@
+{% extends 'reponse/baseBack.html.twig' %}
+
+{% block title %}{{ complaint.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4">Complaint Details</h2>
+            <div class="card shadow">
+                <div class="card-header" style="background-color: #D4EDDA;">
+                    {{ complaint.title }}'s Details
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th>Id</th>
+                                    <td>{{ complaint.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>User_id</th>
+                                    <td>{{ complaint.user }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Title</th>
+                                    <td>{{ complaint.title }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+<td style="max-width:200px; word-wrap:break-word;">{{ complaint.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Location</th>
+                                    <td>{{ complaint.location }}</td>
+                                </tr>
+                                <tr>
+                                    <th>SubmissionDate</th>
+                                    <td>{{ complaint.submissionDate ? complaint.submissionDate|date('M d, Y') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{{ complaint.status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      <div class="mt-4">
+                            <h5>Picture</h5>
+                            <img src="{{ asset(complaint.picture) }}" alt="Complaint picture" style="max-width: 100%;">
+                        </div>
+                    <h2 class="mb-4" style="text-align: center; color: #2C3E50;">Add Response</h2>
+<div class="card shadow">
+    <div class="card-header" style="background-color: #D4EDDA; text-align: center; color: #2C3E50;">
+        Response Form
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    {{ form_start(form) }}
+                        <div class="form-group mb-3">
+                            {{ form_widget(form) }}
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mt-3">Submit Response</button>
+                            {% if complaint.reponse %}
+                                <a href="{{ path('app_reponse_delete', {'id': complaint.reponse.id}) }}" class="btn btn-danger mt-3">Delete Response</a>
+                            {% endif %}
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-warning mx-2">Edit</a>
+                        {{ include('complaint/_delete_form.html.twig') }}
+                        <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary mx-2">Back to List</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

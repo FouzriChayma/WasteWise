@@ -1,0 +1,119 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}New Stock{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* Votre style ici */
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New Stock</h2>
+                </div>
+                <div class="card-body">
+                                    {% set errorMessage = app.flashes('error') %}
+                    {% if errorMessage is not empty %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ errorMessage[0] }}
+                        </div>
+                    {% endif %}
+    {{ form_start(form) }}
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>{{ form_widget(form._token) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.name_st, 'Name') }}</td>
+                <td>
+                    {{ form_widget(form.name_st) }}
+                    {% if form_errors(form.name_st) %}
+                        <div class="error-message">{{ form_errors(form.name_st) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.quantity_st, 'Quantity') }}</td>
+                <td>
+                    {{ form_widget(form.quantity_st) }}
+                    {% if form_errors(form.quantity_st) %}
+                        <div class="error-message">{{ form_errors(form.quantity_st) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.buying_price, 'Buying Price') }}</td>
+                <td>
+                    {{ form_widget(form.buying_price) }}
+                    {% if form_errors(form.buying_price) %}
+                        <div class="error-message">{{ form_errors(form.buying_price) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.selling_price, 'Selling Price') }}</td>
+                <td>
+                    {{ form_widget(form.selling_price) }}
+                    {% if form_errors(form.selling_price) %}
+                        <div class="error-message">{{ form_errors(form.selling_price) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.storehouse, 'Storehouse') }}</td>
+                <td>
+                    {{ form_widget(form.storehouse) }}
+                    {% if form_errors(form.storehouse) %}
+                        <div class="error-message">{{ form_errors(form.storehouse) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.image_st, 'Image') }}</td>
+                <td>
+                    {{ form_widget(form.image_st, { 'attr': {'class': 'form-control'} }) }}
+                    {% if form_errors(form.image_st) %}
+                        <div class="error-message">{{ form_errors(form.image_st) }}</div>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
+            <div class="ms-2">
+                <a href="{{ path('app_stock_index') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
+
+        </div>
+    </div>
+</div>
+ <style>
+.error-message {
+    display: block; /* Display as block to make it appear on its own line */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 5px 5px 0px;
+    margin-top: 2px; /* Adjust margin for smaller space between elements */
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px; /* Adjust the maximum width as needed */
+    /* Add more styles as needed */
+}
+
+
+</style>
+{% endblock %}

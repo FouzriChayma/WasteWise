@@ -1,0 +1,59 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}{{ stock.nameSt }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 50px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow" style="width: 80%; margin: 0 auto;">
+                <div class="card-header" style="background-color: #D4EDDA;">
+                    {{ stock.nameSt }}'s Details
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ stock.nameSt }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Quantity</th>
+                                    <td>{{ stock.quantitySt }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Image</th>
+                                    <td>
+                                        <img src="{{ asset(stock.imageSt) }}" alt="Stock Image" width="50">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Last Modification At</th>
+                                    <td>{{ stock.dateDAjoutSt ? stock.dateDAjoutSt|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Buying price</th>
+                                    <td>{{ stock.buyingPrice }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Selling price</th>
+                                    <td>{{ stock.sellingPrice }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ path('app_stock_edit', {'idSt': stock.idSt}) }}" class="btn btn-warning mx-2">Edit</a>
+                        {{ include('stock/_delete_form.html.twig') }}
+                        <a href="{{ path('app_stock_index') }}" class="btn btn-secondary mx-2">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

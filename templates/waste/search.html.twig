@@ -1,0 +1,31 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Etat</th>
+            <th>Quantite</th>
+            <th>Truck</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for waste in wastes %}
+        <tr>
+            <td>{{ waste.type }}</td>
+            <td>{{ waste.location }}</td>
+            <td>{{ waste.etat }}</td>
+            <td>{{ waste.quantite }}</td>
+            <td>{{ waste.truck }}</td>
+            <td>
+                <a href="{{ path('app_waste_show', {'id': waste.id}) }}" class="badge bg-success">Show</a>
+                <a href="{{ path('app_waste_edit', {'id': waste.id}) }}" class="badge bg-warning">Edit</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6">No records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

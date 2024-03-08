@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AI.Tech - Artificial Intelligence HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{{asset('Front/img/favicon.ico')}}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ubuntu:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{asset('Front/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{asset('Front/css/style.css')}}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+    
+    <!-- Navbar Start -->
+    <div class="container-fluid sticky-top">
+        <div class="container">
+        
+            <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                
+                <a href="" class="navbar-brand">
+                    <h1 class="text-white">Waste<span class="text-dark">.</span>Wise</h1>
+                </a>
+
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="/home" class="nav-item nav-link active">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="/stock/Recyclable/materials" class="nav-item nav-link" style="color: lightgreen;">Recyclable materials</a>
+                        <a href="project.html" class="nav-item nav-link">Projects</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                    <butaton type="button" class="btn text-white p-0 d-none d-lg-block" data-bs-toggle="modal"
+                        data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Hero Start -->
+    <div class="container-fluid pt-5 bg-primary hero-header">
+        <div class="container pt-1">
+            <div class="row g-5 pt-5">
+                <div class="col-lg-6 align-self-center text-center text-lg-start mb-lg-5">
+                    <h1 class="display-4 mb-4 animated slideInRight" style="color: lightgreen;">Recyclable materials</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center justify-content-lg-start mb-0">
+                            <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="#">Recyclable materials</a></li>
+                            <li class="breadcrumb-item"><a class="text-white" href="#">Order Now</a></li>
+
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 align-self-end text-center text-lg-end">
+                    <img class="img-fluid" src="img/hero-img.png" alt="" style="max-height: 300px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+    <!-- Full Screen Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content" style="background: rgba(20, 24, 62, 0.7);">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn btn-square bg-white btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="input-group" style="max-width: 600px;">
+                        <input type="text" class="form-control bg-transparent border-light p-3"
+                            placeholder="Type search keyword">
+                        <button class="btn btn-light px-4"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Full Screen Search End -->
+
+
+<!-- Contact Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="">
+                    <img class="img-fluid" src="{{ asset(stock.getImageSt()) }}">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 500px;">
+                    <h1 class="mb-4">Order Now</h1>
+                </div>
+                 <div class="container-fluid bg-light mt-5 py-5">
+                  <div class="container py-5">
+                    <div class="row g-5 align-items-center">
+                         <h2 class="card-title">{{ stock.getNameSt() }}</h2>
+                    <p><strong>Selling Price:</strong> {{ stock.getSellingPrice() }} DT/kg</p>
+                    
+                    <!-- Form to specify quantity and add to cart -->
+                    <form method="post" action="">
+                        <div class="mb-3">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1">
+                        </div>
+             <a class="btn px-3 mt-auto mx-auto" href="{{ path('app_stock_details', {'id': stock.getIdSt()}) }}">Order Now</a>
+             <a class="btn px-3 mt-auto mx-auto" href="{{ path('app_stock_recyclable_materials') }}">Back to Stock List</a>
+
+                    </form>
+
+                    <!-- Example: Display a link to go back to the stock listing page -->
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function calculateTotal() {
+        var quantity = parseInt(document.getElementById('our_order_quantityO').value);
+        var stock = parseInt(document.getElementById('our_order_stock').value);
+        var total = quantity * stock;
+        document.getElementById('total').innerText = 'Total: ' + total;
+    }
+</script>
+
+<!-- Contact End -->
+
+ 
+<!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('Front/lib/wow/wow.min.js')}}"></script>
+    <script src="{{asset('Front/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('Front/lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{asset('Front/lib/counterup/counterup.min.js')}}"></script>
+    <script src="{{asset('Front/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+    
+
+    <!-- Template Javascript -->
+    <script src="{{asset('Front/js/main.js')}}"></script>
+    <style>
+    /* Add your CSS styles here */
+    #total {
+        font-size: 1.2rem;
+        margin-left: 10px; /* Adjust spacing between button and total */
+    }
+    .custom-gray-btn {
+    background-color: gray;
+    border-color: black;
+}
+
+.custom-gray-btn:hover {
+    background-color: gray;
+    border-color: black;
+}
+.custom-p-margin {
+    margin-bottom: 0 !important;
+}
+.error-message {
+    display: block; /* Display as block to make it appear on its own line */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 5px 5px 0px;
+    margin-top: 2px; /* Adjust margin for smaller space between elements */
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px; /* Adjust the maximum width as needed */
+    /* Add more styles as needed */
+}
+
+
+
+
+</style>
+
+</body>
+
+</html>
