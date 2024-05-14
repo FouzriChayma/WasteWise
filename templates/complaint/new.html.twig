@@ -32,16 +32,16 @@
                     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                         {{ form_widget(form._token) }}
 
-                        <div class="mb-3">
-                            <label for="edit-user" class="form-label">user</label>
-                            {{ form_widget(form.user, {'attr': {'class': 'form-control', 'id': 'edit-user'}}) }}
+                        {# <div class="mb-3">
+                            <label for="edit-user" class="form-label">User_id</label>
+                            {{ form_widget(form.user, {'attr': {'class': 'form-control', 'id': 'edit-user_id'}}) }}
                             {% if form_errors(form.user)|length > 0 %}
-                                <div class="error-message">{{ form_errors(form.user) }}</div>
+                                <div class="error-message">{{ form_errors(form.user_id) }}</div>
                             {% endif %}
-                        </div>
+                        </div> #}
 
                         <div class="mb-3">
-                            <label for="edit-title" class="form-label">Title</label>
+                            <label for="edit-title" class="form-label">Type</label>
                             {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'edit-title'}}) }}
                             {% if form_errors(form.title)|length > 0 %}
                                 <div class="error-message">{{ form_errors(form.title) }}</div>
@@ -65,7 +65,7 @@
     <button id="submit-location" type="button" class="btn btn-primary">Submit Location</button>
 </div>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlaND8AnWh1fG9IJ1WZhRg-fGV6fgCiMQ&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=   &callback=initMap"></script>
 
 <script>
 function initMap() {
@@ -107,27 +107,28 @@ document.getElementById('submit-location').addEventListener('click', function(ev
                             {% endif %}
                         </div>
 
-                        <div class="mb-3">
-                            <label for="edit-picture" class="form-label">Picture</label>
-                            {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'id': 'edit-picture'}}) }}
-                            {% if form_errors(form.picture)|length > 0 %}
-                                <div class="error-message">{{ form_errors(form.picture) }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="mb-3">
+                        <div class="email mb-3">
+                                {{ field_label(form.picture) }}
+								{{ form_widget(form.picture,{attr: {'class':'form-control','placeholder':'Image'}}) }}
+                                {% if form_errors(form.picture)|length > 0 %}
+        <div class="error-message">{{ form_errors(form.picture) }}</div>
+    {% endif %}	
+                                  
+							</div>
+							
+                        {# <div class="mb-3">
                             <label for="edit-status" class="form-label">Status</label>
                             {{ form_widget(form.status, {'attr': {'class': 'form-control', 'id': 'edit-status'}}) }}
                             {% if form_errors(form.status)|length > 0 %}
                                 <div class="error-message">{{ form_errors(form.status) }}</div>
                             {% endif %}
-                        </div>
+                        </div> #}
 
                         <div class="text-center">
                             <div class="btn-group">
                                 <button type="submit" class="btn btn-primary">{{ button_label|default('Create') }}</button>
                                 <div class="ms-2">
-                                    <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary">Back to List</a>
+                                    <a href="{{ path('complaints_by_user') }}" class="btn btn-secondary">Back to List</a>
                                 </div>
                             </div>
                         </div>

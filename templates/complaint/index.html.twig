@@ -3,45 +3,100 @@
 {% block title %}Complaint index{% endblock %}
 
 {% block content %}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Complaint List</h1>
-        <a href="{{ path('app_complaint_new') }}" class="btn btn-sm btn-secondary"><i class="fas fa-plus"></i> Create New</a>
-    </div>
-    <nav class="app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-        <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">All Complaints</a>
-    </nav>
+<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <!-- Modify the styles of the <a> element -->
+    <a id="toggleButton" class="btn btn-primary" style="padding: 10px 20px; border-radius: 5px;">Show Statistics</a>
+</div>
+
+<!-- Wrap the canvas in a div that can be shown/hidden -->
+<div id="chartContainer" style="display: none;">
+    <canvas id="complaintsChart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<canvas id="complaintsChart"></canvas>
+
+<script>
+var ctx = document.getElementById('complaintsChart').getContext('2d');
+var chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ chartData.locations|json_encode|raw }},
+        datasets: [{
+            label: 'Number of Complaints',
+            data: {{ chartData.counts|json_encode|raw }},
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+// Get references to the button and the chart container
+var toggleButton = document.getElementById('toggleButton');
+var chartContainer = document.getElementById('chartContainer');
+
+// Add a click event listener to the button
+toggleButton.addEventListener('click', function() {
+    // Check the current display style of the chart container
+    if (chartContainer.style.display === 'none') {
+        // If it's currently hidden, show it and update the button text
+        chartContainer.style.display = 'block';
+        toggleButton.textContent = 'Hide Statistics';
+    } else {
+        // If it's currently shown, hide it and update the button text
+        chartContainer.style.display = 'none';
+        toggleButton.textContent = 'Show Statistics';
+    }
+});
+</script>
+
+   <nav class="app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+    <a class="flex-sm-fill text-sm-center nav-link {{ app.request.query.get('status') is empty ? 'active' : '' }}" href="{{ path('app_complaint_index') }}">All Complaints ({{ pendingCount+inProgressCount+resolvedCount }})</a>
+    <a class="flex-sm-fill text-sm-center nav-link {{ app.request.query.get('status') == 'Pending' ? 'active' : '' }}" href="{{ path('app_complaint_index', {'status': 'Pending'}) }}">Pending ({{ pendingCount }})</a>
+    <a class="flex-sm-fill text-sm-center nav-link {{ app.request.query.get('status') == 'In Progress' ? 'active' : '' }}" href="{{ path('app_complaint_index', {'status': 'In Progress'}) }}">In Progress ({{ inProgressCount }})</a>
+    <a class="flex-sm-fill text-sm-center nav-link {{ app.request.query.get('status') == 'Resolved' ? 'active' : '' }}" href="{{ path('app_complaint_index', {'status': 'Resolved'}) }}">Resolved ({{ resolvedCount }})</a>
+</nav>
+
+
+
 
     <table class="table table-bordered table-hover">
      <thead class="table-success">
     <tr>
         {# <th>Id</th> #}
         <th>
-            <a href="{{ path('app_complaint_index', {'sort': 'userId'}) }}">
-                User_id
-            </a>
-        </th>
-        <th>
-            <a href="{{ path('app_complaint_index', {'sort': 'title'}) }}">
-                Title
-            </a>
-        </th>
-        {# <th>Description</th> #}
-        <th>
-            <a href="{{ path('app_complaint_index', {'sort': 'location'}) }}">
-                Location
-            </a>
-        </th>
-        <th>
-            <a href="{{ path('app_complaint_index', {'sort': 'submissionDate'}) }}">
-                SubmissionDate
-            </a>
-        </th>
-        {# <th>Picture</th> #}
-        <th>
-            <a href="{{ path('app_complaint_index', {'sort': 'status'}) }}">
-                Status
-            </a>
-        </th>
+    <a href="{{ path('app_complaint_index', {'status': app.request.query.get('status'), 'sort': 'userId'}) }}">
+        Username
+    </a>
+</th>
+<th>
+    <a href="{{ path('app_complaint_index', {'status': app.request.query.get('status'), 'sort': 'title'}) }}">
+        Type of Waste
+    </a>
+</th>
+<th>
+    <a href="{{ path('app_complaint_index', {'status': app.request.query.get('status'), 'sort': 'location'}) }}">
+        Location
+    </a>
+</th>
+<th>
+    <a href="{{ path('app_complaint_index', {'status': app.request.query.get('status'), 'sort': 'submissionDate'}) }}">
+        Submission Date
+    </a>
+</th>
+<th>
+    <a href="{{ path('app_complaint_index', {'status': app.request.query.get('status'), 'sort': 'status'}) }}">
+        Status
+    </a>
+</th>
+
         <th>Actions</th>
     </tr>
 </thead>
@@ -50,7 +105,7 @@
             {% for complaint in complaints %}
     <tr>
         {# <td>{{ complaint.id }}</td> #}
-        <td>{{ complaint.userId }}</td>
+        <td>{{ complaint.user }}</td>
         <td>{{ complaint.title }}</td>
 {# <td style="max-width:200px; word-wrap:break-word;">{{ complaint.description }}</td> #}
         <td>{{ complaint.location }}</td>
@@ -59,7 +114,7 @@
         <td>{{ complaint.status }}</td>
         <td>
             <a href="{{ path('app_complaint_show', {'id': complaint.id}) }}" class="btn btn-sm btn-secondary">Show</a>
-            <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-sm btn-primary">Edit</a>
+            {# <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-sm btn-primary">Edit</a> #}
         </td>
     </tr>
 {% else %}

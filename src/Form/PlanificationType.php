@@ -21,28 +21,30 @@ class PlanificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('id_driver',null, [
-                'attr' => [
-                    'placeholder' => 'Mission',
-                ]])
             ->add('date',DateTimeType::class, [
                 'widget' => 'single_text',
                 'constraints' => [
                     new Assert\GreaterThan('today')
                 ],
             ])
+            ->add('id_driver', null, [
+                'attr' => [
+                    'placeholder' => 'Mission',
+                ]
+            ])
             ->add('mission',null, [
                 'attr' => [
                     'placeholder' => 'Mission',
-                ]])
-            
-           
-            
-        ;
+                ]
+            ]);
+
+        // Assuming you have a 'role' option passed into your form
+        
+
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();
-        
+
             if ($data->getMission()) {
                 $mission = $form->get('mission')->getData();
                 if ($mission) {
@@ -50,16 +52,13 @@ class PlanificationType extends AbstractType
                 }
             }
         });
-        
-        
-       
-        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Planification::class,
+            'role' => null, // Add a new 'role' option
         ]);
     }
 }

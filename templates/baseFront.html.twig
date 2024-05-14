@@ -99,7 +99,8 @@
                         
                         
                         <a href="{{ path('app_stock_recyclable_materials') }}" class="nav-item nav-link">Recyclable materials</a>
-                        
+                        <a href="{{ path('app_complaint_new',{'id':app.user.id})}}" class="nav-item nav-link">Submit a Complaint</a>
+                         <a href="{{ path('complaints_by_user',{'id':app.user.id})}}" class="nav-item nav-link">My Complaints</a>
                     {% if (app.user) %}
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Account</a>

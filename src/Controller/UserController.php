@@ -22,6 +22,8 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -89,10 +91,21 @@ public function searchUsersC(Request $request, UserRepository $utilisateurReposi
         ]);
     }
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function indexAdmin(UserRepository $userRepository): Response
+    public function indexAdmin(UserRepository $userRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        // Récupération des utilisateurs avec le rôle "Admin"
+        $users = $userRepository->findByRole("Admin");
+    
+        // Pagination des résultats
+        $pagination = $paginator->paginate(
+            $users, // Requête contenant les données à paginer
+            $request->query->getInt('page', 1), // Numéro de page par défaut si aucune page n'est spécifiée dans l'URL
+            3 // Nombre d'éléments par page
+        );
+    
+        // Passez les utilisateurs paginés à votre template Twig
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findByRole("Admin"),
+            'users' => $pagination,
         ]);
     }
 

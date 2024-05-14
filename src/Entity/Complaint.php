@@ -15,7 +15,6 @@ class Complaint
     #[ORM\Column]
     private ?int $id = null;
 
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Please fill the title.")]
     #[Assert\Length(max: 255, maxMessage: "The title cannot be longer than {{ limit }} characters.")]
@@ -37,7 +36,6 @@ class Complaint
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Please provide a picture.")]
-    #[Assert\Length(max: 255, maxMessage: "The picture information cannot be longer than {{ limit }} characters.")]
     private ?string $picture = null;
 
     #[ORM\Column(length: 255)]
@@ -51,7 +49,6 @@ class Complaint
     #[ORM\ManyToOne(inversedBy: 'complaints')]
     private ?User $user = null;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +60,7 @@ class Complaint
 
         return $this;
     }
+
 
     public function getTitle(): ?string
     {
@@ -169,5 +167,9 @@ class Complaint
 
         return $this;
     }
-
+    public function __construct()
+{
+    $this->status = 'Pending';
+    // other default values...
+}
 }

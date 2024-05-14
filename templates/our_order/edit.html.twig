@@ -22,6 +22,20 @@
                                             <div class="error-message">{{ form_errors(form.quantityO) }}</div>
                                         {% endif %}
                                     </div>
+                                    <div class="mb-3">
+                                        {{ form_label(form.locationO, 'Location') }}
+                                        {{ form_widget(form.locationO, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.locationO) %}
+                                            <div class="error-message">{{ form_errors(form.locationO) }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="mb-3">
+                                        {{ form_label(form.emailU, 'Email of Order') }}
+                                        {{ form_widget(form.emailU, {'attr': {'class': 'form-control'}}) }}
+                                        {% if form_errors(form.emailU) %}
+                                            <div class="error-message">{{ form_errors(form.emailU) }}</div>
+                                        {% endif %}
+                                    </div>
                                     
                                     <div class="mb-3">
                                         {{ form_label(form.statusO, 'Status') }}

@@ -4,13 +4,15 @@ namespace App\Form;
 
 use App\Entity\Complaint;
 use App\Entity\Reponse;
-use App\Entity\User; // Make sure to import the User entity
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Response; // Make sure to import the Response entity
+use Symfony\Bridge\Doctrine\Form\Type\EntityType as TypeEntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 class ComplaintType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -19,29 +21,42 @@ class ComplaintType extends AbstractType
 
         // Add fields common to both create and edit
         $builder
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'email', // or any other property you'd like to use
-            ])
-            ->add('title')
+            ->add('title', ChoiceType::class, [
+                'choices'  => [
+                    'Organic' => 'Organic',
+                    'Glass' => 'Glass',
+                    'Plastic' => 'Plastic',
+                    'Metal' => 'Metal',
+                    'Paper' => 'Paper',
+                    'Other' => 'Other'
+                ]])
+
             ->add('description')
             ->add('location')
             ->add('submissionDate')
-            ->add('picture')
-            ->add('status', ChoiceType::class, [
-                'choices'  => [
-                    'Pending' => 'Pending',
-                    'In Progress' => 'In progress',
-                    'Resolved' => 'Resolved',
+            ->add('picture', FileType::class, [
+                'label' => 'Upload Picture',
+                'required' => false,
+                'mapped' => false, // Do not map directly to the entity field
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file',
+                    ])
                 ],
-                'data' => 'pending', // Default value
             ]);
+         
 
         // Conditionally add response field only when editing a complaint
         if ($complaint && $complaint->getReponse()) {
-            $builder->add('reponse', EntityType::class, [
+            $builder->add('reponse', TypeEntityType::class, [
                 'class' => Reponse::class,
-                'choice_label' => 'name', // Change 'name' to the appropriate property of the Response entity
+                'choice_label' => 'message', // Change 'name' to the appropriate property of the Response entity
                 'required' => false, // Change to true if the response is required
             ]);
         }

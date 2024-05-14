@@ -71,12 +71,12 @@
           <div class="card-body">
             <form method="post">
               {{ form_widget(form._token) }}
+              {# <div class="mb-3">
+                <label for="edit-user_id" class="form-label">Username</label>
+                {{ form_widget(form.user.id, {'attr': {'class': 'form-control', 'id': 'edit-user_id'}}) }}
+              </div> #}
               <div class="mb-3">
-                <label for="edit-user_id" class="form-label">User_id</label>
-                {{ form_widget(form.user_id, {'attr': {'class': 'form-control', 'id': 'edit-user_id'}}) }}
-              </div>
-              <div class="mb-3">
-                <label for="edit-title" class="form-label">Title</label>
+                <label for="edit-title" class="form-label">Type of Waste</label>
                 {{ form_widget(form.title, {'attr': {'class': 'form-control', 'id': 'edit-title'}}) }}
               </div>
 
@@ -86,9 +86,48 @@
               </div>
 
               <div class="mb-3">
-                <label for="edit-location" class="form-label">Location</label>
-                {{ form_widget(form.location, {'attr': {'class': 'form-control', 'id': 'edit-location'}}) }}
-              </div>
+    <label for="map" class="form-label">Location</label>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <input id="lat" type="hidden" name="lat">
+    <input id="lng" type="hidden" name="lng">
+    {{ form_widget(form.location, {'attr': {'id': 'location', 'class': 'form-control', 'readonly': true}}) }}
+    <button id="submit-location" type="button" class="btn btn-primary">Submit Location</button>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlaND8AnWh1fG9IJ1WZhRg-fGV6fgCiMQ&callback=initMap"></script>
+
+<script>
+function initMap() {
+    var myLatLng = {lat: 33.8869, lng: 9.5375};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: myLatLng
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        draggable: true
+    });
+
+    google.maps.event.addListener(marker, 'position_changed', function () {
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
+    });
+document.getElementById('submit-location').addEventListener('click', function(event) {
+    event.preventDefault();
+    var lat = document.getElementById('lat').value;
+    var lng = document.getElementById('lng').value;
+    document.querySelector('[name="complaint[location]"]').value = lat + ',' + lng;
+});
+
+
+}
+</script>
+
+
 
               <div class="mb-3">
                 <label for="edit-submissionDate" class="form-label">Submission Date</label>
@@ -100,16 +139,22 @@
                 {{ form_widget(form.picture, {'attr': {'class': 'form-control', 'id': 'edit-picture'}}) }}
               </div>
 
-              <div class="mb-3">
+              {# <div class="mb-3">
                 <label for="edit-status" class="form-label">Status</label>
                 {{ form_widget(form.status, {'attr': {'class': 'form-control', 'id': 'edit-status'}}) }}
-              </div>
+              </div> #}
+
+              {# <div class="mb-3">
+                <label for="edit-reponse" class="form-label">Response</label>
+{{ form_widget(form.reponse, {'attr': {'readonly': true}}) }}
+
+              </div> #}
 
               <div class="text-center">
                 <div class="btn-group">
                   <button type="submit" class="btn btn-primary">Update</button>
                   <div class="ms-2">
-                    <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary">Back to List</a>
+                    <a href="{{ path('complaints_by_user') }}" class="btn btn-secondary">Back to List</a>
                   </div>
                 </div>
               </div>
@@ -120,7 +165,7 @@
     </div>
   </div>
 
-  <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary mb-3">Back to list</a>
+  <a href="{{ path('complaints_by_user') }}" class="btn btn-secondary mb-3">Back to list</a>
 
   {{ include('complaint/_delete_form.html.twig') }}
 {% endblock %}

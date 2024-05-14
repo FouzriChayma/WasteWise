@@ -121,9 +121,17 @@ class MissionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $mission->setTypeD($mission->getIdWaste()->getType());
             $mission->setLocation($mission->getIdWaste()->getLocation());
+            
             $mission->setStatus('Undone');
+            $existingMission = $entityManager->getRepository(Mission::class)->findOneBy(['id_waste' => $mission->getIdWaste()]);
+
+            if ($existingMission) {
+                $this->addFlash('error', 'A mission with this waste ID already exists.');
+            } else {
             $entityManager->persist($mission);
             $entityManager->flush();
+            $this->addFlash('success', 'Mission created successfully.');
+            }
 
             return $this->redirectToRoute('app_mission_index', [], Response::HTTP_SEE_OTHER);
         }

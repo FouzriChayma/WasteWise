@@ -99,19 +99,68 @@
 </a>
 <hr>
 {% if user.isBanned == 0 %}
-    <a href="{{ path('app_user_ban_C', {'id': user.id}) }}" class="btn btn-danger btn-sm rounded-pill py-1 px-3"
-       onclick="return confirm('Are you sure you want to ban this user?');">
-        <i class="fas fa-ban mr-2"></i>Ban User
-    </a>
-    
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#banConfirmationModal">
+  Ban User
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="banConfirmationModal" tabindex="-1" aria-labelledby="banConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="banConfirmationModalLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to ban this user?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="{{ path('app_user_ban_S', {'id': user.id}) }}" method="post">
+            <input type="hidden" name="_method" value="BAN">
+            <input type="hidden" name="_token" value="{{ csrf_token('ban' ~ user.id) }}">
+            <button type="submit" class="btn btn-danger">Ban User</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endif %}
 
+
 {% if user.isBanned == 1 %}
-    <a href="{{ path('app_user_unban_C', {'id': user.id}) }}" class="btn btn-danger btn-sm rounded-pill py-1 px-3"
-       onclick="return confirm('Are you sure you want to unban this user?');">
-        <i class="fas fa-ban mr-2"></i>Unban User
-    </a>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#unbanConfirmationModal">
+      Unban User
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="unbanConfirmationModal" tabindex="-1" aria-labelledby="unbanConfirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="unbanConfirmationModalLabel">Confirmation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to unban this user?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <form action="{{ path('app_user_unban_S', {'id': user.id}) }}" method="post">
+                <input type="hidden" name="_method" value="UNBAN">
+                <input type="hidden" name="_token" value="{{ csrf_token('unban' ~ user.id) }}">
+                <button type="submit" class="btn btn-danger">Unban User</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
 {% endif %}
+
 
                     </td>
                 </tr>

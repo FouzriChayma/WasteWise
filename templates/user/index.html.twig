@@ -37,6 +37,7 @@
         </div>
     </div>
 </div>
+
 <div class="col-12 col-lg-6 mx-auto mt-4 mb-4"> <!-- Ajout de mt-4 et mb-4 pour l'espace -->
     <!-- Chart -->
     <div class="app-card app-card-chart shadow-sm">
@@ -141,6 +142,11 @@
             {% endfor %}
         </tbody>
     </table>
+    
+
+    {{ knp_pagination_render(users) }}
+
+
 </div>
 <script>
 $(document).ready(function() {
@@ -206,56 +212,52 @@ $(document).ready(function() {
 
 {% block stylesheets %}
     <style>
-        /* Style pour la pagination */
         .pagination {
             display: flex;
-            justify-content: center;
-            list-style: none;
+            list-style-type: none;
             padding: 0;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
+            margin: 0;
+            justify-content: center;
+            margin-top: 2rem;
         }
 
         .pagination li {
-            margin: 0 5px;
+            margin-right: 0.5rem;
+            border-right: 1px solid #ccc; /* Ajoute une bordure droite à tous les éléments de la liste */
+            padding-right: 0.5rem; /* Ajoute un espace entre les éléments de la liste */
         }
 
-        .pagination a {
-            color: #555;
+        .pagination li:last-child {
+            border-right: none; /* Supprime la bordure droite du dernier élément */
+            padding-right: 0; /* Supprime l'espace entre le dernier élément et la pagination */
+        }
+
+        .pagination a,
+        .pagination .current {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            background-color: #20A53A;
             text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            border: none; /* Ajout de cette ligne pour rendre la bordure transparente */
-        }
-
-        .pagination a:hover {
-            background-color: #f0f0f0;
-        }
-
-        .pagination .active a {
-            background-color: #D4EDDA;
             color: #fff;
         }
 
-        .pagination .disabled a {
-            pointer-events: none;
-            opacity: 0.6;
+        .pagination a:hover,
+        .pagination .current:hover {
+            background-color: #c7c7c5;
+        }
+
+        .pagination .active a {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .pagination .disabled a,
+        .pagination .disabled .current {
+            color: #ccc;
         }
     </style>
 {% endblock %}
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center mt-4 custom-pagination"> <!-- Utilisation de votre propre classe custom-pagination -->
-        <li class="page-item disabled">
-            <span class="page-link custom-link text-dark">Previous</span>
-        </li>
-        <li class="page-item active "><a class="page-link custom-link text-dark" href="#">1</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">2</a></li>
-        <li class="page-item"><a class="page-link custom-link text-dark" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link custom-link text-dark" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
-
 {% endblock %}
+

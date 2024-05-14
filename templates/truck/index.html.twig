@@ -1,9 +1,5 @@
 {% extends 'baseBack.html.twig' %}
 
-
-
-
-
 {% block body %}
 <style>
     .pagination {
@@ -44,59 +40,52 @@
         cursor: not-allowed;
     }
 
-   
-
- 
-
+    .btn-container {
+        margin-bottom: 1rem;
+    }
 </style>
 
 <div class="app-wrapper">
-
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
                     <h1>Table of Truck</h1>
                 </div>
-
-
                 <div class="col-auto">
                     <div class="input__container input__container--variant d-flex justify-content-end">
                         <div class="shadow__input shadow__input--variant"></div>
-                   
                     </div>
                 </div>
             </div>
 
-			  <form class="form" action="{{ path('search') }}" method="get">
-  
-  <form id="searchForm" action="{{ path('search') }}" method="get">
-<select id="searchTerm" class="input" onchange="filterTable()" required>
-        <option value="" selected disabled hidden>Select a status</option>
-        <option value="available">available</option>
-        <option value="unavailable">unavailable</option>
-    </select>
-</form>
+            <form class="form" action="{{ path('search') }}" method="get">
+                <form id="searchForm" action="{{ path('search') }}" method="get">
+                    <select id="searchTerm" class="input" onchange="filterTable()" required>
+                        <option value="" selected disabled hidden>Select a status</option>
+                        <option value="available">available</option>
+                        <option value="unavailable">unavailable</option>
+                    </select>
+                </form>
+                <div class="btn-container d-flex justify-content-end">
+                    <a href="{{ path('app_truck_new') }}" class="btn btn-primary me-2">Create new</a>
+                    <a href="{{ path('generate_pdf_Truck') }}" class="btn btn-danger">Create PDF</a>
+                </div>
+            </form>
 
-</form>
             <table id="wasteTable" class="table">
                 <thead>
                     <tr>
-
                         <th>Matricule</th>
                         <th>Disponibilite</th>
                         <th>Actions</th>
-
                     </tr>
                 </thead>
                 <tbody>
-				
                     {% for truck in trucks %}
                     <tr>
-
                         <td>{{ truck.matricule }}</td>
                         <td>{{ truck.disponibilite }}</td>
-
                         <td>
                             <a href="{{ path('app_truck_show', {'id': truck.id}) }}" class="badge bg-success">Show</a>
                             <a href="{{ path('app_truck_edit', {'id': truck.id}) }}" class="badge bg-warning">Edit</a>
@@ -110,26 +99,9 @@
                 </tbody>
             </table>
             {{ knp_pagination_render(trucks) }}
-            <a href="{{ path('app_truck_new') }}" class="btn btn-primary">Create new</a>
-            <a href="{{ path('generate_pdf_Truck') }}" class="btn btn-danger">Create PDF</a>
-
-
         </div>
     </div>
 </div>
-
-	
-
-
-
-
-
-
-
-
-
-
-
 
 <script>
 function filterTable() {
@@ -154,9 +126,5 @@ function filterTable() {
         }
     }
 }
-
-   
-
-    
 </script>
 {% endblock %}

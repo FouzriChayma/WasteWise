@@ -29,7 +29,35 @@ class ComplaintRepository extends ServiceEntityRepository
            ->getQuery()
        ;
    }
+   public function countByLocation()
+{
+    $qb = $this->createQueryBuilder('c');
+    $qb->select('c.location, COUNT(c.id) as complaint_count')
+       ->groupBy('c.location');
 
+    $results = $qb->getQuery()->getResult();
+
+    // Define the size of the grid
+    $gridSize = 1; // Adjust this value to change the granularity of the grid
+
+    // Convert the results into an associative array
+    $counts = [];
+    foreach ($results as $result) {
+        $location = explode(',', $result['location']);
+        $roundedLat = round($location[0] / $gridSize) * $gridSize;
+        $roundedLng = round($location[1] / $gridSize) * $gridSize;
+        $roundedLocation = $roundedLat . ',' . $roundedLng;
+        if (!isset($counts[$roundedLocation])) {
+            $counts[$roundedLocation] = 0;
+        }
+        $counts[$roundedLocation] += $result['complaint_count'];
+    }
+
+    return $counts;
+}
+
+
+   
 //    public function findOneBySomeField($value): ?Complaint
 //    {
 //        return $this->createQueryBuilder('c')

@@ -76,7 +76,7 @@ class ReponseController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_reponse_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_complaint_index', [], Response::HTTP_SEE_OTHER);
     }
  
 }

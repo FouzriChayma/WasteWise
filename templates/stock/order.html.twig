@@ -148,7 +148,14 @@
                 <tbody>
                 {{ form_start(form) }}
                 
-                
+                <tr>
+                        <th>Enter Your mail</th>
+                        <td> {{ form_row(form.emailU, {'attr': {'class': 'form-control', 'id': 'emailU'}, 'label': false}) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Location</th>
+                        <td> {{ form_row(form.locationO, {'attr': {'class': 'form-control', 'id': 'locationO'}, 'label': false}) }}</td>
+                    </tr>
                     <tr>
                         <th>Quantity</th>
                 <td> {{ form_row(form.quantityO, {'attr': {'class': 'form-control', 'id': 'quantityO', 'data-selling-price': stock.getSellingPrice()}, 'label': false}) }}</td>

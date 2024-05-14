@@ -1,4 +1,4 @@
-{% extends 'reponse/baseBack.html.twig' %}
+{% extends 'baseBack.html.twig' %}
 
 {% block title %}{{ complaint.title }}{% endblock %}
 
@@ -16,15 +16,15 @@
                         <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>Complaint ID</th>
                                     <td>{{ complaint.id }}</td>
                                 </tr>
                                 <tr>
-                                    <th>User_id</th>
+                                    <th>Username</th>
                                     <td>{{ complaint.user }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Title</th>
+                                    <th>Type of Waste</th>
                                     <td>{{ complaint.title }}</td>
                                 </tr>
                                 <tr>
@@ -59,11 +59,11 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     {{ form_start(form) }}
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-3 ">
                             {{ form_widget(form) }}
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary mt-3">Submit Response</button>
+                        <div class="form-group d-flex justify-content-center">
+                            <button type="submit" class="btn btn-secondary mt-3">Submit Response</button>
                             {% if complaint.reponse %}
                                 <a href="{{ path('app_reponse_delete', {'id': complaint.reponse.id}) }}" class="btn btn-danger mt-3">Delete Response</a>
                             {% endif %}
@@ -76,12 +76,11 @@
 
 
                 <div class="card-footer bg-light">
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ path('app_complaint_edit', {'id': complaint.id}) }}" class="btn btn-warning mx-2">Edit</a>
-                        {{ include('complaint/_delete_form.html.twig') }}
-                        <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary mx-2">Back to List</a>
-                    </div>
-                </div>
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('app_complaint_index') }}" class="btn btn-secondary mx-2">Back to List</a>
+        <a href="{{ path('app_mission_new', {'complaintId': complaint.id}) }}" class="btn btn-primary mx-2">Mark as Mission</a>
+    </div>
+</div>
         </div>
     </div>
 </div>

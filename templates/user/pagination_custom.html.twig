@@ -1,0 +1,27 @@
+{# pagination_custom.html.twig #}
+
+{% if pageCount > 1 %}
+    <ul class="pagination">
+        {% if previous is defined %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({'page': previous})) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            <li class="page-item{% if page == current %} active{% endif %}">
+                <a class="page-link" href="{{ path(route, query|merge({'page': page})) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        {% if next is defined %}
+            <li class="page-item">
+                <a class="page-link" href="{{ path(route, query|merge({'page': next})) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

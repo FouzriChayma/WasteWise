@@ -44,7 +44,6 @@ class Mission
     private Collection $planification;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    
     private ?Truck $truck = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -153,6 +152,8 @@ class Mission
 
         return $this;
     }
+
+    
     public function __toString(){
         return $this->id_mission;
     }

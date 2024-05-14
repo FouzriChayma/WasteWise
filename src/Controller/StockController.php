@@ -208,7 +208,7 @@ public function showDetails(Stock $stock): Response
             $entityManager->persist($stock);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_stock_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_stock_recyclable_materials', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('stock/new.html.twig', [

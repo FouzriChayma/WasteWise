@@ -24,8 +24,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(message: 'The email "{{ value }}" is not a valid email address')]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
+   
+    private ?array $roles = null;
 
     /**
      * @var string The hashed password
@@ -138,14 +138,14 @@ private ?string $password = null;
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = $this->roles ?? [];
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(?array $roles): static
     {
         $this->roles = $roles;
 
@@ -285,7 +285,7 @@ public function setIsVerified(bool $isVerified): self
         return $this->isVerified;
     }
     public function __toString(){
-        return $this->id;
+        return $this->name;
     }
 
     /**
