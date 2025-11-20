@@ -1,241 +1,148 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <title>WasteWise – Application web de gestion durable des déchets</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
-</head>
+🌱 WasteWise – Application Web de Gestion Durable des Déchets
 
-<body>
+WasteWise est une application web intelligente développée pour moderniser la gestion des déchets dans les villes et quartiers.
+Elle vise à sensibiliser les citoyens au recyclage, améliorer la communication avec les associations et optimiser la collecte via une interface moderne, ergonomique et multi-rôles.
 
-<header class="topbar">
-  <div class="logo">HM.</div>
-  <nav class="nav-links">
-    <a href="index.html#accueil">Accueil</a>
-    <a href="index.html#presentation">Présentation</a>
-    <a href="index.html#projets" class="active">Projets</a>
-    <a href="index.html#contact">Contact</a>
-  </nav>
-</header>
+✨ Fonctionnalités principales
 
-<main class="section project-page">
+♻️ Sensibilisation au recyclage
+Informations sur les bonnes pratiques environnementales.
 
-  <p class="project-back">
-    <a href="index.html#projets">← Retour aux projets</a>
-  </p>
+🗑️ Déclarations de déchets
+Les citoyens peuvent déposer des demandes de collecte ou signaler un dépôt sauvage.
 
-  <header class="project-header">
-    <h1 class="project-title-centered">
-      WasteWise – Application web de gestion durable des déchets
-    </h1>
+🗂️ Gestion intelligente
+Gestion des catégories de déchets, zones, itinéraires et points de tri.
 
-    <p class="project-subtitle">
-      WasteWise est une application web développée pour sensibiliser les citoyens
-      à la gestion durable des déchets. Elle propose une interface moderne permettant
-      de trier, déposer, suivre et gérer les déchets via un système intelligent
-      organisé en modules.
-    </p>
+📊 Dashboard pour admin & associations
+Visualisation des demandes, statistiques & suivi en temps réel.
 
-    <div class="project-meta-grid">
-      <span class="meta-pill">♻️ Développement durable</span>
-      <span class="meta-pill">🌐 Application Web</span>
-      <span class="meta-pill">👥 Multi-rôles</span>
-      <span class="meta-pill">🟢 Gestion des déchets</span>
-    </div>
-  </header>
+👥 Multi-rôles
+Citoyen, Admin, Association, Driver, Visiteur.
 
-  <!-- Objectif général -->
-  <section class="objective-general">
-    <h2 class="general-title"> Objectif </h2>
+🔐 Authentification sécurisée (Symfony Security)
+Gestion des accès basée sur les rôles.
 
-    <p class="general-text">
-      L’objectif de <strong>WasteWise</strong> est de numériser et simplifier la gestion
-      des déchets au sein des villes et quartiers. L’application vise à encourager
-      les bonnes pratiques environnementales, réduire les dépôts sauvages et faciliter
-      la collaboration entre citoyens, associations et responsables de collecte.
-    </p>
+🎯 Objectif général
 
-    <ul class="general-list">
-      <li>Sensibiliser la population au recyclage.</li>
-      <li>Réduire les déchets abandonnés dans l’espace public.</li>
-      <li>Digitaliser la collecte, le tri et le transport des déchets.</li>
-      <li>Améliorer la communication entre citoyens et associations.</li>
-      <li>Créer un écosystème écologique moderne et fonctionnel.</li>
-    </ul>
-  </section>
+L’objectif de WasteWise est de digitaliser la gestion des déchets afin de :
 
+Encourager le recyclage et les comportements responsables
 
-  <!-- Objectifs détaillés -->
-  <section>
-    <h2>Objectifs fonctionnels</h2>
-    <ul>
-      <li>Permettre aux utilisateurs de déposer des demandes de collecte.</li>
-      <li>Informer sur les bonnes pratiques de recyclage.</li>
-      <li>Proposer un tableau de bord pour l’admin et les associations.</li>
-      <li>Assurer un système d’authentification complet (citoyen, admin, association, drivers…)</li>
-      <li>Permettre la gestion des zones, déchets, catégories et itinéraires.</li>
-    </ul>
+Réduire les dépôts sauvages
 
-    <h2>Objectifs techniques</h2>
-    <ul>
-      <li>Développer un FrontOffice ergonomique et responsive.</li>
-      <li>Implémenter un BackOffice complet avec statistiques.</li>
-      <li>Assurer la rapidité, sécurité et robustesse du système.</li>
-      <li>Utiliser une architecture MVC avec Symfony.</li>
-      <li>Gérer la base de données via MySQL pour les données de tri.</li>
-    </ul>
-  </section>
+Optimiser le tri, la collecte et le transport
 
+Faciliter la communication entre citoyens, associations et collecteurs
 
-  <!-- Technologies -->
-  <section>
-    <h2>Technologies utilisées</h2>
+Construire un écosystème écologique moderne et efficace
 
-    <div class="tech-grid">
-      <article class="tech-card">
-        <h3>Backend</h3>
-        <ul>
-          <li>Symfony (PHP)</li>
-          <li>MySQL</li>
-          <li>Architecture MVC</li>
-        </ul>
-      </article>
+🧩 Objectifs Fonctionnels
 
-      <article class="tech-card">
-        <h3>Frontend</h3>
-        <ul>
-          <li>HTML / CSS / JavaScript</li>
-          <li>UI responsive</li>
-          <li>Maquettes & design système</li>
-        </ul>
-      </article>
+Dépôt d’une demande de collecte
 
-      <article class="tech-card">
-        <h3>Conception</h3>
-        <ul>
-          <li>Diagramme de cas d’utilisation</li>
-          <li>Diagramme de classes</li>
-          <li>Maquettes (Figma / Adobe XD)</li>
-        </ul>
-      </article>
+Informations pédagogiques sur le recyclage
 
-      <article class="tech-card">
-        <h3>Autres</h3>
-        <ul>
-          <li>Gestion des rôles</li>
-          <li>BackOffice + FrontOffice</li>
-          <li>Notifications & suivi des demandes</li>
-        </ul>
-      </article>
-    </div>
-  </section>
+Dashboard pour admins/associations
 
-=
-  <!-- Conception & visuels -->
-  <section>
-    <h2>Conception & visuels</h2>
+Gestion des zones, catégories, types de déchets
 
-    <p>
-      Le projet comprend une architecture claire organisée autour de plusieurs
-      acteurs : citoyen, association, admin, driver et visiteur. Voici quelques
-      visuels tirés de la conception :
-    </p>
+Gestion des itinéraires et des chauffeurs
 
-    <h3>Diagramme de cas d’utilisation</h3>
-    <img src="img/use case.png" class="screenshot" alt="Diagramme WasteWise">
-    <img src="img/use case1.png" class="screenshot" alt="Diagramme WasteWise">
+🛠️ Objectifs Techniques
 
-    <h3>Diagramme de classes</h3>
-    <img src="img/diag.png" class="screenshot" alt="Classes WasteWise">
+FrontOffice moderne et responsive
 
-    <h3>Interfaces sign in /sign up</h3>
-    <img src="img/signin.JPEG" class="screenshot" alt="Maquette front">
-    <img src="img/signup.JPEG" class="screenshot" alt="Maquette back">
+BackOffice complet avec statistiques
 
-    <h3>Front-End /Back-End</h3>
-    <img src="img/front.JPEG" class="screenshot" alt="Maquette front">
-    <img src="img/back.JPEG" class="screenshot" alt="Maquette back">
+Architecture MVC (Symfony)
 
+Sécurité renforcée & gestion des rôles
 
-    
-  </section>
+Base de données MySQL optimisée
 
+🧬 Architecture du projet
 
-  <!-- Installation -->
-  <section>
-    <h2>Mise en route (installation)</h2>
+Backend : Symfony (PHP)
 
-    <ol>
-      <li><code>git clone &lt;url_du_repo&gt;</code></li>
-      <li><code>composer install</code></li>
-      <li>Configurer la base de données dans <code>.env</code></li>
-      <li><code>php bin/console doctrine:migrations:migrate</code></li>
-      <li><code>symfony server:start</code></li>
-    </ol>
-  </section>
+Frontend : HTML / CSS / JavaScript
 
+Base de données : MySQL
 
-  <!-- Licence -->
-  <section>
-    <h2>Licence</h2>
-    <p>
-      WasteWise est un projet étudiant développé dans un cadre académique.
-      Aucune licence open source n’est encore appliquée.
-    </p>
-  </section>
+Architecture : MVC
 
-<!-- Contributions -->
-<section>
-  <h2>Contributions </h2>
+Conception : Diagrammes UML, maquettes (Figma / Adobe XD)
 
-  <p>
-    Bien que <strong>WasteWise</strong> soit un projet académique, il a été structuré comme 
-    une véritable application professionnelle afin de faciliter l’évolution future du système.  
-    Plusieurs axes de contribution ont été définis pour améliorer et étendre le projet.
-  </p>
+🖥️ Aperçus & Visuels
 
-  <h3>🔧 Contributions techniques</h3>
-  <ul>
-    <li>Refactorisation du code Symfony selon les bonnes pratiques MVC.</li>
-    <li>Amélioration de la gestion des rôles et de la sécurité (authentification, permissions, accès).</li>
-    <li>Optimisation des requêtes SQL pour les modules de collecte et de gestion des déchets.</li>
-    <li>Création d’un BackOffice complet pour l’administration du système.</li>
-    <li>Implémentation d’alertes et de notifications dynamiques (email / UI).</li>
-  </ul>
+Voici quelques visuels représentatifs de l’application :
 
-  <h3>🎨 Contributions UI / UX</h3>
-  <ul>
-    <li>Conception d’interfaces modernes et responsives (FrontOffice & BackOffice).</li>
-    <li>Création des maquettes de navigation (Figma / Adobe XD).</li>
-    <li>Expérience utilisateur améliorée pour déposer, gérer et suivre les déchets.</li>
-    <li>Guides de couleurs, typographies et composants réutilisables.</li>
-  </ul>
+Diagrammes de cas d’utilisation
 
-  <h3>📘 Contributions documentaires</h3>
-  <ul>
-    <li>Rédaction de la documentation d’installation et de déploiement.</li>
-    <li>Création des diagrammes UML (cas d’utilisation, classes, acteurs).</li>
-    <li>Rédaction du manuel d’utilisation pour les rôles : citoyen, admin, association, driver.</li>
-  </ul>
+Diagramme de classes
 
-  <h3>🚀 Contributions futures possibles</h3>
-  <ul>
-    <li>Ajout d’un système de gamification pour encourager le recyclage.</li>
-    <li>Intégration de statistiques avancées (tableaux, graphiques).</li>
-    <li>Ajout d’une API mobile pour une application Android / iOS.</li>
-    <li>Reconnaissance des déchets via IA / computer vision.</li>
-  </ul>
+Interfaces de connexion / inscription
 
-  <p class="project-note">
-    Ce projet reste ouvert aux améliorations futures dans une logique de développement durable,
-    d’innovation citoyenne et de valorisation des données environnementales.
-  </p>
+Dashboard FrontOffice & BackOffice
 
-</section>
+(Les images sont disponibles dans le dossier img/)
 
- 
-<script src="script.js"></script>
+🚀 Installation
+1️⃣ Cloner le projet
+git clone <url_du_repo>
+cd WasteWise
 
-</body>
-</html>
+2️⃣ Installer les dépendances
+composer install
+
+3️⃣ Configurer la base de données
+
+Dans le fichier .env :
+
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/wastewise"
+
+4️⃣ Créer la base & migrations
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+
+5️⃣ Lancer le serveur Symfony
+symfony server:start
+
+🔧 Contributions (réalisées)
+Contributions techniques
+
+Refactorisation MVC
+
+Sécurisation des accès (rôles, permissions)
+
+Optimisation des requêtes SQL
+
+Implémentation du BackOffice complet
+
+Ajout des notifications & alertes
+
+Contributions UI/UX
+
+Maquettes complètes (Figma / Adobe XD)
+
+Amélioration de la navigation utilisateur
+
+Design moderne & responsive
+
+Contributions documentaires
+
+Documentation d’installation
+
+Diagrammes UML
+
+Guide utilisateur détaillé
+
+Contributions futures possibles
+
+IA pour la reconnaissance de déchets
+
+Gamification (récompenses pour recycler)
+
+API mobile Android / iOS
+
+Statistiques avancées interactives
